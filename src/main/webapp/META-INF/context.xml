@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/">
+    <Resource
+            url="jdbc:h2:tcp://localhost/db/warehouse"
+            name="jdbc/freewms"
+            auth="Container"
+            type="javax.sql.DataSource"
+            maxActive="20"
+            maxIdle="60"
+            maxWait="10000"
+            username="sa"
+            password=""
+            driverClassName="org.h2.Driver"
+    />
+</Context>
+        <!--<Resource-->
+        <!--factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"-->
+        <!--name="freewms"-->
+        <!--auth="Container"-->
+        <!--type="javax.sql.DataSource"-->
+        <!--maxActive="10"-->
+        <!--maxIdle="30"-->
+        <!--maxWait="10000"-->
+        <!--username="sa"-->
+        <!--password=""-->
+        <!--driverClassName="org.h2.Driver"-->
+        <!--url="jdbc:h2:tcp://localhost/db/warehouse"-->
+        <!--removeAbandoned="true"-->
+        <!--removeAbandonedTimeout="60"-->
+        <!--/>-->
+
+
+        <!--factory="org.apache.commons.dbcp.BasicDataSourceFactory"-->
+        <!--factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"-->
+        <!--<Resource-->
+        <!--name="freewms"-->
+        <!--auth="Container"-->
+        <!--type="javax.sql.DataSource"-->
+        <!--maxActive="10"-->
+        <!--maxIdle="30"-->
+        <!--maxWait="10000"-->
+        <!--username="sa"-->
+        <!--password=""-->
+        <!--driverClassName="org.h2.Driver"-->
+        <!--url="jdbc:h2:tcp://localhost/db/warehouse"-->
+        <!--removeAbandoned="true"-->
+        <!--removeAbandonedTimeout="60"-->
+        <!--/>-->
+
+
+        <!--<resourceparams name="newDS">-->
+        <!--<parameter>-->
+        <!--<name>factory</name>-->
+        <!--<value>org.apache.commons.dbcp.BasicDataSourceFactory</value>-->
+        <!--</parameter>-->
+        <!--<parameter>-->
+        <!--<name>url</name>-->
+        <!--<value>jdbc:h2:tcp://localhost/db/warehouse</value>-->
+        <!--</parameter>-->
+        <!--<parameter>-->
+        <!--<name>username</name>-->
+        <!--<value>sa</value>-->
+        <!--</parameter>-->
+        <!--<parameter>-->
+        <!--<name>password</name>-->
+        <!--<value></value>-->
+        <!--</parameter>-->
+        <!--<parameter>-->
+        <!--<name>driverClassName</name>-->
+        <!--<value>org.h2.Driver</value>-->
+        <!--</parameter>-->
+        <!--<parameter>-->
+        <!--<name>maxActive</name>-->
+        <!--<value>100</value>-->
+        <!--</parameter>-->
+        <!--<parameter>-->
+        <!--<name>maxIdle</name>-->
+        <!--<value>10</value>-->
+        <!--</parameter>-->
+        <!--<parameter>-->
+        <!--<name>maxWait</name>-->
+        <!--<value>10000</value>-->
+        <!--</parameter>-->
+        <!--<parameter>-->
+        <!--<name>removeAbandoned</name>-->
+        <!--<value>true</value>-->
+        <!--</parameter>-->
+        <!--<parameter>-->
+        <!--<name>removeAbandonedTimeout</name>-->
+        <!--<value>60</value>-->
+        <!--</parameter>-->
+        <!--</resourceparams>-->
+
