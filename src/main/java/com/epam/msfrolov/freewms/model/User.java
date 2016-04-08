@@ -1,8 +1,9 @@
 package com.epam.msfrolov.freewms.model;
 
-import static com.epam.msfrolov.freewms.util.Preconditions.checkNotNull;
+import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public class User extends NamedEntity {
+    private String password;
     private UserRole role;
     private Individual individual;
 
@@ -30,5 +31,14 @@ public class User extends NamedEntity {
 
     public void setIndividual(Individual individual) {
         this.individual = individual;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        checkNotNull(password);
+        this.password = password;
     }
 }

@@ -1,6 +1,6 @@
 package com.epam.msfrolov.freewms.model;
 
-import static com.epam.msfrolov.freewms.util.Preconditions.checkNotNull;
+import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public class DocumentExpense extends Document {
     private Warehouse sender;

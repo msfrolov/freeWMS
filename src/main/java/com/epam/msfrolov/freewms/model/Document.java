@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.epam.msfrolov.freewms.util.Preconditions.checkNotNull;
+import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public abstract class Document extends BaseEntity {
     private LocalDateTime date;

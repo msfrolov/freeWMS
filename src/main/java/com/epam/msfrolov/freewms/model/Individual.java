@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.epam.msfrolov.freewms.util.Preconditions.checkNotNull;
+import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public class Individual extends NamedEntity {
     private String lastName;
@@ -24,11 +24,11 @@ public class Individual extends NamedEntity {
                 '}';
     }
 
-    public Object[] toArray() {
+    public Object[] toArrayContact() {
         return contact.toArray();
     }
 
-    public Iterator<String> iterator() {
+    public Iterator<String> iteratorContact() {
         return contact.iterator();
     }
 
@@ -36,48 +36,48 @@ public class Individual extends NamedEntity {
         return contact.size();
     }
 
-    public boolean isEmpty() {
+    public boolean isEmptyContact() {
         return contact.isEmpty();
     }
 
-    public boolean contains(Object o) {
+    public boolean containsContact(Object o) {
         checkNotNull(o);
         return contact.contains(o);
     }
 
-    public boolean remove(Object o) {
+    public boolean removeContact(Object o) {
         checkNotNull(o);
         return contact.remove(o);
     }
 
-    public boolean add(String s) {
+    public boolean addContact(String s) {
         checkNotNull(s);
         return contact.add(s);
     }
 
-    public void clear() {
+    public void clearContact() {
         contact.clear();
     }
 
-    public void add(int i, String s) {
+    public void addContact(int i, String s) {
         checkNotNull(s);
         contact.add(i, s);
     }
 
-    public String set(int i, String s) {
+    public String setContact(int i, String s) {
         checkNotNull(s);
         return contact.set(i, s);
     }
 
-    public String get(int i) {
+    public String getContact(int i) {
         return contact.get(i);
     }
 
-    public String remove(int i) {
+    public String removeContact(int i) {
         return contact.remove(i);
     }
 
-    public int indexOf(Object o) {
+    public int indexOfContact(Object o) {
         checkNotNull(o);
         return contact.indexOf(o);
     }

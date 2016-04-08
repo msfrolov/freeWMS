@@ -29,6 +29,6 @@ public class CP {
         } catch (SQLException e) {
             throw new ConnectionException("SQLException: failed to get a connection", e);
         }
-        
+
     }
 }

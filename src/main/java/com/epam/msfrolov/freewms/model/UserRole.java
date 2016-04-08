@@ -1,5 +1,11 @@
 package com.epam.msfrolov.freewms.model;
 
-public enum UserRole {
-    ADMIN, STOCKMAN, ACCOUNTANT, GUEST
+public class UserRole extends NamedEntity {
+
+    @Override
+    public String toString() {
+        return "UserRole{" +
+                super.toString() +
+                "}";
+    }
 }

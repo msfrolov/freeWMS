@@ -14,6 +14,13 @@ public interface DaoFactory {
         }
     }
 
+    <T> Dao<T> createDaoEntity(Class<T> clazz);
 
-    <T> Dao createDao(Class<T> userClass);
+    void startTransaction() throws DaoException;
+
+    void commit() throws DaoException;
+
+    void rollback() throws DaoException;
+
+    void close() throws DaoException;
 }

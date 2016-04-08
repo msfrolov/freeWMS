@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.epam.msfrolov.freewms.util.Preconditions.checkNotNull;
+import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public class Counterpart extends NamedEntity {
     private Individual responsiblePerson;
@@ -39,5 +39,13 @@ public class Counterpart extends NamedEntity {
 
     public Iterator<String> iteratorRequisite() {
         return requisite.iterator();
+    }
+
+    public Individual getResponsiblePerson() {
+        return responsiblePerson;
+    }
+
+    public void setResponsiblePerson(Individual responsiblePerson) {
+        this.responsiblePerson = responsiblePerson;
     }
 }

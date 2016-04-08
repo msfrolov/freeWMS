@@ -1,11 +1,11 @@
 package com.epam.msfrolov.freewms.model;
 
-import static com.epam.msfrolov.freewms.util.Preconditions.checkNotNull;
+import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public class DocumentTableLine extends BaseEntity {
     Integer lineNumber;
     Product product;
-    Integer count;
+    Integer count; //amount
 
     @Override
     public String toString() {
