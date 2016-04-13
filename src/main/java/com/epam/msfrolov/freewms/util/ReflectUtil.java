@@ -4,14 +4,12 @@ import com.epam.msfrolov.freewms.model.BaseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.epam.msfrolov.freewms.util.Common.firstUpperCase;
 
@@ -78,6 +76,7 @@ public class ReflectUtil {
         List<Field> fields = new ArrayList<>();
         List<Class> classes = getAllSuperClasses(clazz);
         for (Class currentClass : classes) fields.addAll(Arrays.asList(currentClass.getDeclaredFields()));
+      //  fields = fields.stream().filter(field -> !Modifier.isStatic(field.getModifiers())).collect(Collectors.toList());todo
         StringBuilder sb = new StringBuilder();
         fields.forEach(s -> sb.append(s.getName()).append(' '));
         log.debug("all fields {} - {}", clazz.getSimpleName(), sb.toString());

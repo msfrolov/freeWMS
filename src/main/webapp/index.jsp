@@ -3,6 +3,6 @@
 <html><head>
 </head>
 <body>
-<c:redirect url="/wms/"/>
+<c:redirect url="/wms/signin"/>
 </body>
 </html>

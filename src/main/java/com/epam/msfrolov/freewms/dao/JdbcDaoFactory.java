@@ -1,5 +1,6 @@
 package com.epam.msfrolov.freewms.dao;
 
+import com.epam.msfrolov.freewms.connection.ConnectionPool;
 import com.epam.msfrolov.freewms.model.BaseEntity;
 
 import java.sql.Connection;
@@ -9,17 +10,17 @@ public class JdbcDaoFactory implements DaoFactory {
 
     private final Connection connection;
 
-    public JdbcDaoFactory(Connection connection) {
-        this.connection = connection;
+    public JdbcDaoFactory() {
+        this.connection = ConnectionPool.getInstance().getConnection();
     }
 
     @Override
     public <T extends BaseEntity> Dao<T> createDaoEntity(Class<T> clazz) {
-        return new JdbcEntityDao<>(clazz, connection);
+        return new JdbcEntityDao<>(clazz, connection, this);
     }
 
     @Override
-    public void startTransaction() throws DaoException {
+    public void startTransaction()  {
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
@@ -28,7 +29,7 @@ public class JdbcDaoFactory implements DaoFactory {
     }
 
     @Override
-    public void commit() throws DaoException {
+    public void commit()  {
         try {
             connection.commit();
         } catch (SQLException e) {
@@ -37,7 +38,7 @@ public class JdbcDaoFactory implements DaoFactory {
     }
 
     @Override
-    public void rollback() throws DaoException {
+    public void rollback()  {
         try {
             connection.rollback();
         } catch (SQLException e) {
@@ -45,11 +46,12 @@ public class JdbcDaoFactory implements DaoFactory {
         }
     }
 
-    public void close() throws DaoException {
+    @Override
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new DaoException("failed to close connection", e);
+            throw new DaoException("failed to close DaoFactory", e);
         }
     }
 

@@ -26,11 +26,15 @@ public class ConnectionPool {
         }
     }
 
-    public Connection getConnection() throws ConnectionException {
+    public Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             throw new ConnectionException("SQLException: failed to get a connection", e);
         }
+    }
+
+    public static ConnectionPool getInstance(){
+        return new ConnectionPool();
     }
 }

@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +24,14 @@ public class JdbcEntityDao<T extends BaseEntity> implements Dao<T> {
     private final List<Field> allFields;
     private final Connection connection;
     private final Adapter adapter;
+    private final DaoFactory daoFactory;
 
-    public JdbcEntityDao(Class<T> clazz, Connection connection) {
+    public JdbcEntityDao(Class<T> clazz, Connection connection, DaoFactory daoFactory) {
         this.clazz = clazz;
         this.connection = connection;
-        allFields = ReflectUtil.getAllFields(clazz);
-        adapter = new Adapter();
+        this.allFields = ReflectUtil.getAllFields(clazz);
+        this.adapter = new Adapter();
+        this.daoFactory = daoFactory;
     }
 
     @Override
@@ -84,7 +87,7 @@ public class JdbcEntityDao<T extends BaseEntity> implements Dao<T> {
         log.debug("query findById: {}", assembledQuery);
         try (PreparedStatement statement = connection.prepareStatement(assembledQuery)) {
             ResultSet resultSet = statement.executeQuery();
-            resultSet.next();
+            if (!resultSet.next()) return null;
             @SuppressWarnings("unchecked")
             T result = (T) ReflectUtil.createInstance(clazz);
             fillObject(resultSet, result);
@@ -215,7 +218,7 @@ public class JdbcEntityDao<T extends BaseEntity> implements Dao<T> {
             if (checkIsSubclass(fieldClass, BaseEntity.class)) {
                 Integer valueId = (Integer) resultSet.getObject(dbFieldName);
                 if (valueId != null) {
-                    Object fieldValue = Dao.createDaoEntity(fieldClass, connection).findById(valueId);
+                    Object fieldValue = daoFactory.createDaoEntity(fieldClass).findById(valueId);
                     Method setter = ReflectUtil.getSetter(field.getName(), clazz);
                     ReflectUtil.invokeMethod(setter, result, new Object[]{fieldValue});
                 }

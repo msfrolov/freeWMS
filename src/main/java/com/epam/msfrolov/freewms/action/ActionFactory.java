@@ -15,11 +15,11 @@ public class ActionFactory {
         actions = new HashMap<>();
         //Properties properties = FileManager.getProperties("properties/action.properties");
 
-        actions.put("GET/", new ShowPageAction("welcome"));
+//        actions.put("GET/", new ShowPageAction("signin"));
         actions.put("GET/signin", new ShowPageAction("signin"));
         actions.put("POST/signin", new LoginAction());
-        actions.put("GET/login", new ShowPageAction("login"));
-        actions.put("POST/login", new LoginAction());
+//        actions.put("GET/login", new ShowPageAction("login"));
+//        actions.put("POST/login", new LoginAction());
         actions.put("GET/logout", new LogoutAction());
         actions.put("GET/home", new ShowPageAction("home"));
     }
