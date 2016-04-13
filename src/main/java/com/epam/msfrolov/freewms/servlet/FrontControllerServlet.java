@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet(name = "FrontControllerServlet", urlPatterns = "/wms/*")
 public class FrontControllerServlet extends HttpServlet {
@@ -27,7 +28,12 @@ public class FrontControllerServlet extends HttpServlet {
     public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         String actionName = req.getMethod() + req.getPathInfo();
-        log.debug("actionName: {}", actionName);
+        log.debug("service actionName: {}", actionName);
+        Map<String, String[]> parameterMap = req.getParameterMap();
+        for (Map.Entry en:parameterMap.entrySet()){
+            System.out.println("---------"+ en.getKey() + " " +en.getValue());
+        }
+
         Action action = actionFactory.getAction(actionName);
 
 
@@ -35,10 +41,10 @@ public class FrontControllerServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Not found");
             return;
         }
-        log.debug("getResult: {}", actionName);
+        log.debug("service getResult: {}", actionName);
         ActionResult result = action.execute(req, resp);
-        log.debug("getView: {}", result.getView());
-        log.debug("isRedirect: {}", result.isRedirect());
+        log.debug("service getView: {}", result.getView());
+        log.debug("service isRedirect: {}", result.isRedirect());
 
         doForwardOrRedirect(result, req, resp);
     }
@@ -50,7 +56,7 @@ public class FrontControllerServlet extends HttpServlet {
             resp.sendRedirect(location);
         } else {
             String path = "/WEB-INF/jsp/" + result.getView() + ".jsp";
-            log.debug("forward path: {}", path);
+            log.debug("forward - path: {}", path);
             req.getRequestDispatcher(path).forward(req, resp);
         }
     }

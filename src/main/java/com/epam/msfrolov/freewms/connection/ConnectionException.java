@@ -1,6 +1,6 @@
 package com.epam.msfrolov.freewms.connection;
 
-public class ConnectionException extends Exception {
+public class ConnectionException extends RuntimeException {
     public ConnectionException(String s) {
         super(s);
     }

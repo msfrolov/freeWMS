@@ -15,9 +15,9 @@ public class Common {
         return o instanceof BaseEntity;
     }
 
-    public static String onlyFirstUpperCase(String s) {
+    public static String firstUpperCase(String s) {
         Common.checkNotNull(s);
-        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
+        return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
 
     public static String camelCaseToUpperCase(String s) {

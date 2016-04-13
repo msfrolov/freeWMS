@@ -2,26 +2,17 @@ package com.epam.msfrolov.freewms.model;
 
 import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
-public class DocumentMove extends Document {
+public class ExpenseDocument extends Document {
     private Warehouse sender;
-    private Warehouse recipient;
+    private Counterpart recipient;
 
     @Override
     public String toString() {
-        return "DocumentMove{" +
+        return "ExpenseDocument{" +
                 super.toString() +
                 "sender=" + sender +
                 ", recipient=" + recipient +
                 '}';
-    }
-
-    public Warehouse getRecipient() {
-        return recipient;
-    }
-
-    public void setRecipient(Warehouse recipient) {
-        checkNotNull(recipient);
-        this.recipient = recipient;
     }
 
     public Warehouse getSender() {
@@ -31,5 +22,14 @@ public class DocumentMove extends Document {
     public void setSender(Warehouse sender) {
         checkNotNull(sender);
         this.sender = sender;
+    }
+
+    public Counterpart getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(Counterpart recipient) {
+        checkNotNull(recipient);
+        this.recipient = recipient;
     }
 }

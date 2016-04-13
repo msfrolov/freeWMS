@@ -2,33 +2,33 @@ package com.epam.msfrolov.freewms.model;
 
 import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
-public class DocumentExpense extends Document {
-    private Warehouse sender;
-    private Counterpart recipient;
+public class ReceiptDocument extends Document {
+    private Counterpart sender;
+    private Warehouse recipient;
 
     @Override
     public String toString() {
-        return "DocumentExpense{" +
+        return "ReceiptDocument{" +
                 super.toString() +
                 "sender=" + sender +
                 ", recipient=" + recipient +
                 '}';
     }
 
-    public Warehouse getSender() {
+    public Counterpart getSender() {
         return sender;
     }
 
-    public void setSender(Warehouse sender) {
+    public void setSender(Counterpart sender) {
         checkNotNull(sender);
         this.sender = sender;
     }
 
-    public Counterpart getRecipient() {
+    public Warehouse getRecipient() {
         return recipient;
     }
 
-    public void setRecipient(Counterpart recipient) {
+    public void setRecipient(Warehouse recipient) {
         checkNotNull(recipient);
         this.recipient = recipient;
     }

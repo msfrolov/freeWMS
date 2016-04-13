@@ -10,7 +10,7 @@ import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public abstract class Document extends BaseEntity {
     private LocalDateTime date;
-    private List<DocumentTableLine> table;
+    private List<TableLine> table;
     private String comment;
 
     @Override
@@ -47,26 +47,13 @@ public abstract class Document extends BaseEntity {
         return table.isEmpty();
     }
 
-    public boolean contains(Object o) {
-        return table.contains(o);
-    }
-
-    public Iterator<DocumentTableLine> iterator() {
+    public Iterator<TableLine> iterator() {
         return table.iterator();
     }
 
-    public <T> T[] toArray(T[] ts) {
-        return table.toArray(ts);
-    }
-
-    public boolean add(DocumentTableLine documentTableLine) {
-        checkNotNull(documentTableLine);
-        return table.add(documentTableLine);
-    }
-
-    public boolean remove(Object o) {
-        checkNotNull(o);
-        return table.remove(o);
+    public boolean add(TableLine tableLine) {
+        checkNotNull(tableLine);
+        return table.add(tableLine);
     }
 
     public boolean containsAll(Collection<?> collection) {
@@ -74,39 +61,30 @@ public abstract class Document extends BaseEntity {
         return table.containsAll(collection);
     }
 
-    public boolean addAll(Collection<? extends DocumentTableLine> collection) {
+    public boolean addAll(Collection<? extends TableLine> collection) {
         checkNotNull(collection);
         return table.addAll(collection);
-    }
-
-    public boolean removeAll(Collection<?> collection) {
-        checkNotNull(collection);
-        return table.removeAll(collection);
     }
 
     public void clear() {
         table.clear();
     }
 
-    public void sort(Comparator<? super DocumentTableLine> comparator) {
+    public void sort(Comparator<? super TableLine> comparator) {
         table.sort(comparator);
     }
 
-    public DocumentTableLine get(int i) {
+    public TableLine get(int i) {
         return table.get(i);
     }
 
-    public DocumentTableLine set(int i, DocumentTableLine documentTableLine) {
-        checkNotNull(documentTableLine);
-        return table.set(i, documentTableLine);
+    public TableLine set(int i, TableLine tableLine) {
+        checkNotNull(tableLine);
+        return table.set(i, tableLine);
     }
 
-    public DocumentTableLine remove(int i) {
+    public TableLine remove(int i) {
         return table.remove(i);
     }
 
-    public int indexOf(Object o) {
-        checkNotNull(o);
-        return table.indexOf(o);
-    }
 }

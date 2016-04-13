@@ -1,6 +1,8 @@
 package com.epam.msfrolov.freewms.util;
 
 import com.epam.msfrolov.freewms.model.BaseEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -11,21 +13,23 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.epam.msfrolov.freewms.util.Common.onlyFirstUpperCase;
+import static com.epam.msfrolov.freewms.util.Common.firstUpperCase;
 
 public class ReflectUtil {
+
+    private static Logger log = LoggerFactory.getLogger(ReflectUtil.class);
 
     public static Method getSetter(String methodName, Class clazz) {
         Method[] declaredMethods = clazz.getDeclaredMethods();
         for (Method method : declaredMethods) {
             if ((method.getName().toUpperCase().contains(methodName.toUpperCase())) &&
-                    method.getName().contains("set" + onlyFirstUpperCase(methodName))) {
+                    method.getName().contains("set" + firstUpperCase(methodName))) {
                 return method;
             }
         }
-        Class currentClass = clazz.getSuperclass();
-        if (currentClass != BaseEntity.class || currentClass != Object.class) {
-            return getSetter(methodName, currentClass);
+        if (clazz != BaseEntity.class) {
+            clazz = clazz.getSuperclass();
+            if (clazz != Object.class) return getSetter(methodName, clazz);
         }
         return null;
     }
@@ -34,15 +38,14 @@ public class ReflectUtil {
         Method[] declaredMethods = clazz.getDeclaredMethods();
         for (Method method : declaredMethods) {
             if ((method.getName().toUpperCase().contains(methodName.toUpperCase())) &&
-                    (method.getName().contains("get" + onlyFirstUpperCase(methodName))
-                            || method.getName().contains("is" + onlyFirstUpperCase(methodName)))
-                    ) {
+                    (method.getName().contains("get" + firstUpperCase(methodName))
+                            || method.getName().contains("is" + firstUpperCase(methodName)))) {
                 return method;
             }
         }
-        Class currentClass = clazz.getSuperclass();
-        if (currentClass != BaseEntity.class || currentClass != Object.class) {
-            return getGetter(methodName, currentClass);
+        if (clazz != BaseEntity.class) {
+            clazz = clazz.getSuperclass();
+            if (clazz != Object.class) return getGetter(methodName, clazz);
         }
         return null;
     }
@@ -74,20 +77,21 @@ public class ReflectUtil {
     public static List<Field> getAllFields(Class clazz) {
         List<Field> fields = new ArrayList<>();
         List<Class> classes = getAllSuperClasses(clazz);
-        for (Class currentClass : classes) {
-            fields.addAll(Arrays.asList(currentClass.getDeclaredFields()));
-        }
+        for (Class currentClass : classes) fields.addAll(Arrays.asList(currentClass.getDeclaredFields()));
+        StringBuilder sb = new StringBuilder();
+        fields.forEach(s -> sb.append(s.getName()).append(' '));
+        log.debug("all fields {} - {}", clazz.getSimpleName(), sb.toString());
         return fields;
     }
 
     public static List<Class> getAllSuperClasses(Class clazz) {
         List<Class> classes = new ArrayList<>();
         classes.add(clazz);
-        Class currentClass = clazz;
-        while (BaseEntity.class != (currentClass = currentClass.getSuperclass())
-                || Object.class != (currentClass = currentClass.getSuperclass())) {
-            classes.add(currentClass);
-        }
+        do {
+            clazz = clazz.getSuperclass();
+            classes.add(clazz);
+        } while (BaseEntity.class != clazz
+                && Object.class != clazz);
         return classes;
     }
 
@@ -165,10 +169,9 @@ public class ReflectUtil {
 
     public static boolean checkIsSubclass(Class subClass, Class superClass) {
         if (subClass == superClass) return true;
-        Class clazz;
-        while ((clazz = subClass.getSuperclass()) != null) {
-            return checkIsSubclass(superClass, clazz);
-        }
+        Class clazz = subClass.getSuperclass();
+        if (clazz != Object.class)
+            return checkIsSubclass(clazz, superClass);
         return false;
     }
 }

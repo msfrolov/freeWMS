@@ -6,6 +6,7 @@ public class Product extends NamedEntity {
     private ProductType type;
     private Measure measure;
     private String description;
+    private String barcode;
 
     @Override
     public String toString() {
@@ -14,7 +15,17 @@ public class Product extends NamedEntity {
                 "type=" + type +
                 ", measure=" + measure +
                 ", description='" + description + '\'' +
+                ", barcode='" + barcode + '\'' +
                 '}';
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        checkNotNull(barcode);
+        this.barcode = barcode;
     }
 
     public ProductType getType() {

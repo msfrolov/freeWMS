@@ -1,58 +1,68 @@
 package com.epam.msfrolov.freewms.util;
 
+import com.epam.msfrolov.freewms.connection.ConnectionPool;
 import com.epam.msfrolov.freewms.dao.Dao;
 import com.epam.msfrolov.freewms.dao.DaoException;
-import com.epam.msfrolov.freewms.dao.DaoFactory;
-import com.epam.msfrolov.freewms.model.BaseEntity;
+import com.epam.msfrolov.freewms.model.Gender;
+import com.epam.msfrolov.freewms.model.Individual;
 import com.epam.msfrolov.freewms.model.User;
 import com.epam.msfrolov.freewms.model.UserRole;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Runner {
 
     public static void main(String[] args) {
-//        LocalDate s = LocalDate.parse("2017-12-17");
-//        System.out.println(s);
-//        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
-//        System.out.println(s.format(formatter));
-//        DaoFactory daoFactory = DaoFactory.newInstance();
-//        Dao<User> userDao = daoFactory.createDaoEntity(User.class);
-//        User user = new User();
-//        user.setName("newUser");
-//        user.setPassword("18734");
-//        UserRole userRole = new UserRole();
-//        userRole.setId(4);
-//        userRole.setName("USER");
-//        user.setRole(userRole);
-//        User insert = null;
-//        try {
-//            insert = userDao.insert(user);
-//        } catch (DaoException e) {
-//            System.out.println("?????" + insert);
-//        }
 
-        Class<BaseEntity> baseEntityClass = BaseEntity.class;
+        ConnectionPool pool = new ConnectionPool();
 
-        System.out.println();
-         Class Classf = ddd(BaseEntity.class);
-//
-//        Field requisite = ReflectUtil.getField("requisite", Counterpart.class);
-////        System.out.println(requisite.getName());
-////        System.out.println(requisite.getType());
-////        System.out.println(requisite.getName());
-//        Method responsiblePerson = ReflectUtil.getGetter("id", Counterpart.class);
-//        System.out.println(responsiblePerson.getReturnType());
-//        System.out.println(ReflectUtil.getGenericType(requisite));
-//        System.out.println(ReflectUtil.presenceField("requisite", Counterpart.class));
-    }
+        Dao<Individual> individualDao = Dao.createDaoEntity(Individual.class, pool.getConnection());
+        Individual byId = individualDao.findById(1);
+        List<Individual> all = individualDao.findAll();
+        List<Individual> all1 = individualDao.findAll(2, 1);
+        Map<String, Object> hashMap = new HashMap<>();
+        hashMap.put("id", 1);
+        List<Individual> byFields = individualDao.findByFields(hashMap);
+
+        System.out.println("byId " + byId);
+        System.out.println("all" + all);
+        System.out.println("all1" + all1);
+        System.out.println("byFields" + byFields);
 
 
-    static <T> T ddd(Class<BaseEntity> clazz){
-        Class<? extends User> aClass = new User().getClass();
+        Dao<User> userDao = Dao.createDaoEntity(User.class, pool.getConnection());
+        User user = new User();
+        user.setName("newUser");
+        user.setPassword("18734");
+        user.setIndividual(byId);
+        UserRole userRole = new UserRole();
+        userRole.setId(4);
+        userRole.setName("USER");
+        user.setRole(userRole);
+        User insert = null;
+        try {
+            insert = userDao.insert(user);
 
-        System.out.println(aClass == clazz);
-        return null;
+            Individual individual = new Individual();
+            individual.setName("Анна");
+            Dao<Gender> genderDao = Dao.createDaoEntity(Gender.class, pool.getConnection());
+            HashMap<String, Object> objectObjectHashMap = new HashMap<>();
+            objectObjectHashMap.put("name","FEMALE");
+            List<Gender> byFields1 = genderDao.findByFields(objectObjectHashMap);
+            individual.setGender(byFields1.get(0));
+            Dao<Individual> individualDao1 = Dao.createDaoEntity(Individual.class,pool.getConnection());
+            individual = individualDao.insert(individual);
+            System.out.println("!!individual " + individual);
+            user.setName("Abra Кадабра");
+            user.setPassword("123456789");
+            user.setIndividual(individual);
+            userDao.update(user);
+            userDao.delete(user);
+        } catch (DaoException e) {
+            e.printStackTrace();
+            System.out.println("-----------------------------?????" + insert);
+        }
     }
 }

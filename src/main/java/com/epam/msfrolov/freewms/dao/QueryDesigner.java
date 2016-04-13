@@ -1,14 +1,16 @@
-package com.epam.msfrolov.freewms.util;
+package com.epam.msfrolov.freewms.dao;
+
+import com.epam.msfrolov.freewms.util.Common;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static com.epam.msfrolov.freewms.util.Common.checkExtendsBaseEntity;
 import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public class QueryDesigner {
     StringBuilder stringBuilder;
+
 
     public QueryDesigner() {
         stringBuilder = new StringBuilder();
@@ -150,6 +152,11 @@ public class QueryDesigner {
         return this;
     }
 
+    public QueryDesigner deletionMark() {
+        stringBuilder.append(" DELETION_MARK ");
+        return this;
+    }
+
     public QueryDesigner asterisk() {
         stringBuilder.append(" * ");
         return this;
@@ -161,7 +168,7 @@ public class QueryDesigner {
     }
 
     public QueryDesigner string(String s) {
-        stringBuilder.append("'" + s + "'");
+        stringBuilder.append('\'').append(s).append('\'');
         return this;
     }
 
@@ -184,7 +191,6 @@ public class QueryDesigner {
 
     public QueryDesigner table(Object o) {
         checkNotNull(o);
-        checkExtendsBaseEntity(o);
         if (!(o instanceof Class)) {
             o = o.getClass();
         }
@@ -201,7 +207,8 @@ public class QueryDesigner {
         return this;
     }
 
-    public String getQuery() {
+    @Override
+    public String toString() {
         return stringBuilder.toString();
     }
 }

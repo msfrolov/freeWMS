@@ -1,26 +1,28 @@
 package com.epam.msfrolov.freewms.dao;
 
+import com.epam.msfrolov.freewms.model.BaseEntity;
+
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-public interface Dao<T> {
+public interface Dao<T extends BaseEntity> {
 
-    //=)) // TODO: 08.04.2016 test
-    static <T> Dao<T> createDaoEntity(Class<T> clazz) {
-        return DaoFactory.newInstance().createDaoEntity(clazz);
+    static <T extends BaseEntity> Dao<T> createDaoEntity(Class<T> clazz, Connection connection) {
+        return DaoFactory.newInstance(connection).createDaoEntity(clazz);
     }
 
-    T insert(T t) throws DaoException;
+    T insert(T t);
 
-    T findById(int id) throws DaoException;
+    T findById(int id);
 
-    List<T> findAll() throws DaoException;
+    List<T> findAll();
 
-    List<T> findAll(int start, int pageSize) throws DaoException; //pagination
+    List<T> findAll(int start, int pageSize); //pagination
 
-    List<T> findByFields(Map<String, Object> map) throws DaoException;
+    List<T> findByFields(Map<String, Object> map);
 
-    T update(T t);
+    boolean update(T t);
 
     boolean delete(T t);
 }

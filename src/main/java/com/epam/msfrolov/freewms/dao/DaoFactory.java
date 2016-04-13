@@ -1,20 +1,15 @@
 package com.epam.msfrolov.freewms.dao;
 
-import com.epam.msfrolov.freewms.util.AppException;
-import com.epam.msfrolov.freewms.util.FileManager;
+import com.epam.msfrolov.freewms.model.BaseEntity;
 
-public interface DaoFactory {
-    static <T extends DaoFactory> T newInstance() {
-        String daoFactoryName = FileManager.getProperties("properties/dao.properties").getProperty("daoFactoryName");
-        try {
-            //noinspection unchecked
-            return (T) Class.forName(daoFactoryName).newInstance();
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-            throw new AppException("failed to initialize DAO factory", e);
-        }
+import java.sql.Connection;
+
+public interface DaoFactory extends AutoCloseable {
+    static DaoFactory newInstance(Connection connection) {
+        return new JdbcDaoFactory(connection);
     }
 
-    <T> Dao<T> createDaoEntity(Class<T> clazz);
+    <T extends BaseEntity> Dao<T> createDaoEntity(Class<T> clazz);
 
     void startTransaction() throws DaoException;
 
@@ -22,5 +17,6 @@ public interface DaoFactory {
 
     void rollback() throws DaoException;
 
-    void close() throws DaoException;
+    @Override
+    void close() throws Exception;
 }

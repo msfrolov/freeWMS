@@ -1,27 +1,21 @@
 package com.epam.msfrolov.freewms.dao;
 
-import com.epam.msfrolov.freewms.connection.CP2;
-import com.epam.msfrolov.freewms.connection.ConnectionException;
+import com.epam.msfrolov.freewms.model.BaseEntity;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JdbcDaoFactory implements DaoFactory {
 
-    Connection connection;
+    private final Connection connection;
 
-    public JdbcDaoFactory() {
-        try {
-            connection = CP2.getInstance().getConnection();
-        } catch (ConnectionException e) {
-            //TODO something
-            e.printStackTrace();
-        }
+    public JdbcDaoFactory(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
-    public <T> Dao<T> createDaoEntity(Class<T> clazz) {
-        return new JdbcDaoEntity<>(clazz, connection);
+    public <T extends BaseEntity> Dao<T> createDaoEntity(Class<T> clazz) {
+        return new JdbcEntityDao<>(clazz, connection);
     }
 
     @Override

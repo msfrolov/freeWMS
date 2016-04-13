@@ -3,6 +3,7 @@ package com.epam.msfrolov.freewms.connection;
 import com.epam.msfrolov.freewms.util.AppException;
 import com.epam.msfrolov.freewms.util.FileManager;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -25,7 +26,7 @@ public class ConnectionPool {
         }
     }
 
-    public java.sql.Connection getConnection() throws ConnectionException {
+    public Connection getConnection() throws ConnectionException {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
