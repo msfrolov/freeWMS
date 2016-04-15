@@ -29,12 +29,7 @@ public class UserSessionFilter implements Filter {
     }
 
     public void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
-        Object user = req.getSession(false).getAttribute("user");
-        if (user == null) {
-            String location = req.getContextPath() + URL_PATTERN_SIGN_IN;
-            log.debug("redirect - location: {}", location);
-            resp.sendRedirect(location);
-        } else
+
             chain.doFilter(req, resp);
     }
 }
