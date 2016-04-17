@@ -1,3 +1,4 @@
+/*noinspection ALL*/
 body
 {
    background-color: #FFFFFF;
@@ -17,6 +18,8 @@ body
 {
    border-width: 0;
 }
+
+/*noinspection ALL*/
 #Image1
 {
    border: 0px #000000 solid;
@@ -54,11 +57,13 @@ body
    width: 100%;
    height: 100%;
 }
+/*noinspection ALL*/
 #WrappingText1
 {
    background-color: transparent;
    background-image: none;
 }
+/*noinspection ALL*/
 .WrappingText1
 {
    position: absolute;
@@ -71,6 +76,7 @@ body
    font-style: normal;
    text-align: left;
 }
+/*noinspection ALL*/
 #Image4
 {
    border: 0px #000000 solid;
@@ -80,6 +86,7 @@ body
    width: 100%;
    height: 100%;
 }
+/*noinspection ALL*/
 #Image5
 {
    border: 0px #000000 solid;
@@ -89,6 +96,7 @@ body
    width: 100%;
    height: 100%;
 }
+/*noinspection ALL*/
 #wb_Form2
 {
    background-color: transparent;
@@ -98,6 +106,7 @@ body
    -webkit-border-radius: 4px;
    border-radius: 4px;
 }
+/*noinspection ALL*/
 #Editbox1
 {
    border: 2px #CCCCCC solid;
@@ -114,6 +123,7 @@ body
    text-align: left;
    vertical-align: middle;
 }
+/*noinspection ALL*/
 #Editbox1:focus
 {
    border-color: #66AFE9;
@@ -122,6 +132,7 @@ body
    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102,175,233,0.60);
    outline: 0;
 }
+/*noinspection ALL*/
 #Editbox2
 {
    border: 2px #CCCCCC solid;
@@ -138,6 +149,7 @@ body
    text-align: left;
    vertical-align: middle;
 }
+/*noinspection ALL*/
 #Editbox2:focus
 {
    border-color: #66AFE9;
@@ -146,6 +158,7 @@ body
    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.075), 0px 0px 8px rgba(102,175,233,0.60);
    outline: 0;
 }
+/*noinspection ALL*/
 #Label1
 {
    border: 0px #CCCCCC solid;
@@ -155,39 +168,40 @@ body
    background-color: transparent;
    background-image: none;
    color :#000000;
-   font-family: Arial;
+   font-family: Arial, serif;
    font-weight: normal;
    font-size: 13px;
    padding: 4px 4px 4px 4px;
-   text-align: left;
+   text-align: right;
    vertical-align: middle;
 }
+/*noinspection ALL*/
 #Button1
 {
    border: 1px #2E6DA4 solid;
    -moz-border-radius: 4px;
    -webkit-border-radius: 4px;
    border-radius: 4px;
-   background-color: #3370B7;
-   background-image: none;
+   background: #3370B7 none;
    color: #FFFFFF;
-   font-family: Arial;
+   font-family: Arial, serif;
    font-weight: normal;
    font-size: 13px;
 }
+/*noinspection ALL*/
 #Button2
 {
    border: 1px #2E6DA4 solid;
    -moz-border-radius: 4px;
    -webkit-border-radius: 4px;
    border-radius: 4px;
-   background-color: #3370B7;
-   background-image: none;
+   background: #3370B7 none;
    color: #FFFFFF;
-   font-family: Arial;
+   font-family: Arial, serif;
    font-weight: normal;
    font-size: 13px;
 }
+/*noinspection ALL*/
 #Image6
 {
    border: 0px #000000 solid;
@@ -197,13 +211,16 @@ body
    width: 100%;
    height: 100%;
 }
+/*noinspection ALL*/
 #wb_Heading1
 {
    background-color: transparent;
    background-image: none;
    border: 0px #FFFFFF solid;
    padding: 0px 0px 0px 0px;
+   font-size: 25px;
 }
+/*noinspection ALL*/
 #Heading1
 {
    color: #000000;
@@ -213,17 +230,20 @@ body
    margin: 0;
    text-align: center;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1
 {
    display: block;
    text-align: left;
    width: 100%;
 }
+/*noinspection ALL*/
 #ResponsiveMenu1
 {
    background-color: #696969;
    height: 69px;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul
 {
    list-style: none;
@@ -231,12 +251,14 @@ body
    padding: 0;
    position: relative;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul:after
 {
    clear: both;
    content: "";
    display: block;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul li
 {
    background-color: #696969;
@@ -244,11 +266,13 @@ body
    float: left;
    list-style: none;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul li i
 {
    font-size: 24px;
    width: 24px;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul li a 
 {
    color: #FFFFFF;
@@ -260,19 +284,23 @@ body
    text-align: center;
    text-decoration: none;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 > ul > li > a 
 {
    height: 39px;
 }
+/*noinspection ALL*/
 .ResponsiveMenu1 a 
 {
    display: block;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 li a:hover, #wb_ResponsiveMenu1 li .active
 { 
    background-color: #CCCCCC;
    color: #696969;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul ul
 {
    display: none;
@@ -280,10 +308,12 @@ body
    top: 69px;
    z-index: 9999;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul li:hover > ul
 {
    display: list-item;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul ul li 
 {
    background-color: #808080;
@@ -292,16 +322,19 @@ body
    position: relative;
    width: 246px;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul ul li a:hover, #wb_ResponsiveMenu1 ul ul li .active
 {
    background-color: #CCCCCC;
    color: #808080;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul ul li i 
 {
    margin-right: 8px;
    vertical-align: middle;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul ul li a 
 {
    color: #FFFFFF;
@@ -309,12 +342,14 @@ body
    text-align: left;
    vertical-align: middle;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul ul ul li 
 {
    left: 246px;
    position: relative;
    top: -69px;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 .arrow-down 
 {
    display: inline-block;
@@ -327,6 +362,7 @@ body
    border-left: 4px solid transparent;
    border-bottom: 0 dotted;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 .arrow-left 
 {
    display: inline-block;
@@ -339,18 +375,22 @@ body
    border-bottom: 4px solid transparent;
    border-right: 0 dotted;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 li a:hover .arrow-down
 { 
    border-top-color: #696969;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 ul ul li a:hover .arrow-left, #wb_ResponsiveMenu1 ul ul li .active .arrow-left
 { 
    border-left-color: #808080;
 }
+/*noinspection ALL*/
 #wb_ResponsiveMenu1 .toggle,[id^=ResponsiveMenu1-submenu]
 {
    display: none;
 }
+/*noinspection ALL*/
 @media all and (max-width:768px) 
 {
 #wb_ResponsiveMenu1 

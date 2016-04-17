@@ -11,7 +11,8 @@
 <div id="wb_Image4" style="position:absolute;left:6px;top:264px;width:989px;height:489px;z-index:14;">
     <img src="${img_path}/body2.jpg" id="Image4" alt="">
     <div id="status" style="position: absolute;padding: 0;top: 160px;left: 315px;">
-        <h1>Status Code: ${statusCode} </h1><br>
+        <h1> ${statusCode} Forbidden </h1><br>
+        <h3> Code: Access denied</h3><br>
         <h3>Requested URI: ${reqUri} </h3><br>
     </div>
 </div>

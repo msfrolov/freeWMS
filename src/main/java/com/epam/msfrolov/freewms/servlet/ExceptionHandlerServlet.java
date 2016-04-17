@@ -23,12 +23,13 @@ public class ExceptionHandlerServlet extends HttpServlet {
         if (requestUri != null) {
             requestUri = "Unknown";
         }
-        req.setAttribute("statusCode", statusCode);
-        req.setAttribute("reqUri", requestUri);
-        String path = ERROR_PAGE;
-        req.getRequestDispatcher(path).forward(req, resp);
-        log.debug("Throwable : {}", thr);
         log.debug("Status code: {}", statusCode);
         log.debug("URI: {}", requestUri);
+        if (thr != null) {
+            log.debug("Throwable : {}", thr.getClass().getSimpleName());
+            log.debug("Throwable : {}", thr.getMessage());
+        }
+        String path = ERROR_PAGE;
+        req.getRequestDispatcher(path).forward(req, resp);
     }
 }

@@ -1,21 +1,29 @@
 package com.epam.msfrolov.freewms.service;
 
 import com.epam.msfrolov.freewms.dao.Dao;
+import com.epam.msfrolov.freewms.dao.DaoException;
 import com.epam.msfrolov.freewms.dao.DaoFactory;
 import com.epam.msfrolov.freewms.model.User;
 import com.epam.msfrolov.freewms.model.UserRole;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class UserService implements AutoCloseable {
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     private Dao<User> userDao;
     private DaoFactory daoFactory;
+    private UserRole defaultRole = UserRole.USER;
 
     public UserService() {
+        log.debug("UserService() constructor");
         daoFactory = DaoFactory.newInstance();
+        log.debug("UserService() constructor: DaoFactory.newInstance()");
         userDao = daoFactory.createDaoEntity(User.class);
+        log.debug("UserService() constructor: daoFactory.createDaoEntity(User.class);");
     }
 
     public User signIn(User user) {
@@ -28,12 +36,11 @@ public class UserService implements AutoCloseable {
     }
 
     public User signUp(User user) {
-        Map<String, Object> userFieldMap = new HashMap<>();
-        userFieldMap.put("name", user.getName());
-        List<User> userList = userDao.findByFields(userFieldMap);
-        user.setRole(UserRole.GUEST);
-        if (userList.isEmpty()) return userDao.insert(user);
-        else return null;
+        try {
+            return userDao.insert(user);
+        } catch (DaoException e) {
+            return null;
+        }
     }
 
     @Override

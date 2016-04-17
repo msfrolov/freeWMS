@@ -14,14 +14,15 @@ public class ActionFactory {
     public ActionFactory() {
         actions = new HashMap<>();
         //Properties properties = FileManager.getProperties("properties/action.properties");
-
-//        actions.put("GET/", new ShowPageAction("signin"));
+        actions.put("GET/", new ShowPageAction("signin"));
         actions.put("GET/signin", new ShowPageAction("signin"));
-        actions.put("POST/signin", new LoginAction());
-//        actions.put("GET/login", new ShowPageAction("login"));
-//        actions.put("POST/login", new LoginAction());
-        actions.put("GET/logout", new LogoutAction());
+        actions.put("POST/signin", new SignInAction());
+        actions.put("GET/signout", new SignOutAction());
         actions.put("GET/home", new ShowPageAction("home"));
+        actions.put("GET/cabinet", new ShowPageAction("cabinet"));
+        actions.put("GET/products_catalog", new ProductsCatalogShowAction());
+        actions.put("GET/product_card", new ProductCardShowAction());
+        actions.put("POST/product_card", new ProductCardUpdateAction());
     }
 
     public Action getAction(String actionName) {

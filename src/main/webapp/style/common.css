@@ -16,6 +16,8 @@ a:hover
    color: #0000FF;
    text-decoration: underline;
 }
+
+/*noinspection ALL*/
 h1
 {
    font-family: Arial;
@@ -29,6 +31,7 @@ h1
    padding: 0px 0px 0px 0px;
    display: inline;
 }
+/*noinspection ALL*/
 h2
 {
    font-family: Arial;
@@ -42,6 +45,7 @@ h2
    padding: 0px 0px 0px 0px;
    display: inline;
 }
+/*noinspection ALL*/
 h3
 {
    font-family: Arial;
@@ -55,6 +59,7 @@ h3
    padding: 0px 0px 0px 0px;
    display: inline;
 }
+/*noinspection ALL*/
 h4
 {
    font-family: Arial;
@@ -68,6 +73,7 @@ h4
    padding: 0px 0px 0px 0px;
    display: inline;
 }
+/*noinspection ALL*/
 h5
 {
    font-family: Arial;
@@ -81,6 +87,7 @@ h5
    padding: 0px 0px 0px 0px;
    display: inline;
 }
+/*noinspection ALL*/
 h6
 {
    font-family: Arial;
@@ -94,6 +101,7 @@ h6
    padding: 0px 0px 0px 0px;
    display: inline;
 }
+/*noinspection ALL*/
 .CustomStyle
 {
    font-family: "Courier New";
