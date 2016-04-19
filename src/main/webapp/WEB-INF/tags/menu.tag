@@ -1,7 +1,7 @@
 <%--suppress ALL --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@tag description="menu" pageEncoding="UTF-8" %>
-<div id="wb_ResponsiveMenu1" style="position:absolute;left:0px;top:187px;width:1000px;height:70px;z-index:21;">
+<div id="wb_ResponsiveMenu1" style="position:absolute;left:0px;top:187px;width:1000px;height:70px;z-index:30;">
     <label class="toggle" for="ResponsiveMenu1-submenu" id="ResponsiveMenu1-title">Menu
         <div id="ResponsiveMenu1-icon"><span>&nbsp;</span><span>&nbsp;</span><span>&nbsp;</span></div>
     </label>

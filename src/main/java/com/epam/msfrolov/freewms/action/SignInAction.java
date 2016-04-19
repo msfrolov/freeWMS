@@ -3,6 +3,7 @@ package com.epam.msfrolov.freewms.action;
 import com.epam.msfrolov.freewms.model.User;
 import com.epam.msfrolov.freewms.service.UserService;
 import com.epam.msfrolov.freewms.util.AppException;
+import com.epam.msfrolov.freewms.util.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,9 +27,10 @@ public class SignInAction implements Action {
         log.debug(" password {}", password);
         log.debug(" sign_in {}", signIn);
         log.debug(" sign_up {}", signUp);
-        if (login == null || password == null) {
-            log.debug("login == null || password == null");
-            req.setAttribute("signInError", "login or password are not filled");
+        if (!Validator.isValid(login, Validator.LETTERS_DIGITS_WS_MIN5_MAX32)
+                ||  !Validator.isValid(password, Validator.LETTERS_DIGITS_WS_MIN5_MAX32)) {
+            log.debug("login or password is not isValid");
+            req.setAttribute("signInError", "login or password is not valid");
             return signInAgain;
         }
         log.debug("try (", signUp);

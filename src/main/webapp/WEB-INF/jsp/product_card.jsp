@@ -4,21 +4,111 @@
 <%@ taglib tagdir="/WEB-INF/tags" prefix="t" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <t:header/>
-<div id="wb_Shape3" style="position:absolute;left:0px;top:258px;width:1000px;height:500px;z-index:7;">
-    <img src="${img_path}/img0006.png" id="Shape3" alt="" style="width:1000px;height:500px;">
+<div id="wb_Shape3">
+    <img src="${img_path}/img0006.png" id="Shape3" alt="">
 </div>
-<div id="wb_Image4" style="position:absolute;left:6px;top:264px;width:989px;height:489px;z-index:14;">
+<div id="wb_Image4">
     <img src="${img_path}/body2.jpg" id="Image4" alt="">
 </div>
-<div id="wb_Heading1"
-     style="position:absolute;left:0px;top:698px;width:205px;height:110px;text-align:center;z-index:19;">
+<div id="wb_Heading1">
     <h1 id="Heading1">Product card</h1>
 </div>
-<div style="position:relative;left:21px;top:278px;width:955px;height:409px;z-index:17;" id="Table1">
-    gr ${product} h  ${product.name} grhr ${product.id} hrhrh
-
-
+<script>
+    function ValidateForm2(theForm) {
+        var regexp;
+        regexp = /^[A-Za-zёЁА-Яа-я \t\r\n\f0-9-]*$/;
+        if (!regexp.test(theForm.Editbox1.value)) {
+            alert("Please enter only letter, digit and whitespace characters in the \"EditName\" field.");
+            theForm.Editbox1.focus();
+            return false;
+        }
+        if (theForm.Editbox1.value == "") {
+            alert("Please enter a value for the \"EditName\" field.");
+            theForm.Editbox1.focus();
+            return false;
+        }
+        if (theForm.Editbox1.value.length < 1) {
+            alert("Please enter at least 1 characters in the \"EditName\" field.");
+            theForm.Editbox1.focus();
+            return false;
+        }
+        if (theForm.Editbox1.value.length > 100) {
+            alert("Please enter at most 100 characters in the \"EditName\" field.");
+            theForm.Editbox1.focus();
+            return false;
+        }
+        regexp = /^[A-Za-zёЁА-Яа-я \t\r\n\f0-9-]*$/;
+        if (!regexp.test(theForm.Editbox4.value)) {
+            alert("Please enter only letter, digit and whitespace characters in the \"EditDescription\" field.");
+            theForm.Editbox4.focus();
+            return false;
+        }
+        if (theForm.Combobox1.selectedIndex < 0) {
+            alert("Please select one of the \"EditMeasure\" options.");
+            theForm.Combobox1.focus();
+            return false;
+        }
+        if (theForm.Combobox2.selectedIndex < 0) {
+            alert("Please select one of the \"EditType\" options.");
+            theForm.Combobox2.focus();
+            return false;
+        }
+        regexp = /^[0-9-]*$/;
+        if (!regexp.test(theForm.Editbox2.value)) {
+            alert("Please enter only digit characters in the \"EditBarcode\" field.");
+            theForm.Editbox2.focus();
+            return false;
+        }
+        if (theForm.Editbox2.value != "" && !(theForm.Editbox2.value > 0)) {
+            alert("Please enter a value greater than \"0\" in the \"EditBarcode\" field.");
+            theForm.Editbox2.focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+<div id="wb_Form14">
+    <form name="Form1" method="post" action="<c:url value="${product_card}"></c:url>" id="Form14"
+          onsubmit="return ValidateForm2(this)">
+        <label for="" id="Label94">ID:</label>
+        <label for="" id="Label54">Name:</label>
+        <label for="" id="Label64">Type:</label>
+        <label for="" id="Label74">Measure:</label>
+        <label for="" id="Label84">Description:</label>
+        <select name="EditMeasure" size="1" id="Combobox14">
+            <c:forEach items="${measureList}" var="item">
+                <c:if test="${item.id == product.measure.id}">
+                    <option value="${item.id}" selected>${item.name}</option>
+                </c:if>
+                <c:if test="${item.id != product.measure.id}">
+                    <option value="${item.id}">${item.name}</option>
+                </c:if>
+            </c:forEach>
+        </select>
+        <select name="EditType" size="1" id="Combobox24">
+            <c:forEach items="${typeList}" var="item">
+                <c:if test="${item.id == product.type.id}">
+                    <option value="${item.id}" selected>${item.name}</option>
+                </c:if>
+                <c:if test="${item.id != product.type.id}">
+                    <option value="${item.id}">${item.name}</option>
+                </c:if>
+            </c:forEach>
+        </select>
+        <label for="" id="Label104">Barcode:</label>
+        <input type="text" id="Editbox54" name="EditId" value="${product.id}" readonly>
+        <input type="text" id="Editbox44" name="EditDescription" value="${product.description}">
+        <input type="text" id="Editbox14" name="EditName" value="${product.name}">
+        <input type="text" id="Editbox24" name="EditBarcode" value="${product.barcode}">
+        <input type="submit" id="Button34" name="Save" value="Save">
+        <input type="submit" id="Button14" name="Close" value="Close">
+        <c:if test="${not empty violation.id}"><label for="" id="Label124">${violation.id}</label></c:if>
+        <c:if test="${not empty violation.name}"><label for="" id="Label125">${violation.name}</label></c:if>
+        <c:if test="${not empty violation.type}"><label for="" id="Label126">${violation.type}</label></c:if>
+        <c:if test="${not empty violation.measure}"><label for="" id="Label127">${violation.measure}</label></c:if>
+        <c:if test="${not empty violation.description}"><label for="" id="Label128">${violation.description}</label></c:if>
+        <c:if test="${not empty violation.barcode}"><label for="" id="Label129">${violation.barcode}</label></c:if>
+        <c:if test="${success}"><label for="" id="Label130">successfully saved</label></c:if>
+    </form>
 </div>
-
-
 <t:footer/>

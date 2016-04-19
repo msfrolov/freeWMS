@@ -3,9 +3,7 @@ package com.epam.msfrolov.freewms.service;
 import com.epam.msfrolov.freewms.dao.Dao;
 import com.epam.msfrolov.freewms.dao.DaoException;
 import com.epam.msfrolov.freewms.dao.DaoFactory;
-import com.epam.msfrolov.freewms.model.Product;
-import com.epam.msfrolov.freewms.model.User;
-import com.epam.msfrolov.freewms.model.UserRole;
+import com.epam.msfrolov.freewms.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,8 +13,10 @@ import java.util.Map;
 
 public class ProductService implements AutoCloseable {
     private static final Logger log = LoggerFactory.getLogger(ProductService.class);
-    private Dao<Product> productDao;
     private DaoFactory daoFactory;
+    private Dao<Product> productDao;
+    private Dao<Measure> measureDao;
+    private Dao<ProductType> productTypeDao;
 
     public ProductService() {
         log.debug("ProductService() constructor");
@@ -24,6 +24,10 @@ public class ProductService implements AutoCloseable {
         log.debug("ProductService() constructor: DaoFactory.newInstance()");
         productDao = daoFactory.createDaoEntity(Product.class);
         log.debug("ProductService() constructor: daoFactory.createDaoEntity(Product.class);");
+        measureDao = daoFactory.createDaoEntity(Measure.class);
+        log.debug("ProductService() constructor: daoFactory.createDaoEntity(Measure.class);");
+        productTypeDao = daoFactory.createDaoEntity(ProductType.class);
+        log.debug("ProductService() constructor: daoFactory.createDaoEntity(ProductType.class);");
     }
 
 
@@ -49,5 +53,25 @@ public class ProductService implements AutoCloseable {
         Product product = productDao.findById(prodId);
         log.debug("product {}", product);
         return product;
+    }
+
+    public List<ProductType> findAllProductType() {
+        return productTypeDao.findAll();
+    }
+
+    public List<Measure> findAllMeasure() {
+        return measureDao.findAll();
+    }
+
+    public ProductType findProdTypeById(int i) {
+        return productTypeDao.findById(i);
+    }
+
+    public Measure findMeasureById(int i) {
+        return measureDao.findById(i);
+    }
+
+    public boolean saveProduct(Product product) {
+        return productDao.update(product);
     }
 }

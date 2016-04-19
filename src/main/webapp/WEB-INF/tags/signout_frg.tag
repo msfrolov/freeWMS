@@ -6,7 +6,7 @@
 <div id="wb_Shape1" style="position:absolute;left:0px;top:10px;width:1000px;height:175px;z-index:6;">
     <img src="${img_path}/img0007.png" id="Shape1" alt="" style="width:1000px;height:175px;"></div>
 <div id="wb_Form2" style="position:absolute;left:763px;top:20px;width:223px;height:153px;z-index:16;">
-    <form name="Form1" method="get" action="${sign_out_action}" accept-charset="UTF-8" id="Form2">
+    <form name="Form1" method="get" action="<c:url value="${sign_out_action}"></c:url>" accept-charset="UTF-8" id="Form2">
         <input type="submit" id="Button2" name="sign_out" value="Sign out"
                style="position:absolute;left:119px;top:109px;width:90px;height:30px;z-index:0;">
         <label for="" id="Label1"

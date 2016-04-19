@@ -31,25 +31,26 @@ public class UserSessionFilter implements Filter {
 
     public void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
         String pathInfo = req.getPathInfo();
-        User user = (User) req.getSession(false).getAttribute("user");
+        Object o = req.getSession(false).getAttribute("user");
         UserRole role;
-        if (user == null)
+        if (o == null)
             role = UserRole.GUEST;
         else
-            role = user.getRole();
+            role = ((User)o).getRole();
         log.debug("UserSessionFilter pathInfo: {}", pathInfo);
-        log.debug("UserSessionFilter user: {}", user);
+        log.debug("UserSessionFilter user: {}", o);
         log.debug("UserSessionFilter role: {}", role);
         if (checkPathInfo(pathInfo, role)) {
             log.debug("  Forbidden!");
             forbidden(req, resp, chain);
+        } else {
+            chain.doFilter(req, resp);
         }
-        chain.doFilter(req, resp);
     }
 
     private boolean checkPathInfo(String pathInfo, UserRole role) {
         if ("/cabinet".equalsIgnoreCase(pathInfo)) {
-            if (getAccessLevel(role) < 5)
+            if (getAccessLevel(role) < 2)
                 return true;
         }
         return false;

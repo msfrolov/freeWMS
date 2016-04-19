@@ -2,6 +2,7 @@ package com.epam.msfrolov.freewms.action;
 
 import com.epam.msfrolov.freewms.model.Product;
 import com.epam.msfrolov.freewms.service.ProductService;
+import com.epam.msfrolov.freewms.util.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,14 +19,14 @@ public class ProductsCatalogShowAction implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
         int pageNumber;
-        try {
-            String pageString = req.getParameter("page_number");
-            pageNumber = Integer.parseInt(pageString);
-            if (pageNumber < 1) throw new ActionException("incorrect parameters");
-        } catch (Exception e) {
-            log.debug("set the default page", e);
-            pageNumber = DEFAULT_PAGE_NUMBER;
-        }
+        String pageString = req.getParameter("page_number");
+       if (Validator.isValid(pageString, Validator.DIGITS_MIN1_MAX9)) {
+           pageNumber = Integer.parseInt(pageString);
+           if (pageNumber < 1) throw new ActionException("incorrect parameters");
+       }else {
+           log.debug("set the default page");
+           pageNumber = DEFAULT_PAGE_NUMBER;
+       }
         log.debug("current page number {}", pageNumber);
         List<Product> products;
         try (ProductService productService = new ProductService()) {

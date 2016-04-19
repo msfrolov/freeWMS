@@ -31,6 +31,7 @@ public class UserService implements AutoCloseable {
         userFieldMap.put("name", user.getName());
         userFieldMap.put("password", user.getPassword());
         List<User> userList = userDao.findByFields(userFieldMap);
+        log.debug("signIn - findByFields: {}", userList);
         if (userList.isEmpty()) return null;
         else return userList.get(0);
     }

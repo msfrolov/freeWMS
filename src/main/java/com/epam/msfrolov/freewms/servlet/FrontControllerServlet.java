@@ -34,7 +34,7 @@ public class FrontControllerServlet extends HttpServlet {
         log.debug("service actionName: {}", actionName);
         Map<String, String[]> parameterMap = req.getParameterMap();
         for (Map.Entry en : parameterMap.entrySet()) {
-            System.out.println("    parameter map: " + en.getKey() + " " + en.getValue());
+            log.debug("    parameter map: " + en.getKey() + " " + en.getValue().toString());
         }
         Action action = actionFactory.getAction(actionName);
         if (action == null) {

@@ -1,6 +1,6 @@
 package com.epam.msfrolov.freewms.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -9,7 +9,7 @@ import java.util.List;
 import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public abstract class Document extends BaseEntity {
-    private LocalDateTime date;
+    private LocalDate date;
     private List<TableLine> table;
     private String comment;
 
@@ -21,11 +21,11 @@ public abstract class Document extends BaseEntity {
                 ", comment='" + comment + '\'';
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         checkNotNull(date);
         this.date = date;
     }

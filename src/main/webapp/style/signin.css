@@ -539,3 +539,155 @@ body
    border-top-color: #808080;
 }
 }
+
+#wb_Shape3 {
+   position: absolute;
+   left: 0px;
+   top: 258px;
+   width: 1000px;
+   height: 500px;
+   z-index: 7;
+}
+
+#Shape3 {
+   width: 1000px;
+   height: 500px;
+}
+
+#wb_Image4 {
+   position: absolute;
+   left: 6px;
+   top: 264px;
+   width: 989px;
+   height: 489px;
+   z-index: 14;
+}
+
+#wb_Heading1 {
+   position: absolute;
+   left: 228px;
+   top: 396px;
+   width: 545px;
+   height: 110px;
+   text-align: center;
+   z-index: 19;
+}
+
+#wb_Shape1 {
+   position: absolute;
+   left: 0px;
+   top: 10px;
+   width: 1000px;
+   height: 175px;
+   z-index: 7;
+}
+
+#Shape1 {
+   width: 1000px;
+   height: 175px;
+}
+
+#wb_Form2 {
+   position: absolute;
+   left: 766px;
+   top: 21px;
+   width: 223px;
+   height: 153px;
+   z-index: 17;
+}
+
+#Editbox1 {
+   position: absolute;
+   left: 14px;
+   top: 13px;
+   width: 188px;
+   height: 18px;
+   line-height: 18px;
+   z-index: 0;
+}
+
+#Editbox2 {
+   position: absolute;
+   left: 14px;
+   top: 54px;
+   width: 188px;
+   height: 18px;
+   line-height: 18px;
+   z-index: 1;
+}
+
+#signInError {
+   margin-top: 76px;
+   margin-left: 15px;
+   color: #a30013;
+   font-size: 14px;
+}
+
+#Button1 {
+   position: absolute;
+   left: 19px;
+   top: 109px;
+   width: 90px;
+   height: 30px;
+   z-index: 4;
+}
+
+#Button2 {
+   position: absolute;
+   left: 119px;
+   top: 109px;
+   width: 90px;
+   height: 30px;
+   z-index: 5;
+}
+
+#wb_Image1 {
+   position: absolute;
+   left: 45px;
+   top: 40px;
+   width: 466px;
+   height: 113px;
+   z-index: 9;
+}
+
+#wb_Image5 {
+   position: absolute;
+   left: 564px;
+   top: 20px;
+   width: 160px;
+   height: 155px;
+   z-index: 16;
+}
+
+#wb_Heading1 {
+   position: absolute;
+   left: 228px;
+   top: 396px;
+   width: 545px;
+   height: 110px;
+   text-align: center;
+   z-index: 19;
+}
+
+#wb_Image4 {
+   position: absolute;
+   left: 6px;
+   top: 264px;
+   width: 989px;
+   height: 489px;
+   z-index: 15;
+}
+
+#Shape3 {
+   width: 1000px;
+   height: 500px;
+}
+
+#wb_Shape3 {
+   position: absolute;
+   left: 0px;
+   top: 258px;
+   width: 1000px;
+   height: 500px;
+   z-index: 8;
+}
