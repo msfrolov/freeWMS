@@ -31,12 +31,17 @@ public class UserSessionFilter implements Filter {
 
     public void doFilter(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
         String pathInfo = req.getPathInfo();
-        Object o = req.getSession(false).getAttribute("user");
+        Object o;
+        try {
+            o = req.getSession(false).getAttribute("user");
+        } catch (NullPointerException e) {
+            o = null;
+        }
         UserRole role;
         if (o == null)
             role = UserRole.GUEST;
         else
-            role = ((User)o).getRole();
+            role = ((User) o).getRole();
         log.debug("UserSessionFilter pathInfo: {}", pathInfo);
         log.debug("UserSessionFilter user: {}", o);
         log.debug("UserSessionFilter role: {}", role);
@@ -49,10 +54,10 @@ public class UserSessionFilter implements Filter {
     }
 
     private boolean checkPathInfo(String pathInfo, UserRole role) {
-        if ("/cabinet".equalsIgnoreCase(pathInfo)) {
-            if (getAccessLevel(role) < 2)
-                return true;
-        }
+//        if ("/cabinet".equalsIgnoreCase(pathInfo)) {
+//            if (getAccessLevel(role) < 2)
+//                return true;
+//        }
         return false;
     }
 

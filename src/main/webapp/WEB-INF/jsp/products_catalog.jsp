@@ -10,7 +10,7 @@
 <div id="wb_Image4">
     <img src="${img_path}/body2.jpg" id="Image4" alt="">
 </div>
-<div id="wb_Heading1">
+<div id="wb_Heading15">
     <h1 id="Heading1">Products</h1>
 </div>
 <table id="Table1">
@@ -31,7 +31,8 @@
             <td class="cell2">&nbsp;&nbsp;${product_elem.measure.name}</td>
             <td class="cell2">&nbsp;&nbsp;${product_elem.barcode}</td>
             <td class="cell1">&nbsp;&nbsp;
-                <c:if test="${empty product_elem.description}"><c:forEach begin="1" end="10">&nbsp;</c:forEach></c:if>
+                <c:if test="${empty product_elem.description}"><c:forEach begin="1"
+                                                                          end="10">&nbsp;</c:forEach></c:if>
                     ${product_elem.description}
             </td>
             <td class="cell2">
@@ -42,4 +43,9 @@
         </tr>
     </c:forEach>
 </table>
+<ul class="pagination">
+    <li><a href="<c:url value="${products_catalog}"><c:param name="page_number" value="${page_number-1}"/></c:url>">❮</a></li>
+    <li><a href="#">${page_number}</a></li>
+    <li><a href="<c:url value="${products_catalog}"><c:param name="page_number" value="${page_number+1}"/></c:url>">❯</a></li>
+</ul>
 <t:footer/>

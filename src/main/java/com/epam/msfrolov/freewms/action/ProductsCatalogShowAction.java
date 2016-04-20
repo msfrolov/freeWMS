@@ -18,21 +18,25 @@ public class ProductsCatalogShowAction implements Action {
 
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
-        int pageNumber;
+        Integer pageNumber;
         String pageString = req.getParameter("page_number");
-       if (Validator.isValid(pageString, Validator.DIGITS_MIN1_MAX9)) {
-           pageNumber = Integer.parseInt(pageString);
-           if (pageNumber < 1) throw new ActionException("incorrect parameters");
-       }else {
-           log.debug("set the default page");
-           pageNumber = DEFAULT_PAGE_NUMBER;
-       }
+        if (Validator.isValid(pageString, Validator.DIGITS_MIN1_MAX9)) {
+            pageNumber = Integer.parseInt(pageString);
+            if (pageNumber < 1) {
+                log.debug("set the default page");
+                pageNumber = DEFAULT_PAGE_NUMBER;
+            }
+        } else {
+            log.debug("set the default page");
+            pageNumber = DEFAULT_PAGE_NUMBER;
+        }
         log.debug("current page number {}", pageNumber);
         List<Product> products;
         try (ProductService productService = new ProductService()) {
             products = productService.getProductsForPage(pageNumber, DEFAULT_PAGE_SIZE);
         }
         req.setAttribute("products_list", products);
+        req.setAttribute("page_number", pageNumber);
         return productsCatalog;
     }
 }

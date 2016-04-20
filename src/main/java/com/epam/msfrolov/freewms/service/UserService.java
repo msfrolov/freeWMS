@@ -44,9 +44,23 @@ public class UserService implements AutoCloseable {
         }
     }
 
+    public boolean updateUser(User user) {
+        try {
+            return userDao.update(user);
+        } catch (DaoException e) {
+            return false;
+        }
+    }
+
+    public User findById(int id) {
+        return userDao.findById(id);
+    }
+
     @Override
     public void close() {
         if (daoFactory != null)
             daoFactory.close();
     }
+
+
 }

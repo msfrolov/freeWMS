@@ -563,14 +563,14 @@ body
    z-index: 14;
 }
 
-#wb_Heading1 {
+#wb_Heading15 {
    position: absolute;
-   left: 228px;
-   top: 396px;
-   width: 545px;
+   left: 0px;
+   top: 696px;
+   width: 227px;
    height: 110px;
    text-align: center;
-   z-index: 19;
+   z-index: 29;
 }
 
 #wb_Shape1 {

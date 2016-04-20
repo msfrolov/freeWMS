@@ -24,6 +24,8 @@
     <link href="${css_path}/home.css" rel="stylesheet">
     <link href="${css_path}/signin.css" rel="stylesheet">
     <link href="${css_path}/table.css" rel="stylesheet">
+    <link href="${css_path}/pagination.css" rel="stylesheet">
+    <link href="${css_path}/cabinet.css" rel="stylesheet">
     <c:if test="${not empty sessionScope.user}">
         <t:signout_frg/>
     </c:if>

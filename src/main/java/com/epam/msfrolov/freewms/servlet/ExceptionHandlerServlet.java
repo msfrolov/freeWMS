@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet(name = "ExceptionHandlerServlet", urlPatterns = "/error")
 public class ExceptionHandlerServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(ExceptionHandlerServlet.class);
-    private static final String ERROR_PAGE = "/WEB-INF/jsp/error-page.jsp";
+    private static final String ERROR_PAGE = "/WEB-INF/jsp/error_page.jsp";
 
     @Override
     public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

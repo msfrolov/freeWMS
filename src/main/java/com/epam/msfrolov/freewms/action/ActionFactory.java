@@ -13,16 +13,15 @@ public class ActionFactory {
 
     public ActionFactory() {
         actions = new HashMap<>();
-        //Properties properties = FileManager.getProperties("properties/action.properties");
         actions.put("GET/", new ShowPageAction("signin"));
         actions.put("GET/signin", new ShowPageAction("signin"));
         actions.put("POST/signin", new SignInAction());
         actions.put("GET/signout", new SignOutAction());
         actions.put("GET/home", new ShowPageAction("home"));
-        actions.put("GET/cabinet", new ShowPageAction("cabinet"));
         actions.put("GET/products_catalog", new ProductsCatalogShowAction());
         actions.put("GET/product_card", new ProductCardShowAction());
         actions.put("POST/product_card", new ProductCardUpdateAction());
+        actions.put("GET/cabinet", new ShowCabinetAction());
     }
 
     public Action getAction(String actionName) {
