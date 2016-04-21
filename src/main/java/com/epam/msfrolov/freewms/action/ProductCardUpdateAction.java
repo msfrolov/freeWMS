@@ -20,7 +20,6 @@ public class ProductCardUpdateAction implements Action {
     private static final Logger log = LoggerFactory.getLogger(ProductCardUpdateAction.class);
     private ActionResult productsCatalog = new ActionResult("products_catalog", true);
     private ActionResult productCard = new ActionResult("product_card");
-    ;
 
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -31,11 +30,18 @@ public class ProductCardUpdateAction implements Action {
         if (save) {
             try (ProductService productService = new ProductService()) {
                 log.debug("- click on the button Save");
-                Product product = new Product();
+                Product product = null;
                 Map<String, String> violation = new HashMap<>();
-                String id = req.getParameter("EditId");
-                if (!isValid(id, DIGITS_MIN1_MAX9)) violation.put("id", "the product with such the id was not found");
-                else product.setId(Integer.parseInt(id));
+                String idString = req.getParameter("EditId");
+                if (!isValid(idString, DIGITS_MIN1_MAX9))
+                    violation.put("id", "the product with such id was not found (not a number)");
+                else {
+                    int id = Integer.parseInt(idString);
+                    if (id < 1) violation.put("id", "the product with such id was not found (negative id)");
+                    else if ((product = productService.findProduct(id)) == null)
+                        violation.put("id", "product with such id is missing or deleted");
+                }
+                if (product == null) product = new Product();
                 String name = req.getParameter("EditName");
                 if (!isValid(name, LETTERS_DIGITS_WS)) violation.put("name", "incorrect characters in the field name");
                 else product.setName(name);

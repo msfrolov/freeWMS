@@ -68,7 +68,9 @@
     }
 </script>
 <div id="wb_Form14">
-    <form name="Form1" method="post" action="<c:url value="${product_card}"></c:url>" id="Form14"
+    <form name="Form1" method="post" action="<c:url value="${product_card}">
+                                                <c:param name="EditId" value="${product.id}"/>
+                                            </c:url>" id="Form14"
           onsubmit="return ValidateForm2(this)">
         <label for="" id="Label94">ID:</label>
         <label for="" id="Label54">Name:</label>
@@ -96,7 +98,7 @@
             </c:forEach>
         </select>
         <label for="" id="Label104">Barcode:</label>
-        <input type="text" id="Editbox54" name="EditId" value="${product.id}" readonly>
+        <input type="text" id="Editbox54" name="EditId2" value="${product.id}" readonly>
         <input type="text" id="Editbox44" name="EditDescription" value="${product.description}">
         <input type="text" id="Editbox14" name="EditName" value="${product.name}">
         <input type="text" id="Editbox24" name="EditBarcode" value="${product.barcode}">
@@ -106,7 +108,8 @@
         <c:if test="${not empty violation.name}"><label for="" id="Label125">${violation.name}</label></c:if>
         <c:if test="${not empty violation.type}"><label for="" id="Label126">${violation.type}</label></c:if>
         <c:if test="${not empty violation.measure}"><label for="" id="Label127">${violation.measure}</label></c:if>
-        <c:if test="${not empty violation.description}"><label for="" id="Label128">${violation.description}</label></c:if>
+        <c:if test="${not empty violation.description}"><label for=""
+                                                               id="Label128">${violation.description}</label></c:if>
         <c:if test="${not empty violation.barcode}"><label for="" id="Label129">${violation.barcode}</label></c:if>
         <c:if test="${success}"><label for="" id="Label130">successfully saved</label></c:if>
     </form>

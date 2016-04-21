@@ -1,15 +1,14 @@
 package com.epam.msfrolov.freewms.service;
 
 import com.epam.msfrolov.freewms.dao.Dao;
-import com.epam.msfrolov.freewms.dao.DaoException;
 import com.epam.msfrolov.freewms.dao.DaoFactory;
-import com.epam.msfrolov.freewms.model.*;
+import com.epam.msfrolov.freewms.model.Measure;
+import com.epam.msfrolov.freewms.model.Product;
+import com.epam.msfrolov.freewms.model.ProductType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ProductService implements AutoCloseable {
     private static final Logger log = LoggerFactory.getLogger(ProductService.class);
@@ -31,7 +30,6 @@ public class ProductService implements AutoCloseable {
     }
 
 
-
     @Override
     public void close() {
         if (daoFactory != null)
@@ -39,7 +37,7 @@ public class ProductService implements AutoCloseable {
     }
 
     public List<Product> getProductsForPage(int pageNumber, int pageSize) {
-        int start = pageSize * (pageNumber-1) +1;
+        int start = pageSize * (pageNumber - 1) + 1;
         log.debug("pageNumber {}", pageNumber);
         log.debug("pageSize {}", pageSize);
         log.debug("start {}", start);
@@ -73,5 +71,9 @@ public class ProductService implements AutoCloseable {
 
     public boolean saveProduct(Product product) {
         return productDao.update(product);
+    }
+
+    public void deleteProduct(int i) {
+        productDao.delete(i);
     }
 }

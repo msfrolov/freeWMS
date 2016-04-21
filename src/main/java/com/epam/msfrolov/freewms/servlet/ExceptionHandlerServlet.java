@@ -14,6 +14,7 @@ import java.io.IOException;
 public class ExceptionHandlerServlet extends HttpServlet {
     private static final Logger log = LoggerFactory.getLogger(ExceptionHandlerServlet.class);
     private static final String ERROR_PAGE = "/WEB-INF/jsp/error_page.jsp";
+    private static final CharSequence MAIN_PACKAGE = "com.epam";
 
     @Override
     public void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,8 +32,15 @@ public class ExceptionHandlerServlet extends HttpServlet {
         log.debug("Exception type : {}", thrClass);
         if (thr != null) {
             log.debug("Throwable : {}", thr.getMessage());
-            thr.printStackTrace();
+            StackTraceElement[] stackTrace = thr.getStackTrace();
+            for (StackTraceElement element : stackTrace) {
+                String currentLine = element.toString();
+                if (currentLine.contains(MAIN_PACKAGE))
+                    log.debug(" {}/:{}", thrClass.getSimpleName(), currentLine);
+            }
         }
+        req.setAttribute("statusCode", statusCode);
+        req.setAttribute("reqUri", requestUri);
         String path = ERROR_PAGE;
         req.getRequestDispatcher(path).forward(req, resp);
     }

@@ -65,49 +65,55 @@
     }
 </script>
 <div id="wb_Form101">
-    <form name="Form1" method="post" action="<c:url value=""></c:url>" id="Form14"
+    <form name="Form1" method="post" action="<c:url value="${cabinet_action}">
+                                                <c:param name="EditId" value="${user_cabinet.id}"/>
+                                                <c:param name="EditName" value="${user_cabinet.name}"/>
+                                                <c:param name="CurrentRole" value="${user_cabinet.role.id}"/>
+                                             </c:url>" id="Form14"
           onsubmit="return ValidateForm3(this)">
-
-
         <label for="" id="Label9422">Role:</label>
         <label for="" id="Label5422">Login:</label>
-        <label for="" id="Label6422">Password:</label>
-        <label for="" id="Label7422">Confirm password:</label>
-        <label for="" id="Label8422">Description:</label>
-        <%--<select name="EditMeasure" size="1" id="Combobox1422">--%>
-            <%--<c:forEach items="" var="item">--%>
-                <%--<c:if test="${item.id == product.measure.id}">--%>
-                    <%--<option value="${item.id}" selected>${item.name}</option>--%>
-                <%--</c:if>--%>
-                <%--<c:if test="${item.id != product.measure.id}">--%>
-                    <%--<option value="${item.id}">${item.name}</option>--%>
-                <%--</c:if>--%>
-            <%--</c:forEach>--%>
-        <%--</select>--%>
-        <%--<select name="EditType" size="1" id="Combobox2422">--%>
-            <%--<c:forEach items="" var="item">--%>
-                <%--<c:if test="${item.id == product.type.id}">--%>
-                    <%--<option value="${item.id}" selected>${item.name}</option>--%>
-                <%--</c:if>--%>
-                <%--<c:if test="${item.id != product.type.id}">--%>
-                    <%--<option value="${item.id}">${item.name}</option>--%>
-                <%--</c:if>--%>
-            <%--</c:forEach>--%>
-        <%--</select>--%>
-        <label for="" id="Label10422">Barcode:</label>
-        <input type="text" id="Editbox5422" name="EditId" value="" readonly>
-        <input type="text" id="Editbox4422" name="EditDescription" value="">
-        <input type="text" id="Editbox1422" name="EditName" value="">
-        <input type="text" id="Editbox2422" name="EditBarcode" value="">
+        <label for="" id="Label6422">First name:</label>
+        <label for="" id="Label7422">Last name:</label>
+        <label for="" id="Label8422">Gender:</label>
+        <%--1--%>
+        <select name="EditRole" size="1" id="Editbox5422">
+            <c:forEach items="${role_list}" var="item">
+                <c:if test="${item.id == user_cabinet.role.id}">
+                    <option value="${item.id}" selected>${item.name}</option>
+                </c:if>
+                <c:if test="${item.id != user_cabinet.role.id}">
+                    <option value="${item.id}">${item.name}</option>
+                </c:if>
+            </c:forEach>
+        </select>
+        <%--2--%>
+        <input type="text" id="Editbox1422" name="EditName2" value="${user_cabinet.name}" readonly>
+        <%--3--%>
+        <input type="text" id="Combobox2422" name="EditIndName" value="${individ_cabinet.name}">
+        <%--4--%>
+        <input type="text" id="Combobox14" name="EditIndLastName" value="${individ_cabinet.lastName}">
+        <%--5--%>
+        <select name="EditGender" size="1" id="Editbox4422">
+            <c:forEach items="${gender_list}" var="item">
+                <c:if test="${item.id == individ_cabinet.gender.id}">
+                    <option value="${item.id}" selected>${item.name}</option>
+                </c:if>
+                <c:if test="${item.id != individ_cabinet.gender.id}">
+                    <option value="${item.id}">${item.name}</option>
+                </c:if>
+            </c:forEach>
+        </select>
+        <c:if test="${not empty violation.role}"><label id="Label12422">${violation.role}</label></c:if>
+        <c:if test="${not empty violation.name}"><label id="Label12522">${violation.name}</label></c:if>
+        <c:if test="${not empty violation.individName}"><label id="Label12622">${violation.individName}</label></c:if>
+        <c:if test="${not empty violation.individLName}"><label id="Label12722">${violation.individLName}</label></c:if>
+        <c:if test="${not empty violation.gender}"><label id="Label12822">${violation.gender}</label></c:if>
+        <c:if test="${not empty violation.transaction}"><label for="" id="Label129">${violation.transaction}</label></c:if>
+        <c:if test="${success}"><label id="Label13022">successfully saved</label></c:if>
+
         <input type="submit" id="Button3422" name="Save" value="Save">
         <input type="submit" id="Button1422" name="Close" value="Close">
-        <%--<c:if test="${not empty violation.id}"><label for="" id="Label12422">${violation.id}</label></c:if>--%>
-        <%--<c:if test="${not empty violation.name}"><label for="" id="Label12522">${violation.name}</label></c:if>--%>
-        <%--<c:if test="${not empty violation.type}"><label for="" id="Label12622">${violation.type}</label></c:if>--%>
-        <%--<c:if test="${not empty violation.measure}"><label for="" id="Label12722">${violation.measure}</label></c:if>--%>
-        <%--<c:if test="${not empty violation.description}"><label for="" id="Label12822">${violation.description}</label></c:if>--%>
-        <%--<c:if test="${not empty violation.barcode}"><label for="" id="Label12922">${violation.barcode}</label></c:if>--%>
-        <%--<c:if test="${success}"><label for="" id="Label13022">successfully saved</label></c:if>--%>
     </form>
 </div>
 <t:footer/>

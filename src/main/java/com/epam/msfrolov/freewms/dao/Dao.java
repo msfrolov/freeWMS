@@ -21,4 +21,6 @@ public interface Dao<T extends BaseEntity> {
 
     boolean delete(T t);
 
+    boolean delete(int id);
+
 }

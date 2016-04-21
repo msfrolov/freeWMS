@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -195,11 +194,16 @@ public class JdbcEntityDao<T extends BaseEntity> implements Dao<T> {
 
     @Override
     public boolean delete(T t) {
+        return delete(t.getId());
+    }
+
+    @Override
+    public boolean delete(int id) {
         String deletionMark = "DELETION_MARK";
         QueryDesigner query = new QueryDesigner();
         query.update().table(clazz)
                 .set().text(deletionMark).equal().question()
-                .where().id().equal().integer(t.getId());
+                .where().id().equal().integer(id);
         String assembledQuery = query.toString();
         log.debug("query update: {}", assembledQuery);
         try (PreparedStatement statement = connection.prepareStatement(assembledQuery)) {

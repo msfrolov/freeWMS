@@ -1,6 +1,8 @@
 package com.epam.msfrolov.freewms.action;
 
 import com.epam.msfrolov.freewms.model.Product;
+import com.epam.msfrolov.freewms.model.User;
+import com.epam.msfrolov.freewms.model.UserRole;
 import com.epam.msfrolov.freewms.service.ProductService;
 import com.epam.msfrolov.freewms.util.Validator;
 import org.slf4j.Logger;
@@ -35,8 +37,17 @@ public class ProductsCatalogShowAction implements Action {
         try (ProductService productService = new ProductService()) {
             products = productService.getProductsForPage(pageNumber, DEFAULT_PAGE_SIZE);
         }
+        boolean isAdmin = false;
+        try {
+            User user = (User) req.getSession(false).getAttribute("user");
+            if (user.getRole().equals(UserRole.ADMIN)) isAdmin = true;
+        } catch (Exception e) {
+            //this exception does not have to handle
+        }
+        log.debug("isAdmin: {}", isAdmin);
         req.setAttribute("products_list", products);
         req.setAttribute("page_number", pageNumber);
+        req.setAttribute("isAdmin", isAdmin);
         return productsCatalog;
     }
 }

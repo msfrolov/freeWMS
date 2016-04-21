@@ -3,15 +3,16 @@ package com.epam.msfrolov.freewms.model;
 import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public class TableLine extends BaseEntity {
+    Integer lineNumber;
     Product product;
-    Integer amount;
+    Integer count;
 
     @Override
     public String toString() {
         return "TableLine{" +
                 super.toString() +
                 "product=" + product +
-                ", amount=" + amount +
+                ", count=" + count +
                 '}';
     }
 
@@ -24,12 +25,12 @@ public class TableLine extends BaseEntity {
         this.product = product;
     }
 
-    public Integer getAmount() {
-        return amount;
+    public Integer getCount() {
+        return count;
     }
 
-    public void setAmount(Integer amount) {
-        checkNotNull(amount);
-        this.amount = amount;
+    public void setCount(Integer count) {
+        checkNotNull(count);
+        this.count = count;
     }
 }

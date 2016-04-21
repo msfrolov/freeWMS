@@ -13,6 +13,10 @@ public class SignOutAction implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
         req.getSession().invalidate();
+        resp.setHeader("Pragma","no-cache");
+        resp.setHeader("Cache-Control","no-store");
+        resp.setHeader("Expires","0");
+        resp.setDateHeader("Expires",-1);
         return welcome;
     }
 }

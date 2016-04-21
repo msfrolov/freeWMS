@@ -11,33 +11,23 @@
     <img src="${img_path}/body2.jpg" id="Image4" alt="">
 </div>
 <div id="wb_Heading15">
-    <h1 id="Heading1">Products</h1>
+    <h1 id="Heading1">Receipt document</h1>
 </div>
 <table id="Table1">
     <tr>
-        <td class="cell3">ID</td>
-        <td class="cell3">Type</td>
-        <td class="cell3">Name</td>
-        <td class="cell3">Measure</td>
-        <td class="cell3">Barcode</td>
-        <td class="cell3">Description</td>
-        <td class="cell3">Edit</td>
-        <c:if test="${isAdmin}">
-            <td class="cell3">Delete</td>
-        </c:if>
+        <td class="cell3">№</td>
+        <td class="cell3">Product</td>
+        <td class="cell3">Count</td>
+        <td class="cell3">Action</td>
     </tr>
-    <c:forEach items="${products_list}" var="product_elem">
+    <c:forEach items="${curent_document_list}" var="product_elem">
         <tr>
-            <td class="cell2">&nbsp;&nbsp;${product_elem.id}</td>
-            <td class="cell2">&nbsp;&nbsp;${product_elem.type.name}</td>
-            <td class="cell1">&nbsp;&nbsp;${product_elem.name}</td>
+            <td class="cell2">&nbsp;&nbsp;${curent_document_list.lineNumber}</td>
+            <td class="cell2">&nbsp;&nbsp;${curent_document_list.Product.id}</td>
+            <td class="cell1">&nbsp;&nbsp;${curent_document_list.name}</td>
             <td class="cell2">&nbsp;&nbsp;${product_elem.measure.name}</td>
             <td class="cell2">&nbsp;&nbsp;${product_elem.barcode}</td>
             <td class="cell1">&nbsp;&nbsp;
-                <c:if test="${empty product_elem.description}"><c:forEach begin="1"
-                                                                          end="10">&nbsp;</c:forEach></c:if>
-                    ${product_elem.description}
-            </td>
             <td class="cell2">
                 <a href="<c:url value="${product_card}"><c:param name="prodId" value="${product_elem.id}"/></c:url>">
                     <img src="${img_path}/edit_line.png" height="20">

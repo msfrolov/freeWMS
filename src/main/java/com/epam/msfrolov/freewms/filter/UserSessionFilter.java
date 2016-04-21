@@ -55,7 +55,7 @@ public class UserSessionFilter implements Filter {
 
     private boolean checkPathInfo(String pathInfo, UserRole role) {
 //        if ("/cabinet".equalsIgnoreCase(pathInfo)) {
-//            if (getAccessLevel(role) < 2)
+//            if (getAccessLevel(role) < 4)
 //                return true;
 //        }
         return false;

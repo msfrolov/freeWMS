@@ -13,6 +13,7 @@
 <c:set var="home_action" scope="request" value="/wms/home"/>
 <c:set var="cabinet_action" scope="request" value="/wms/cabinet"/>
 <c:set var="products_catalog" scope="request" value="/wms/products_catalog"/>
+<c:set var="product_delete" scope="request" value="/wms/product_delete"/>
 <c:set var="product_card" scope="request" value="/wms/product_card"/>
 <html>
 <head>

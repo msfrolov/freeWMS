@@ -23,16 +23,17 @@
             </ul>
         </li>
         <li>
+        <li>
             <label for="ResponsiveMenu1-submenu-1" class="toggle"><i class="fa fa-book fa-2x">&nbsp;</i>Documents<b
                     class="arrow-down"></b></label>
             <a href="#"><i class="fa fa-book fa-2x">&nbsp;</i><br>Documents<b class="arrow-down"></b></a>
             <input type="checkbox" id="ResponsiveMenu1-submenu-1">
             <ul>
-                <li><a href="#" title="Receipt documents"><i class="fa fa-calendar-plus-o fa-2x">&nbsp;</i>Receipt&nbsp;documents</a>
+                <li><a href="#" title="Receipt document"><i class="fa fa-calendar-plus-o fa-2x">&nbsp;</i>Receipt&nbsp;document</a>
                 </li>
-                <li><a href="#" title="Move documents"><i class="fa fa-calendar-times-o fa-2x">&nbsp;</i>Move&nbsp;documents</a>
+                <li><a href="#" title="Move document"><i class="fa fa-calendar-times-o fa-2x">&nbsp;</i>Move&nbsp;document</a>
                 </li>
-                <li><a href="#" title="Expense documens"><i class="fa fa-calendar-minus-o fa-2x">&nbsp;</i>Expense&nbsp;documens</a>
+                <li><a href="#" title="Expense documen"><i class="fa fa-calendar-minus-o fa-2x">&nbsp;</i>Expense&nbsp;documen</a>
                 </li>
             </ul>
         </li>
