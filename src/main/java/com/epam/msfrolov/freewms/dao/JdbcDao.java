@@ -1,6 +1,7 @@
 package com.epam.msfrolov.freewms.dao;
 
 import com.epam.msfrolov.freewms.model.BaseEntity;
+import com.epam.msfrolov.freewms.model.Document;
 import com.epam.msfrolov.freewms.util.Adapter;
 import com.epam.msfrolov.freewms.util.AppException;
 import com.epam.msfrolov.freewms.util.Common;
@@ -17,15 +18,15 @@ import java.util.Map;
 
 import static com.epam.msfrolov.freewms.util.ReflectUtil.*;
 
-public class JdbcEntityDao<T extends BaseEntity> implements Dao<T> {
-    private static final Logger log = LoggerFactory.getLogger("JdbcEntityDao.class " + JdbcEntityDao.class);
+public class JdbcDao<T extends BaseEntity> implements Dao<T> {
+    private static final Logger log = LoggerFactory.getLogger("JdbcDao.class " + JdbcDao.class);
     private final Class<T> clazz;
     private final List<Field> allFields;
     private final Connection connection;
     private final Adapter adapter;
     private final DaoFactory daoFactory;
 
-    public JdbcEntityDao(Class<T> clazz, Connection connection, DaoFactory daoFactory) {
+    public JdbcDao(Class<T> clazz, Connection connection, DaoFactory daoFactory) {
         this.clazz = clazz;
         this.connection = connection;
         this.allFields = ReflectUtil.getAllFields(clazz);
@@ -35,9 +36,17 @@ public class JdbcEntityDao<T extends BaseEntity> implements Dao<T> {
 
     @Override
     public T insert(T t) {
+        return insert(t, null);
+    }
+
+    @Override
+    public T insert(T t, Document document) {
         List<Object> listValues = new ArrayList<>();
         QueryDesigner query = new QueryDesigner();
-        query.insertInto().table(t).ob();
+        if (document == null)
+            query.insertInto().table(t).ob();
+        else
+            query.insertInto().table(t, document).ob();
         List<Field> allFields = this.allFields;
         allFields.remove(ReflectUtil.getField("id", clazz));
         boolean[] trigger = {false};
@@ -54,17 +63,21 @@ public class JdbcEntityDao<T extends BaseEntity> implements Dao<T> {
                 trigger[0] = true;
             }
         });
+        if (document != null)
+            query.comma().text(document.getClass().getSuperclass().getSimpleName().toUpperCase());
         query.cb().values().ob();
         for (int i = 0; i < listValues.size(); i++) {
             if (i != 0)
                 query.comma();
             query.question();
         }
+        if (document != null)
+            query.comma().question();
         query.cb();
         String assembledQuery = query.toString();
         log.debug("query insert: {}", assembledQuery);
         try (PreparedStatement statement = connection.prepareStatement(assembledQuery, Statement.RETURN_GENERATED_KEYS)) {
-            fillStatementParameters(listValues, statement);
+            fillStatementParameters(listValues, statement, document);
             statement.execute();
             ResultSet generatedKeys = statement.getGeneratedKeys();
             generatedKeys.next();
@@ -184,7 +197,7 @@ public class JdbcEntityDao<T extends BaseEntity> implements Dao<T> {
         String assembledQuery = query.toString();
         log.debug("query update: {}", assembledQuery);
         try (PreparedStatement statement = connection.prepareStatement(assembledQuery)) {
-            fillStatementParameters(listValues, statement);
+            fillStatementParameters(listValues, statement, null);
             int numberOfChanges = statement.executeUpdate();
             return numberOfChanges > 0;
         } catch (SQLException e) {
@@ -253,12 +266,14 @@ public class JdbcEntityDao<T extends BaseEntity> implements Dao<T> {
         }
     }
 
-    private void fillStatementParameters(List<Object> listValues, PreparedStatement statement) throws SQLException {
+    private void fillStatementParameters(List<Object> listValues, PreparedStatement statement, Document document) throws SQLException {
         for (int i = 0; i < listValues.size(); i++) {
             Object o = listValues.get(i);
             if (adapter.checkType(o)) statement.setString(i + 1, adapter.serialize(o));
             else throw new AppException("condition was not provided");
         }
+        if (document != null)
+            statement.setInt(listValues.size() + 1, document.getId());
     }
 
 

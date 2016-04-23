@@ -3,6 +3,8 @@ package com.epam.msfrolov.freewms.util;
 import com.epam.msfrolov.freewms.model.BaseEntity;
 
 public class Common {
+
+
     public static void checkNotNull(Object o) {
         if (o == null) throw new AppException("null validation fails");
     }

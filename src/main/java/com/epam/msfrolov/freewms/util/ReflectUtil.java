@@ -77,6 +77,7 @@ public class ReflectUtil {
         List<Class> classes = getAllSuperClasses(clazz);
         for (Class currentClass : classes) fields.addAll(Arrays.asList(currentClass.getDeclaredFields()));
         fields = fields.stream().filter(field -> !Modifier.isStatic(field.getModifiers())).collect(Collectors.toList());
+        fields = fields.stream().filter(field -> ((Class) field.getType()) != List.class).collect(Collectors.toList());
         StringBuilder sb = new StringBuilder();
         fields.forEach(s -> sb.append(s.getName()).append(' '));
         log.debug("all fields {} - {}", clazz.getSimpleName(), sb.toString());

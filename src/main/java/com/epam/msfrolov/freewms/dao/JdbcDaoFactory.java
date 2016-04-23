@@ -1,6 +1,10 @@
 package com.epam.msfrolov.freewms.dao;
 
 import com.epam.msfrolov.freewms.connection.ConnectionPool;
+import com.epam.msfrolov.freewms.dao.Dao;
+import com.epam.msfrolov.freewms.dao.DaoException;
+import com.epam.msfrolov.freewms.dao.DaoFactory;
+import com.epam.msfrolov.freewms.dao.JdbcDao;
 import com.epam.msfrolov.freewms.model.BaseEntity;
 
 import java.sql.Connection;
@@ -16,7 +20,7 @@ public class JdbcDaoFactory implements DaoFactory {
 
     @Override
     public <T extends BaseEntity> Dao<T> createDaoEntity(Class<T> clazz) {
-        return new JdbcEntityDao<>(clazz, connection, this);
+        return new JdbcDao<>(clazz, connection, this);
     }
 
     @Override

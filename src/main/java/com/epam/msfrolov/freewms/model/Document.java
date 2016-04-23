@@ -1,17 +1,23 @@
 package com.epam.msfrolov.freewms.model;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public abstract class Document extends BaseEntity {
+
     private LocalDate date;
     private List<TableLine> table;
     private String comment;
+
+    public Document() {
+        table = new ArrayList<>();
+        date = LocalDate.now();
+    }
 
     @Override
     public String toString() {
@@ -87,4 +93,27 @@ public abstract class Document extends BaseEntity {
         return table.remove(i);
     }
 
+    public boolean remove(Object o) {
+        return table.remove(o);
+    }
+
+    public void forEach(Consumer<? super TableLine> consumer) {
+        table.forEach(consumer);
+    }
+
+    public Stream<TableLine> stream() {
+        return table.stream();
+    }
+
+    public boolean removeIf(Predicate<? super TableLine> predicate) {
+        return table.removeIf(predicate);
+    }
+
+    public Stream<TableLine> parallelStream() {
+        return table.parallelStream();
+    }
+
+    public List<TableLine> getSubList(int i1, int i2) {
+        return table.subList(i1, i2);
+    }
 }

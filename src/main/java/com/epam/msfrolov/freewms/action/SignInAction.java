@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SignInAction implements Action {
     private static final Logger log = LoggerFactory.getLogger(SignInAction.class);
     private ActionResult home = new ActionResult("home", true);
-    private ActionResult signInAgain = new ActionResult("signin");
+    private ActionResult signInAgain = new ActionResult("home");
 
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {

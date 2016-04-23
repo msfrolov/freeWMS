@@ -2,7 +2,6 @@ package com.epam.msfrolov.freewms.service;
 
 import com.epam.msfrolov.freewms.dao.Dao;
 import com.epam.msfrolov.freewms.dao.DaoException;
-import com.epam.msfrolov.freewms.dao.DaoFactory;
 import com.epam.msfrolov.freewms.model.Gender;
 import com.epam.msfrolov.freewms.model.Individual;
 import com.epam.msfrolov.freewms.model.User;
@@ -15,17 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserService implements AutoCloseable {
+public class UserService extends Service {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
-    private DaoFactory daoFactory;
     private Dao<User> userDao;
     private Dao<UserRole> roleDao;
     private Dao<Gender> genderDao;
     private Dao<Individual> individualDao;
 
     public UserService() {
-        log.debug("UserService() constructor");
-        daoFactory = DaoFactory.newInstance();
         log.debug("UserService() constructor: DaoFactory.newInstance()");
         userDao = daoFactory.createDaoEntity(User.class);
         log.debug("UserService() constructor: daoFactory.createDaoEntity(User.class);");
@@ -72,13 +68,6 @@ public class UserService implements AutoCloseable {
         return roleDao.findById(id);
     }
 
-    @Override
-    public void close() {
-        if (daoFactory != null)
-            daoFactory.close();
-    }
-
-
     public List<UserRole> getAllRoles() {
         return roleDao.findAll();
     }
@@ -113,5 +102,10 @@ public class UserService implements AutoCloseable {
             log.debug("failed to hold a transaction", e);
             return false;
         }
+    }
+
+    @Override
+    public void close() {
+        super.close();
     }
 }

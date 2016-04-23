@@ -10,16 +10,14 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class ProductService implements AutoCloseable {
+public class ProductService extends Service {
     private static final Logger log = LoggerFactory.getLogger(ProductService.class);
-    private DaoFactory daoFactory;
     private Dao<Product> productDao;
     private Dao<Measure> measureDao;
     private Dao<ProductType> productTypeDao;
 
     public ProductService() {
-        log.debug("ProductService() constructor");
-        daoFactory = DaoFactory.newInstance();
+        super();
         log.debug("ProductService() constructor: DaoFactory.newInstance()");
         productDao = daoFactory.createDaoEntity(Product.class);
         log.debug("ProductService() constructor: daoFactory.createDaoEntity(Product.class);");
@@ -27,13 +25,6 @@ public class ProductService implements AutoCloseable {
         log.debug("ProductService() constructor: daoFactory.createDaoEntity(Measure.class);");
         productTypeDao = daoFactory.createDaoEntity(ProductType.class);
         log.debug("ProductService() constructor: daoFactory.createDaoEntity(ProductType.class);");
-    }
-
-
-    @Override
-    public void close() {
-        if (daoFactory != null)
-            daoFactory.close();
     }
 
     public List<Product> getProductsForPage(int pageNumber, int pageSize) {
@@ -75,5 +66,10 @@ public class ProductService implements AutoCloseable {
 
     public void deleteProduct(int i) {
         productDao.delete(i);
+    }
+
+    @Override
+    public void close() {
+        super.close();
     }
 }

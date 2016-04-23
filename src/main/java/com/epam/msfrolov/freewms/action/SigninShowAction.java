@@ -3,10 +3,10 @@ package com.epam.msfrolov.freewms.action;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class HomeShowAction implements Action {
+public class SigninShowAction implements Action {
     private ActionResult result;
 
-    public HomeShowAction() {
+    public SigninShowAction() {
         this.result = new ActionResult("home");
     }
 

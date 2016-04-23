@@ -1,5 +1,6 @@
 package com.epam.msfrolov.freewms.dao;
 
+import com.epam.msfrolov.freewms.model.Document;
 import com.epam.msfrolov.freewms.util.Common;
 
 import java.time.LocalDate;
@@ -195,6 +196,15 @@ public class QueryDesigner {
             o = o.getClass();
         }
         return camelCaseToUpperCase(((Class) o).getSimpleName());
+    }
+
+    public QueryDesigner table(Object o, Document document) {
+        checkNotNull(o);
+        if (!(o instanceof Class)) {
+            o = o.getClass();
+        }
+        String prefix = document.getClass().getSimpleName().replaceAll("Document", "");
+        return camelCaseToUpperCase(prefix + ((Class) o).getSimpleName());
     }
 
     public QueryDesigner camelCaseToUpperCase(String s) {

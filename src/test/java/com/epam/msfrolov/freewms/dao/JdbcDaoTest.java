@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class JdbcEntityDaoTest {
+public class JdbcDaoTest {
 
     @Test
     public void testDao() throws Exception {
