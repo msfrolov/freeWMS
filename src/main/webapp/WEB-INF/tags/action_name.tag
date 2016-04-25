@@ -15,3 +15,5 @@
 <c:set var="product_delete" scope="request" value="/wms/product_delete"/>
 <c:set var="product_card" scope="request" value="/wms/product_card"/>
 <c:set var="receipt_document" scope="request" value="/wms/receipt_document"/>
+<c:set var="move_document" scope="request" value="/wms/move_document"/>
+<c:set var="expense_document" scope="request" value="/wms/expense_document"/>

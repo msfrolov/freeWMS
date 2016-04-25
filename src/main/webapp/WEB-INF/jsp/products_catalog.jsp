@@ -13,7 +13,7 @@
 <div id="wb_Heading15">
     <h1 id="Heading1">Products</h1>
 </div>
-<t:table_products/>
+<t:table_products products_list="${products_list}" isAdmin="${isAdmin}"/>
 <ul class="pagination">
     <li>
         <a href="<c:url value="${products_catalog}"><c:param name="page_number" value="${page_number-1}"/></c:url>">❮</a>

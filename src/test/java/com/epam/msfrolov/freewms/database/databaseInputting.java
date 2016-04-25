@@ -2,10 +2,12 @@ package com.epam.msfrolov.freewms.database;
 
 import com.epam.msfrolov.freewms.dao.Dao;
 import com.epam.msfrolov.freewms.dao.DaoFactory;
+import com.epam.msfrolov.freewms.model.Counterpart;
 import com.epam.msfrolov.freewms.model.Measure;
 import com.epam.msfrolov.freewms.model.Product;
 import com.epam.msfrolov.freewms.model.ProductType;
 import com.epam.msfrolov.freewms.util.FileManager;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +61,22 @@ public class databaseInputting {
                 Measure measure = daoMeasure.findById(4);
                 product.setMeasure(measure);
                 daoProduct.insert(product);
+            }
+        });
+    }
+
+    public void fillCounterparts() throws Exception {
+        List<String> strings = FileManager.readFileToList("counterparts");
+        DaoFactory daoFactory = DaoFactory.newInstance();
+        Dao<Counterpart> daoProduct = daoFactory.createDaoEntity(Counterpart.class);
+        strings.forEach(p -> {
+            Map<String, Object> map = new HashMap<>();
+            map.put("name", p);
+            List<Counterpart> counterparts = daoProduct.findByFields(map);
+            if (counterparts.isEmpty()) {
+                Counterpart counterpart = new Counterpart();
+                counterpart.setName(p);
+                daoProduct.insert(counterpart);
             }
         });
     }

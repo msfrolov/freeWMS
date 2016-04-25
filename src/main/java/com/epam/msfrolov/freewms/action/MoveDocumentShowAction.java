@@ -1,6 +1,9 @@
 package com.epam.msfrolov.freewms.action;
 
-import com.epam.msfrolov.freewms.model.*;
+import com.epam.msfrolov.freewms.model.MoveDocument;
+import com.epam.msfrolov.freewms.model.Product;
+import com.epam.msfrolov.freewms.model.TableLine;
+import com.epam.msfrolov.freewms.model.Warehouse;
 import com.epam.msfrolov.freewms.service.DocumentService;
 import com.epam.msfrolov.freewms.util.Validator;
 import org.slf4j.Logger;
@@ -13,12 +16,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReceiptDocumentShowAction implements Action {
+public class MoveDocumentShowAction implements Action {
     public static final String COUNT_DESC = "count(desc)";
     public static final String COUNT_ASCE = "count(asce)";
     public static final String PRODUCT_ASCE = "product(asce)";
     public static final String PRODUCT_DESC = "product(desc)";
-    private static final Logger log = LoggerFactory.getLogger(ReceiptDocumentShowAction.class);
+    private static final Logger log = LoggerFactory.getLogger(MoveDocumentShowAction.class);
     private static final int DEFAULT_PAGE_NUMBER = 1;
     private static final int DEFAULT_PAGE_SIZE = 9;
     private ActionResult home = new ActionResult("home", true);
@@ -26,7 +29,7 @@ public class ReceiptDocumentShowAction implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
         List<Product> productList;
-        List<Counterpart> senderList;
+        List<Warehouse> senderList;
         List<Warehouse> recipientList;
         String pageNumberStr = req.getParameter("page_number");
         String productIdStr = req.getParameter("product");
@@ -52,37 +55,36 @@ public class ReceiptDocumentShowAction implements Action {
             pageNumber = Integer.parseInt(pageNumberStr);
             if (pageNumber < 1) pageNumber = DEFAULT_PAGE_NUMBER;
         }
-
-        Object receiptDocumentObj = null;
+        Object moveDocumentObj = null;
         try {
-            receiptDocumentObj = req.getSession(false).getAttribute("document");
+            moveDocumentObj = req.getSession(false).getAttribute("document");
         } catch (Exception e) {
             //this exception does not have to handle
         }
-        log.debug("attribute document {}", receiptDocumentObj);
-        ReceiptDocument receiptDocument;
-        if (receiptDocumentObj != null) receiptDocument = (ReceiptDocument) receiptDocumentObj;
-        else receiptDocument = new ReceiptDocument();
+        log.debug("attribute document {}", moveDocumentObj);
+        MoveDocument moveDocument;
+        if (moveDocumentObj != null) moveDocument = (MoveDocument) moveDocumentObj;
+        else moveDocument = new MoveDocument();
         try (DocumentService documentService = new DocumentService()) {
-            Counterpart counterpart;
+            Warehouse warehouse1;
             Warehouse warehouse;
-            counterpart = receiptDocument.getSender();
-            warehouse = receiptDocument.getRecipient();
+            warehouse1 = moveDocument.getSender();
+            warehouse = moveDocument.getRecipient();
             productList = documentService.findAllProduct();
-            senderList = documentService.findAllCounterparts();
+            senderList = documentService.findAllWarehouse();
             recipientList = documentService.findAllWarehouse();
-            if (delete) deleteDocumentLine(idLineDelStr, receiptDocument);
-            else if (add) addDocumentLine(productIdStr, countStr, receiptDocument, documentService, req);
-            counterpart = setSender(EditSender, receiptDocument, documentService, counterpart);
-            warehouse = setRecipient(EditRecipient, receiptDocument, documentService, warehouse);
-            req.setAttribute("sender", counterpart);
+            if (delete) deleteDocumentLine(idLineDelStr, moveDocument);
+            else if (add) addDocumentLine(productIdStr, countStr, moveDocument, documentService, req);
+            warehouse1 = setSender(EditSender, moveDocument, documentService, warehouse1);
+            warehouse = setRecipient(EditRecipient, moveDocument, documentService, warehouse);
+            req.setAttribute("sender", warehouse1);
             req.setAttribute("recipient", warehouse);
-            sortDocumentLine(sort, receiptDocument, req);
+            sortDocumentLine(sort, moveDocument, req);
             List<TableLine> tableLineList;
             int size;
             int fromIndex;
             int toIndex;
-            size = receiptDocument.size();
+            size = moveDocument.size();
             fromIndex = (pageNumber - 1) * DEFAULT_PAGE_SIZE;
             toIndex = fromIndex + DEFAULT_PAGE_SIZE;
             if (fromIndex > size - 1)
@@ -90,22 +92,23 @@ public class ReceiptDocumentShowAction implements Action {
             else {
                 if (toIndex > size)
                     toIndex = size;
-                log.debug("fromIndex {}", fromIndex);
+                log.debug("fromIndex  {}", fromIndex);
                 log.debug("toIndex   {}", toIndex);
-                tableLineList = receiptDocument.getSubList(fromIndex, toIndex);
+                tableLineList = moveDocument.getSubList(fromIndex, toIndex);
             }
             double i = (size / DEFAULT_PAGE_SIZE + 1);
             log.debug("size {}", size);
             log.debug("size / DEFAULT_PAGE_SIZE + 1 = {}", i);
             log.debug("pageNumber {}", pageNumber);
-            if (add || delete) if (i > pageNumber) pageNumber++;
-            else if (pageNumber > i) pageNumber--;
+            if (add || delete) if (i > pageNumber) {
+                pageNumber++;
+            } else if (pageNumber > i) pageNumber--;
             try {
-                receiptDocument.setDate(LocalDate.parse(docDate, DateTimeFormatter.ISO_LOCAL_DATE));
+                moveDocument.setDate(LocalDate.parse(docDate, DateTimeFormatter.ISO_LOCAL_DATE));
             } catch (Exception e) {
                 //this exception does not have to handle
             }
-            String format = receiptDocument.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
+            String format = moveDocument.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
             log.debug("document date {}", format);
             req.setAttribute("current_document_list", tableLineList);
             req.setAttribute("doc_date", format);
@@ -115,19 +118,19 @@ public class ReceiptDocumentShowAction implements Action {
             req.setAttribute("recipient_list", recipientList);
             req.setAttribute("page_number", pageNumber);
             req.setAttribute("start", fromIndex);
-            req.getSession(false).setAttribute("document", receiptDocument);
+            req.getSession(false).setAttribute("document", moveDocument);
             if (save) {
-                if (saveDocument(req, receiptDocument, documentService))
-                    return new ActionResult("receipt_document?doc_save=true", true);
+                if (saveDocument(req, moveDocument, documentService))
+                    return new ActionResult("move_document?doc_save=true", true);
             } else if (clear) {
                 return clearDocument(req);
             }
             if (req.getParameter("doc_save") != null) req.setAttribute("doc_save", "true");
-            return new ActionResult("receipt_document");
+            return new ActionResult("move_document");
         }
     }
 
-    private Warehouse setRecipient(String editRecipient, ReceiptDocument receiptDocument, DocumentService documentService, Warehouse warehouse) {
+    private Warehouse setRecipient(String editRecipient, MoveDocument receiptDocument, DocumentService documentService, Warehouse warehouse) {
         if (editRecipient != null) {
             try {
                 warehouse = documentService.findWarehouseById(Integer.parseInt(editRecipient));
@@ -139,16 +142,16 @@ public class ReceiptDocumentShowAction implements Action {
         return warehouse;
     }
 
-    private Counterpart setSender(String editSender, ReceiptDocument receiptDocument, DocumentService documentService, Counterpart counterpart) {
+    private Warehouse setSender(String editSender, MoveDocument moveDocument, DocumentService documentService, Warehouse warehouse) {
         if (editSender != null) {
             try {
-                counterpart = documentService.findCounterpartById(Integer.parseInt(editSender));
-                receiptDocument.setSender(counterpart);
+                warehouse = documentService.findWarehouseById(Integer.parseInt(editSender));
+                moveDocument.setSender(warehouse);
             } catch (Exception e) {
                 //this exception does not have to handle
             }
         }
-        return counterpart;
+        return warehouse;
     }
 
     private ActionResult clearDocument(HttpServletRequest req) {
@@ -156,8 +159,8 @@ public class ReceiptDocumentShowAction implements Action {
         return home;
     }
 
-    private boolean saveDocument(HttpServletRequest req, ReceiptDocument receiptDocument, DocumentService documentService) {
-        boolean b = documentService.insertReceiptDocument(receiptDocument);
+    private boolean saveDocument(HttpServletRequest req, MoveDocument moveDocument, DocumentService documentService) {
+        boolean b = documentService.insertMoveDocument(moveDocument);
         if (!b) req.setAttribute("doc_not_save", "true");
         else {
             req.getSession(false).setAttribute("document", null);
@@ -166,31 +169,31 @@ public class ReceiptDocumentShowAction implements Action {
         return false;
     }
 
-    private void deleteDocumentLine(String idLineDelStr, ReceiptDocument receiptDocument) {
+    private void deleteDocumentLine(String idLineDelStr, MoveDocument moveDocument) {
         int idLineDel;
         if (!Validator.isValid(idLineDelStr, Validator.DIGITS_MIN1_MAX9))
             throw new ActionException("delete: product id parameter is incorrect (not a number)");
         else if ((idLineDel = Integer.parseInt(idLineDelStr)) < 0)
             throw new ActionException("delete: product id parameter is incorrect (negative number)");
-        TableLine removeLine = receiptDocument.remove(idLineDel);
+        TableLine removeLine = moveDocument.remove(idLineDel);
         log.debug("removeLine: {}", removeLine);
     }
 
-    private void addDocumentLine(String productIdStr, String countStr, ReceiptDocument receiptDocument, DocumentService documentService, HttpServletRequest req) {
+    private void addDocumentLine(String productIdStr, String countStr, MoveDocument moveDocument, DocumentService documentService, HttpServletRequest req) {
         int productId;
         int count;
         if (!Validator.isValid(productIdStr, Validator.DIGITS_MIN1_MAX9))
-            throw new ActionException("add: product id parameter is incorrect (not a number)");
+            throw new ActionException(" add: product id parameter is incorrect (not a number)");
         else if ((productId = Integer.parseInt(productIdStr)) < 1)
-            throw new ActionException("add: product id parameter is incorrect (negative number)");
+            throw new ActionException(" add: product id parameter is incorrect (negative number)");
         if (!Validator.isValid(countStr, Validator.DIGITS_MIN1_MAX9))
-            throw new ActionException("add: count parameter is incorrect (not a number)");
+            throw new ActionException(" add: count parameter is incorrect (not a number)");
         else if ((count = Integer.parseInt(countStr)) < 1)
-            throw new ActionException("add: count parameter is incorrect (negative number)");
+            throw new ActionException(" add: count parameter is incorrect (negative number)");
         Product product = documentService.findProduct(productId);
-        if (product == null) throw new ActionException("add: product with the id is deleted or does not exist");
+        if (product == null) throw new ActionException(" add: product with the id is deleted or does not exist");
         final boolean[] addNewLine = {true};
-        receiptDocument.forEach(tableLine -> {
+        moveDocument.forEach(tableLine -> {
             if (tableLine.getProduct().equals(product)) {
                 tableLine.setCount(tableLine.getCount() + count);
                 addNewLine[0] = false;
@@ -198,26 +201,26 @@ public class ReceiptDocumentShowAction implements Action {
         });
         if (addNewLine[0]) {
             TableLine tableLine = new TableLine();
-            tableLine.setProduct(product);
             tableLine.setCount(count);
-            receiptDocument.add(tableLine);
+            tableLine.setProduct(product);
+            moveDocument.add(tableLine);
         }
         req.setAttribute("curProd", product);
     }
 
-    private void sortDocumentLine(String sort, ReceiptDocument receiptDocument, HttpServletRequest req) {
+    private void sortDocumentLine(String sort, MoveDocument moveDocument, HttpServletRequest req) {
         if (COUNT_ASCE.equals(sort)) {
-            receiptDocument.sort(TableLine.COMPARE_COUNT);
+            moveDocument.sort(TableLine.COMPARE_COUNT);
             req.setAttribute("sort", COUNT_ASCE);
-        } else if (PRODUCT_ASCE.equals(sort)) {
-            receiptDocument.sort(TableLine.COMPARE_PRODUCT_NAME);
-            req.setAttribute("sort", PRODUCT_ASCE);
         } else if (COUNT_DESC.equals(sort)) {
-            receiptDocument.sort(TableLine.COMPARE_COUNT_DESC);
+            moveDocument.sort(TableLine.COMPARE_COUNT_DESC);
             req.setAttribute("sort", COUNT_DESC);
         } else if (PRODUCT_DESC.equals(sort)) {
-            receiptDocument.sort(TableLine.COMPARE_PRODUCT_NAME_DESC);
+            moveDocument.sort(TableLine.COMPARE_PRODUCT_NAME_DESC);
             req.setAttribute("sort", PRODUCT_DESC);
+        } else if (PRODUCT_ASCE.equals(sort)) {
+            moveDocument.sort(TableLine.COMPARE_PRODUCT_NAME);
+            req.setAttribute("sort", PRODUCT_ASCE);
         }
     }
 }

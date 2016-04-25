@@ -90,7 +90,7 @@
         <%--2--%>
         <input type="text" id="Editbox1422" name="EditName2" value="${user_cabinet.name}" readonly>
         <%--3--%>
-        <input type="text" id="Combobox2422" name="EditIndName" value="${individ_cabinet.name}">
+        <input type="text" id="Combobox2422" name="EditIndName" value="${individ_cabinet.name}"></input>
         <%--4--%>
         <input type="text" id="Combobox14" name="EditIndLastName" value="${individ_cabinet.lastName}">
         <%--5--%>

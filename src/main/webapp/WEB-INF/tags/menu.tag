@@ -31,7 +31,7 @@
             <ul>
                 <li><a href="<c:url value="${receipt_document}"></c:url>" title="Receipt document"><i class="fa fa-calendar-plus-o fa-2x">&nbsp;</i>Receipt&nbsp;document</a>
                 </li>
-                <li><a href="#" title="Move document"><i class="fa fa-calendar-times-o fa-2x">&nbsp;</i>Move&nbsp;document</a>
+                <li><a href="<c:url value="${move_document}"></c:url>" title="Move document"><i class="fa fa-calendar-times-o fa-2x">&nbsp;</i>Move&nbsp;document</a>
                 </li>
                 <li><a href="#" title="Expense documen"><i class="fa fa-calendar-minus-o fa-2x">&nbsp;</i>Expense&nbsp;documen</a>
                 </li>

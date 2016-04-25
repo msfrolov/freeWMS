@@ -96,7 +96,7 @@ public class JdbcDao<T extends BaseEntity> implements Dao<T> {
                 .from().table(clazz)
                 .where().id().equal().integer(id).and().deletionMark().equal().bool(false);
         String assembledQuery = query.toString();
-        log.debug("query findById: {}", assembledQuery);
+        //log.debug("query findById: {}", assembledQuery);
         try (PreparedStatement statement = connection.prepareStatement(assembledQuery)) {
             ResultSet resultSet = statement.executeQuery();
             if (!resultSet.next()) return null;

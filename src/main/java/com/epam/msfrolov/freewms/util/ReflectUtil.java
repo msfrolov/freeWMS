@@ -80,7 +80,7 @@ public class ReflectUtil {
         fields = fields.stream().filter(field -> ((Class) field.getType()) != List.class).collect(Collectors.toList());
         StringBuilder sb = new StringBuilder();
         fields.forEach(s -> sb.append(s.getName()).append(' '));
-        log.debug("all fields {} - {}", clazz.getSimpleName(), sb.toString());
+//        log.debug("all fields {} - {}", clazz.getSimpleName(), sb.toString());
         return fields;
     }
 
@@ -170,6 +170,7 @@ public class ReflectUtil {
     public static boolean checkIsSubclass(Class subClass, Class superClass) {
         if (subClass == superClass) return true;
         Class clazz = subClass.getSuperclass();
+        //noinspection SimplifiableIfStatement
         if (clazz != Object.class)
             return checkIsSubclass(clazz, superClass);
         return false;

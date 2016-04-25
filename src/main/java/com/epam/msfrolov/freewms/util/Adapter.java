@@ -42,7 +42,7 @@ public class Adapter {
     }
 
     public Object deserialize(String s, Class fieldClass) {
-        log.debug("deserialize: {} - {}", s, fieldClass);
+//        log.debug("deserialize: {} - {}", s, fieldClass);
         if (s == null)
             return null;
         else if (fieldClass == LocalDateTime.class) {

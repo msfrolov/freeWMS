@@ -82,18 +82,16 @@ public class CabinetUpdateAction implements Action {
                 }
                 if (roleHasBeenModified && !allowEditRole)
                     violation.put("role", "no access to change the role");
-                if (!roleHasBeenModified){
-
-                }
-                if (roleHasBeenModified && allowEditRole && userRole !=null) {
-                        user.setRole(userRole);
+                //noinspection ConstantConditions
+                if (roleHasBeenModified && allowEditRole && userRole != null) {
+                    user.setRole(userRole);
                 }
                 String stringIndName = req.getParameter("EditIndName");
-                if (!Validator.isValid(stringIndName, Validator.LETTERS_DIGITS_WS_MIN5_MAX32))
+                if (!Validator.isValid(stringIndName, Validator.LETTERS_DIGITS_WS))
                     violation.put("individName", "incorrect characters in the field first name");
                 else user.getIndividual().setName(stringIndName);
                 String stringIndLName = req.getParameter("EditIndLastName");
-                if (!Validator.isValid(stringIndLName, Validator.LETTERS_DIGITS_WS_MIN5_MAX32))
+                if (!Validator.isValid(stringIndLName, Validator.LETTERS_DIGITS_WS))
                     violation.put("individLName", "incorrect characters in the field last name");
                 else user.getIndividual().setLastName(stringIndLName);
                 String stringGender = req.getParameter("EditGender");

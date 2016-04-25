@@ -12,9 +12,9 @@
     <img src="${img_path}/body3.jpg" id="Image4" alt="">
 </div>
 <div id="wb_Heading1533">
-    <h1 id="Heading1">Receipt document</h1>
+    <h1 id="Heading1">Move document</h1>
 </div>
-<form name="Form17" method="post" action="<c:url value="${receipt_document}">
+<form name="Form17" method="post" action="<c:url value="${move_document}">
                                             <c:param name="sort" value="${requestScope.sort}"></c:param>
                                           </c:url>" accept-charset="UTF-8">
     <p style=" position:absolute;top: 251px;left: 30px;z-index: 14">Document date:
@@ -232,7 +232,7 @@
         </style>
     </div>
 </form>
-<form name="Form17" method="get" action="<c:url value="${receipt_document}"></c:url>" accept-charset="UTF-8">
+<form name="Form17" method="get" action="<c:url value="${move_document}"></c:url>" accept-charset="UTF-8">
     <t:sort_document/>
 </form>
 <t:footer/>

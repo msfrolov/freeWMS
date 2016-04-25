@@ -1,6 +1,8 @@
 <%--suppress ALL --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@tag description="line_products" pageEncoding="UTF-8" %>
+<%@attribute name="product_elem" required="true" type="com.epam.msfrolov.freewms.model.Product" %>
+<%@attribute name="page_number" required="true" type="java.lang.Integer" %>
 <tr>
     <td class="cell2">&nbsp;&nbsp;${product_elem.id}</td>
     <td class="cell2">&nbsp;&nbsp;${product_elem.type.name}</td>

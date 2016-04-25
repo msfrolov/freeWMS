@@ -23,8 +23,8 @@ public class ProductCardUpdateAction implements Action {
 
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
-        boolean save = "Save".equalsIgnoreCase(req.getParameter("Save"));
-        boolean close = "Close".equalsIgnoreCase(req.getParameter("Close"));
+        boolean save = "save".equalsIgnoreCase(req.getParameter("Save"));
+        boolean close = "close".equalsIgnoreCase(req.getParameter("Close"));
         log.debug("Save {}", save);
         log.debug("Close {}", close);
         if (save) {
