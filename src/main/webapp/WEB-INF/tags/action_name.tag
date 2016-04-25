@@ -17,3 +17,4 @@
 <c:set var="receipt_document" scope="request" value="/wms/receipt_document"/>
 <c:set var="move_document" scope="request" value="/wms/move_document"/>
 <c:set var="expense_document" scope="request" value="/wms/expense_document"/>
+<c:set var="balance_products" scope="request" value="/wms/balance_products"/>

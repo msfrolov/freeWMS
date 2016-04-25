@@ -55,7 +55,7 @@ public class ReceiptDocumentShowAction implements Action {
 
         Object receiptDocumentObj = null;
         try {
-            receiptDocumentObj = req.getSession(false).getAttribute("document");
+            receiptDocumentObj = req.getSession(false).getAttribute("receipt_document");
         } catch (Exception e) {
             //this exception does not have to handle
         }
@@ -115,7 +115,7 @@ public class ReceiptDocumentShowAction implements Action {
             req.setAttribute("recipient_list", recipientList);
             req.setAttribute("page_number", pageNumber);
             req.setAttribute("start", fromIndex);
-            req.getSession(false).setAttribute("document", receiptDocument);
+            req.getSession(false).setAttribute("receipt_document", receiptDocument);
             if (save) {
                 if (saveDocument(req, receiptDocument, documentService))
                     return new ActionResult("receipt_document?doc_save=true", true);
@@ -152,7 +152,7 @@ public class ReceiptDocumentShowAction implements Action {
     }
 
     private ActionResult clearDocument(HttpServletRequest req) {
-        req.getSession(false).setAttribute("document", null);
+        req.getSession(false).setAttribute("receipt_document", null);
         return home;
     }
 
@@ -160,7 +160,7 @@ public class ReceiptDocumentShowAction implements Action {
         boolean b = documentService.insertReceiptDocument(receiptDocument);
         if (!b) req.setAttribute("doc_not_save", "true");
         else {
-            req.getSession(false).setAttribute("document", null);
+            req.getSession(false).setAttribute("receipt_document", null);
             return true;
         }
         return false;

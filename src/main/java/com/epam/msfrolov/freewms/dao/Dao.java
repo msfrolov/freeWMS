@@ -3,6 +3,7 @@ package com.epam.msfrolov.freewms.dao;
 import com.epam.msfrolov.freewms.model.BaseEntity;
 import com.epam.msfrolov.freewms.model.Document;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Map;
 
@@ -26,4 +27,7 @@ public interface Dao<T extends BaseEntity> {
 
     boolean delete(int id);
 
+    boolean queryDesigner(QueryDesigner query, List<Object> param);
+
+    ResultSet queryDesignerResultSet(QueryDesigner query, List<Object> param);
 }

@@ -57,7 +57,7 @@ public class MoveDocumentShowAction implements Action {
         }
         Object moveDocumentObj = null;
         try {
-            moveDocumentObj = req.getSession(false).getAttribute("document");
+            moveDocumentObj = req.getSession(false).getAttribute("document_move");
         } catch (Exception e) {
             //this exception does not have to handle
         }
@@ -118,7 +118,7 @@ public class MoveDocumentShowAction implements Action {
             req.setAttribute("recipient_list", recipientList);
             req.setAttribute("page_number", pageNumber);
             req.setAttribute("start", fromIndex);
-            req.getSession(false).setAttribute("document", moveDocument);
+            req.getSession(false).setAttribute("document_move", moveDocument);
             if (save) {
                 if (saveDocument(req, moveDocument, documentService))
                     return new ActionResult("move_document?doc_save=true", true);
@@ -155,7 +155,7 @@ public class MoveDocumentShowAction implements Action {
     }
 
     private ActionResult clearDocument(HttpServletRequest req) {
-        req.getSession(false).setAttribute("document", null);
+        req.getSession(false).setAttribute("document_move", null);
         return home;
     }
 
@@ -163,7 +163,7 @@ public class MoveDocumentShowAction implements Action {
         boolean b = documentService.insertMoveDocument(moveDocument);
         if (!b) req.setAttribute("doc_not_save", "true");
         else {
-            req.getSession(false).setAttribute("document", null);
+            req.getSession(false).setAttribute("document_move", null);
             return true;
         }
         return false;

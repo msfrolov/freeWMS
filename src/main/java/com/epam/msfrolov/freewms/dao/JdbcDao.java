@@ -276,5 +276,62 @@ public class JdbcDao<T extends BaseEntity> implements Dao<T> {
             statement.setInt(listValues.size() + 1, document.getId());
     }
 
+    @Override
+    public boolean queryDesigner(QueryDesigner query, List<Object> param) {
+        String assembledQuery = query.toString();
+        log.debug("free query: {}", assembledQuery);
+        try (PreparedStatement statement = connection.prepareStatement(assembledQuery)) {
+            if (!param.isEmpty()) {
+                final int[] x = {1};
+                param.forEach(p -> {
+                    try {
+                        log.debug("p = {}", p);
+                        log.debug("param.indexOf(p)+1 = {}", param.indexOf(p) + 1);
+                        if (p.getClass() == Boolean.class)
+                            statement.setBoolean(x[0]++, (Boolean) p);
+                        if (p.getClass() == Integer.class)
+                            statement.setInt(x[0]++, (Integer) p);
+                        else
+                            statement.setString(x[0]++, (String) p);
+                    } catch (SQLException e) {
+                        throw new DaoException("SQLException: fail in prepare statement 'queryDesigner'", e);
+                    }
+                });
+            }
+            int numberOfChanges = statement.executeUpdate();
+            return numberOfChanges > 0;
+        } catch (SQLException e) {
+            throw new DaoException("SQLException: fail in prepare statement 'queryDesigner'", e);
+        }
+    }
+
+    @Override
+    public ResultSet queryDesignerResultSet(QueryDesigner query, List<Object> param) {
+        String assembledQuery = query.toString();
+        log.debug("free query: {}", assembledQuery);
+        try (PreparedStatement statement = connection.prepareStatement(assembledQuery)) {
+            if (!param.isEmpty()) {
+                final int[] x = {1};
+                param.forEach(p -> {
+                    try {
+                        log.debug("p = {}", p);
+                        log.debug("param.indexOf(p)+1 = {}", param.indexOf(p) + 1);
+                        if (p.getClass() == Boolean.class)
+                            statement.setBoolean(x[0]++, (Boolean) p);
+                        if (p.getClass() == Integer.class)
+                            statement.setInt(x[0]++, (Integer) p);
+                        else
+                            statement.setString(x[0]++, (String) p);
+                    } catch (SQLException e) {
+                        throw new DaoException("SQLException: fail in prepare statement 'queryDesigner' ", e);
+                    }
+                });
+            }
+            int numberOfChanges = statement.executeUpdate();
+            return statement.getResultSet();
+        } catch (SQLException e) {
+            throw new DaoException("SQLException: fail in prepare statement 'queryDesigner'", e);
+        }
+    }
 
 }

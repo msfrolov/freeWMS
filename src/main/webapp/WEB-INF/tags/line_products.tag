@@ -19,14 +19,14 @@
             <img src="${img_path}/edit_line.png" height="20">
         </a>
     </td>
-    <c:if test="${isAdmin}">
-        <td class="cell2">
-            <a href="<c:url value="${product_delete}">
+    <td class="cell2">
+        <a href="<c:url value="${product_delete}">
                                  <c:param name="page_number" value="${page_number}"/>
                                  <c:param name="prodId" value="${product_elem.id}"/>
                              </c:url>">
-                <img src="${img_path}/delete.png" height="20">
-            </a>
-        </td>
-    </c:if>
+            <img src="${img_path}/delete.png" height="20">
+        </a>
+    </td>
+    <%--<c:if test="${isAdmin}">--%>
+    <%--</c:if>--%>
 </tr>

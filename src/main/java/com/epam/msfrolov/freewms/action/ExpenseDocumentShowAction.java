@@ -54,7 +54,7 @@ public class ExpenseDocumentShowAction implements Action {
         }
         Object expenseDocumentObj = null;
         try {
-            expenseDocumentObj = req.getSession(false).getAttribute("document");
+            expenseDocumentObj = req.getSession(false).getAttribute("expense_document");
         } catch (Exception e) {
             //this exception does not have to handle
         }
@@ -117,7 +117,7 @@ public class ExpenseDocumentShowAction implements Action {
             req.setAttribute("recipient_list", recipientList);
             req.setAttribute("page_number", pageNumber);
             req.setAttribute("start", fromIndex);
-            req.getSession(false).setAttribute("document", expenseDocument);
+            req.getSession(false).setAttribute("expense_document", expenseDocument);
             if (save) {
                 if (saveDocument(req, expenseDocument, documentService))
                     return new ActionResult("expense_document?doc_save=true", true);
@@ -154,7 +154,7 @@ public class ExpenseDocumentShowAction implements Action {
     }
 
     private ActionResult clearDocument(HttpServletRequest req) {
-        req.getSession(false).setAttribute("document", null);
+        req.getSession(false).setAttribute("expense_document", null);
         return home;
     }
 
@@ -162,7 +162,7 @@ public class ExpenseDocumentShowAction implements Action {
         boolean b = documentService.insertExpenseDocument(expenseDocument);
         if (!b) req.setAttribute("doc_not_save", "true");
         else {
-            req.getSession(false).setAttribute("document", null);
+            req.getSession(false).setAttribute("expense_document", null);
             return true;
         }
         return false;

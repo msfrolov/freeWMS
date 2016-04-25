@@ -118,6 +118,11 @@ public class QueryDesigner {
         return this;
     }
 
+    public QueryDesigner sum() {
+        stringBuilder.append(" SUM ");
+        return this;
+    }
+
     public QueryDesigner lessThan() {
         stringBuilder.append(" < ");
         return this;
@@ -125,6 +130,10 @@ public class QueryDesigner {
 
     public QueryDesigner greaterThan() {
         stringBuilder.append(" > ");
+        return this;
+    }
+    public QueryDesigner groupBy() {
+        stringBuilder.append(" GROUP BY ");
         return this;
     }
 
