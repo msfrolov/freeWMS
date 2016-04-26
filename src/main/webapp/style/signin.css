@@ -571,7 +571,19 @@ body
    height: 110px;
    text-align: center;
    z-index: 29;
-}#wb_Heading1533 {
+}
+
+#wb_Heading1588 {
+   position: absolute;
+   left: 0px;
+   top: 696px;
+   width: 300px;
+   height: 110px;
+   text-align: center;
+   z-index: 29;
+}
+
+#wb_Heading1533 {
    position: absolute;
    left: 0px;
    top: 696px;

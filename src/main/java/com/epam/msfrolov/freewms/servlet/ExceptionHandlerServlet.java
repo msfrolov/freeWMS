@@ -31,13 +31,8 @@ public class ExceptionHandlerServlet extends HttpServlet {
         log.debug("Error message : {}", errorMessage);
         log.debug("Exception type : {}", thrClass);
         if (thr != null) {
-            log.debug("Throwable : {}", thr.getMessage());
-            StackTraceElement[] stackTrace = thr.getStackTrace();
-            for (StackTraceElement element : stackTrace) {
-                String currentLine = element.toString();
-                if (currentLine.contains(MAIN_PACKAGE))
-                    log.debug(" {}/:{}", thrClass.getSimpleName(), currentLine);
-            }
+            log.debug("Throwable message: {}", thr.getMessage());
+            thr.printStackTrace();
         }
         req.setAttribute("statusCode", statusCode);
         req.setAttribute("reqUri", requestUri);

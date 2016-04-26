@@ -49,16 +49,13 @@
                     class="arrow-down"></b></a>
             <input type="checkbox" id="ResponsiveMenu1-submenu-2">
             <ul>
-                <li><a href="<c:url value="${balance_products}"></c:url>" title="Balance products"><i
-                        class="fa fa-tasks fa-2x">
-                    &nbsp;</i>Balance&nbsp;products</a></li>
-                <li><a href="#" title="Turnover with counterparties"><i class="fa fa-retweet fa-2x">&nbsp;</i>Turnover&nbsp;with&nbsp;counterparties</a>
+                <li><a href="<c:url value="${balance_products}"></c:url>" title="Balance products"><i class="fa fa-tasks fa-2x">&nbsp;</i>Balance&nbsp;products</a></li>
+                <li><a href="<c:url value="${turnover}"></c:url>" title="Turnover with counterparties"><i class="fa fa-retweet fa-2x">&nbsp;</i>Turnover&nbsp;with&nbsp;counterparties</a>
                 </li>
             </ul>
         </li>
         <li>
-            <label for="ResponsiveMenu1-submenu-3" class="toggle"><i class="fa fa-gears fa-2x">
-                &nbsp;</i>Administration<b class="arrow-down"></b></label>
+            <label for="ResponsiveMenu1-submenu-3" class="toggle"><i class="fa fa-gears fa-2x">&nbsp;</i>Administration<b class="arrow-down"></b></label>
             <a href="#" title="Administration"><i class="fa fa-gears fa-2x">&nbsp;</i><br>Administration<b
                     class="arrow-down"></b></a>
             <input type="checkbox" id="ResponsiveMenu1-submenu-3">
@@ -67,8 +64,6 @@
                 <li><a href="#" title="Roles"><i class="fa fa-tachometer fa-2x">&nbsp;</i>Roles</a></li>
             </ul>
         </li>
-        <%--<li><a href="google.com" title="Cabinet"><i class="fa fa-user fa-2x">&nbsp;</i><br>Cabinet</a></li>--%>
-        <li><a href="<c:url value="${cabinet_action}"></c:url>" title="Cabinet"><i class="fa fa-user fa-2x">
-            &nbsp;</i><br>Cabinet</a></li>
+        <li><a href="<c:url value="${cabinet_action}"></c:url>" title="Cabinet"><i class="fa fa-user fa-2x">&nbsp;</i><br>Cabinet</a></li>
     </ul>
 </div>

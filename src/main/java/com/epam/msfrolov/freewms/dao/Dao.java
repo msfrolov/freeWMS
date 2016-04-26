@@ -3,7 +3,7 @@ package com.epam.msfrolov.freewms.dao;
 import com.epam.msfrolov.freewms.model.BaseEntity;
 import com.epam.msfrolov.freewms.model.Document;
 
-import java.sql.ResultSet;
+import javax.sql.rowset.CachedRowSet;
 import java.util.List;
 import java.util.Map;
 
@@ -29,5 +29,5 @@ public interface Dao<T extends BaseEntity> {
 
     boolean queryDesigner(QueryDesigner query, List<Object> param);
 
-    ResultSet queryDesignerResultSet(QueryDesigner query, List<Object> param);
+    CachedRowSet queryDesignerResultSet(QueryDesigner query, List<Object> param);
 }

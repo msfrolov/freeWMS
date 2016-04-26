@@ -14,10 +14,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReceiptDocumentShowAction implements Action {
-    public static final String COUNT_DESC = "count(desc)";
-    public static final String COUNT_ASCE = "count(asce)";
-    public static final String PRODUCT_ASCE = "product(asce)";
-    public static final String PRODUCT_DESC = "product(desc)";
+    private static final String COUNT_DESC = "count(desc)";
+    private static final String COUNT_ASCE = "count(asce)";
+    private static final String PRODUCT_ASCE = "product(asce)";
+    private static final String PRODUCT_DESC = "product(desc)";
     private static final Logger log = LoggerFactory.getLogger(ReceiptDocumentShowAction.class);
     private static final int DEFAULT_PAGE_NUMBER = 1;
     private static final int DEFAULT_PAGE_SIZE = 9;

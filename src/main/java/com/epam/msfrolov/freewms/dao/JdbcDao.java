@@ -6,12 +6,15 @@ import com.epam.msfrolov.freewms.util.Adapter;
 import com.epam.msfrolov.freewms.util.AppException;
 import com.epam.msfrolov.freewms.util.Common;
 import com.epam.msfrolov.freewms.util.ReflectUtil;
+import com.sun.rowset.CachedRowSetImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.rowset.CachedRowSet;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -306,7 +309,7 @@ public class JdbcDao<T extends BaseEntity> implements Dao<T> {
     }
 
     @Override
-    public ResultSet queryDesignerResultSet(QueryDesigner query, List<Object> param) {
+    public CachedRowSet queryDesignerResultSet(QueryDesigner query, List<Object> param) {
         String assembledQuery = query.toString();
         log.debug("free query: {}", assembledQuery);
         try (PreparedStatement statement = connection.prepareStatement(assembledQuery)) {
@@ -314,12 +317,14 @@ public class JdbcDao<T extends BaseEntity> implements Dao<T> {
                 final int[] x = {1};
                 param.forEach(p -> {
                     try {
-                        log.debug("p = {}", p);
+                        log.debug("p = {} class {}", p, p.getClass());
                         log.debug("param.indexOf(p)+1 = {}", param.indexOf(p) + 1);
                         if (p.getClass() == Boolean.class)
                             statement.setBoolean(x[0]++, (Boolean) p);
-                        if (p.getClass() == Integer.class)
+                        else if (p.getClass() == Integer.class)
                             statement.setInt(x[0]++, (Integer) p);
+                        else if (p.getClass() == LocalDate.class)
+                            statement.setDate(x[0]++, Date.valueOf((LocalDate) p));
                         else
                             statement.setString(x[0]++, (String) p);
                     } catch (SQLException e) {
@@ -327,8 +332,10 @@ public class JdbcDao<T extends BaseEntity> implements Dao<T> {
                     }
                 });
             }
-            int numberOfChanges = statement.executeUpdate();
-            return statement.getResultSet();
+            ResultSet resultSet = statement.executeQuery();
+            CachedRowSet cachedRowSet = new CachedRowSetImpl();
+            cachedRowSet.populate(resultSet);
+            return cachedRowSet;
         } catch (SQLException e) {
             throw new DaoException("SQLException: fail in prepare statement 'queryDesigner'", e);
         }

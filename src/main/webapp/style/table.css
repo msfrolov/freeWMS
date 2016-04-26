@@ -565,6 +565,7 @@ body {
     vertical-align: middle;
 }
 
+
 /*noinspection ALL*/
 #Label7455 {
     border: 0px #CCCCCC solid;
@@ -581,7 +582,40 @@ body {
     text-align: left;
     vertical-align: middle;
 }
+/*noinspection ALL*/
+#Label64558 {
+    border: 0px #CCCCCC solid;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    background-color: transparent;
+    background-image: none;
+    color: #000000;
+    font-family: Arial;
+    font-weight: normal;
+    font-size: 13px;
+    padding: 4px 4px 4px 4px;
+    text-align: left;
+    vertical-align: middle;
+}
 
+
+/*noinspection ALL*/
+#Label74558 {
+    border: 0px #CCCCCC solid;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    background-color: transparent;
+    background-image: none;
+    color: #000000;
+    font-family: Arial;
+    font-weight: normal;
+    font-size: 13px;
+    padding: 4px 4px 4px 4px;
+    text-align: left;
+    vertical-align: middle;
+}
 /*noinspection ALL*/
 #Label84 {
     border: 0px #CCCCCC solid;
@@ -880,6 +914,28 @@ body {
     line-height: 20px;
     z-index: 10;
 }
+/*noinspection ALL*/
+#Label64558 {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 60px;
+    height: 20px;
+    line-height: 20px;
+    z-index: 10;
+}
+
+/*noinspection ALL*/
+#Label74558 {
+    position: absolute;
+    left: 17px;
+    top: 185px;
+    width: 60px;
+    height: 20px;
+    line-height: 20px;
+    z-index: 10;
+}
+
 
 /*noinspection ALL*/
 #Label84 {

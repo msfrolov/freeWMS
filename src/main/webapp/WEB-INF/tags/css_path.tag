@@ -8,3 +8,7 @@
 <link href="${css_path}/table.css" rel="stylesheet">
 <link href="${css_path}/pagination.css" rel="stylesheet">
 <link href="${css_path}/cabinet.css" rel="stylesheet">
+<link href="${css_path}/fontawesome-webfont.ttf" rel="stylesheet">
+<link href="${css_path}/FontAwesome.otf" rel="stylesheet">
+<link href="${css_path}/fontawesome-webfont.woff" rel="stylesheet">
+<link href="${css_path}/fontawesome-webfont.woff2" rel="stylesheet">

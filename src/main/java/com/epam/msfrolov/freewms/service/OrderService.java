@@ -6,10 +6,9 @@ import com.epam.msfrolov.freewms.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.ResultSet;
+import javax.sql.rowset.CachedRowSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,25 +48,39 @@ public class OrderService extends Service {
         return warehouseDao.findById(warehouseId);
     }
 
-    public List<TableLine> calculateProdBalance(Integer pageNumber, int defaultPageSize, Warehouse warehouse, LocalDate date) {
+    public List<TableLine> calculateProdBalance(Integer pageNumber, int pageSize, Warehouse warehouse, LocalDate date) {
         List<TableLine> tableLines = new ArrayList<>();
         List<Object> param = new ArrayList<>();
         param.add(warehouse.getId());
-        param.add(date.format(DateTimeFormatter.ISO_LOCAL_DATE));
-        ResultSet resultSet = tableLineDao.queryDesignerResultSet(PRODUCT_BALANCE_QUERY, param);
+        param.add(date);
+        CachedRowSet cachedRowSet = tableLineDao.queryDesignerResultSet(PRODUCT_BALANCE_QUERY, param);
         try {
-            while (resultSet.next()) {
-                int product = resultSet.getInt("PRODUCT");
-                int balance = resultSet.getInt("BALANCE");
+            while (cachedRowSet.next()) {
+                int product = cachedRowSet.getInt(1);
+                int balance = cachedRowSet.getInt(2);
                 TableLine tableLine = new TableLine();
                 Product byId = productDao.findById(product);
                 tableLine.setProduct(byId);
                 tableLine.setCount(balance);
                 tableLines.add(tableLine);
             }
-            return tableLines;
+//                                  pn - 1 * sz   -- + ps
+//            2   10      11  20     10  20
+//            реал  15    11  15     10  15
+//                    10    000  00    if (size<=start)   else if size<end end=size
+
+            int start = (pageNumber - 1) * pageSize;
+            int end = start + pageSize;
+            int listSize = tableLines.size();
+            if (listSize<=start) return new ArrayList<>();
+            else if (listSize<end) end = listSize;
+            return tableLines.subList(start, end);
         } catch (SQLException e) {
-            throw new ServiceException("failed to generate a report");
+            throw new ServiceException("failed to generate a report", e);
         }
+    }
+
+    public List<Warehouse> findAllWarehouse() {
+        return warehouseDao.findAll();
     }
 }
