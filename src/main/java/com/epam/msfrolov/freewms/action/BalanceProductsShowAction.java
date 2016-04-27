@@ -33,7 +33,6 @@ public class BalanceProductsShowAction implements Action {
         String pageString = req.getParameter("page_number");
         String dateString = req.getParameter("doc_date");
         String warehouseString = req.getParameter("warehouse_select");
-        sort = req.getParameter("sort_select");
         pageNumber = checkPageNumber(pageString);
         log.debug("current page number {}", pageNumber);
         date = checkDate(dateString);
@@ -48,7 +47,7 @@ public class BalanceProductsShowAction implements Action {
         }
 
 
-        sortDocumentLine(sort, tableLineList, req);
+        sortDocumentLine(tableLineList, req);
         req.setAttribute("balance_list", tableLineList);
         req.setAttribute("page_number", pageNumber);
         req.setAttribute("page_size", DEFAULT_PAGE_SIZE);
@@ -103,7 +102,8 @@ public class BalanceProductsShowAction implements Action {
         return idInt;
     }
 
-    private void sortDocumentLine(String sort, List<TableLine> tableLines, HttpServletRequest req) {
+    private void sortDocumentLine(List<TableLine> tableLines, HttpServletRequest req) {
+        String sort = req.getParameter("sort_select");
         List<String> sort_list = new ArrayList<>();
         sort_list.add(COUNT_ASCE);
         sort_list.add(COUNT_DESC);

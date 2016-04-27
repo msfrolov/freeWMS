@@ -31,7 +31,6 @@ public class ExpenseDocumentShowAction implements Action {
         String pageNumberStr = req.getParameter("page_number");
         String productIdStr = req.getParameter("product");
         String countStr = req.getParameter("count");
-        String sort = req.getParameter("sort");
         String EditSender = req.getParameter("EditSender");
         String EditRecipient = req.getParameter("EditRecipient");
         String docDate = req.getParameter("doc_date");
@@ -76,7 +75,7 @@ public class ExpenseDocumentShowAction implements Action {
             counterpart = setRecipient(EditRecipient, expenseDocument, documentService, counterpart);
             req.setAttribute("sender", warehouse);
             req.setAttribute("recipient", counterpart);
-            sortDocumentLine(sort, expenseDocument, req);
+            sortDocumentLine(expenseDocument, req);
             List<TableLine> tableLineList;
             int size;
             int fromIndex;
@@ -209,19 +208,28 @@ public class ExpenseDocumentShowAction implements Action {
         req.setAttribute("curProd", product);
     }
 
-    private void sortDocumentLine(String sort, ExpenseDocument expenseDocument, HttpServletRequest req) {
-        if (COUNT_DESC.equals(sort)) {
-            expenseDocument.sort(TableLine.COMPARE_COUNT_DESC);
-            req.setAttribute("sort", COUNT_DESC);
-        } else if (PRODUCT_DESC.equals(sort)) {
-            expenseDocument.sort(TableLine.COMPARE_PRODUCT_NAME_DESC);
-            req.setAttribute("sort", PRODUCT_DESC);
+    private void sortDocumentLine(ExpenseDocument expenseDocument, HttpServletRequest req) {
+        List<String> sort_list = new ArrayList<>();
+        sort_list.add(COUNT_ASCE);
+        sort_list.add(PRODUCT_ASCE);
+        sort_list.add(COUNT_DESC);
+        sort_list.add(PRODUCT_DESC);
+        req.setAttribute("sort_list", sort_list);
+        String sort = req.getParameter("sort_select");
+        if (sort == null) sort = PRODUCT_ASCE;
+        log.debug("sort {}", sort);
+        if (COUNT_ASCE.equals(sort)) {
+            expenseDocument.sort(TableLine.COMPARE_COUNT);
+            req.setAttribute("sort_select", COUNT_ASCE);
         } else if (PRODUCT_ASCE.equals(sort)) {
             expenseDocument.sort(TableLine.COMPARE_PRODUCT_NAME);
-            req.setAttribute("sort", PRODUCT_ASCE);
-        } else if (COUNT_ASCE.equals(sort)) {
-            expenseDocument.sort(TableLine.COMPARE_COUNT);
-            req.setAttribute("sort", COUNT_ASCE);
+            req.setAttribute("sort_select", PRODUCT_ASCE);
+        } else if (PRODUCT_DESC.equals(sort)) {
+            expenseDocument.sort(TableLine.COMPARE_PRODUCT_NAME_DESC);
+            req.setAttribute("sort_select", PRODUCT_DESC);
+        } else if (COUNT_DESC.equals(sort)) {
+            expenseDocument.sort(TableLine.COMPARE_COUNT_DESC);
+            req.setAttribute("sort_select", COUNT_DESC);
         }
     }
 }

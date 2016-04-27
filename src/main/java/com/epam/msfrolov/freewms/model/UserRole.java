@@ -5,8 +5,8 @@ import com.epam.msfrolov.freewms.util.Common;
 public class UserRole extends NamedEntity {
 
     public static final UserRole ADMIN = new UserRole(1, "admin");
-    public static final UserRole STOCKMAN = new UserRole(2, "stockman");
-    public static final UserRole ACCOUNTANT = new UserRole(3, "accountant");
+    public static final UserRole ACCOUNTANT = new UserRole(2, "accountant");
+    public static final UserRole STOCKMAN = new UserRole(3, "stockman");
     public static final UserRole USER = new UserRole(4, "user");
     public static final UserRole GUEST = new UserRole(5, "guest");
 

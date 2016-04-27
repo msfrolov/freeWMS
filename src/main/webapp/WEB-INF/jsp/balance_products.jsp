@@ -33,18 +33,7 @@
                 return document.getElementById(idElem).getAttribute(atrName);
             }
         </script>
-        <select name="sort_select" size="1" id="Combobox1455"
-                style="position: absolute;left: 300px;top: -425px;width: 151px;height: 23px;line-height: 20px;z-index: 10;"
-                required>
-            <c:forEach items="${sort_list}" var="item">
-                <c:if test="${item eq sort_select}">
-                    <option value="${item}" selected>${item}</option>
-                </c:if>
-                <c:if test="${item ne sort_select}">
-                    <option value="${item}">${item}</option>
-                </c:if>
-            </c:forEach>
-        </select>
+        <t:sort/>
         <select name="warehouse_select" size="1" id="Combobox2455"
                 style="    position: absolute;left: -73px;top: -425px;width: 260px;height: 23px;z-index: 29;" required>
             <c:forEach items="${warehouse_list}" var="item">
@@ -57,20 +46,7 @@
             </c:forEach>
         </select>
     </div>
-    <ul class="pagination">
-        <li>
-                <input height="35" src="${img_path}/pre.ico" type="image" name="page_number" value="${page_number-1}" style=" text-align: center;text-decoration: underline"
-                       href="<c:url value="${balance_products}"></c:url>"> </input>
-        </li>
-        <li>
-            <input height="35" src="${img_path}/refresh.png" type="image" name="page_number" value="${page_number}" style=" text-align: center;text-decoration: underline"
-                   href="<c:url value="${balance_products}"></c:url>"> </input>
-        </li>
-        <li>
-            <input height="35" src="${img_path}/next.png" type="image" name="page_number" value="${page_number+1}" style=" text-align: center;text-decoration: underline"
-                   href="<c:url value="${balance_products}"></c:url>"> </input>
-        </li><h2>&nbsp;&nbsp;&nbsp;&nbsp;Page number ${page_number}</h2>
-    </ul>
+    <t:pagination page_number="${requestScope.page_number}" url="${balance_products}"/>
 </form>
 <t:footer/>
 

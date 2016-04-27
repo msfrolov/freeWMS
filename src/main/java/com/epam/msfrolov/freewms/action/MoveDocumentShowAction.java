@@ -34,7 +34,6 @@ public class MoveDocumentShowAction implements Action {
         String pageNumberStr = req.getParameter("page_number");
         String productIdStr = req.getParameter("product");
         String countStr = req.getParameter("count");
-        String sort = req.getParameter("sort");
         String EditSender = req.getParameter("EditSender");
         String EditRecipient = req.getParameter("EditRecipient");
         String docDate = req.getParameter("doc_date");
@@ -79,7 +78,7 @@ public class MoveDocumentShowAction implements Action {
             warehouse = setRecipient(EditRecipient, moveDocument, documentService, warehouse);
             req.setAttribute("sender", warehouse1);
             req.setAttribute("recipient", warehouse);
-            sortDocumentLine(sort, moveDocument, req);
+            sortDocumentLine(moveDocument, req);
             List<TableLine> tableLineList;
             int size;
             int fromIndex;
@@ -208,19 +207,27 @@ public class MoveDocumentShowAction implements Action {
         req.setAttribute("curProd", product);
     }
 
-    private void sortDocumentLine(String sort, MoveDocument moveDocument, HttpServletRequest req) {
+    private void sortDocumentLine(MoveDocument moveDocument, HttpServletRequest req) {
+        List<String> sort_list = new ArrayList<>();
+        sort_list.add(COUNT_ASCE);
+        sort_list.add(PRODUCT_ASCE);
+        sort_list.add(COUNT_DESC);
+        sort_list.add(PRODUCT_DESC);
+        req.setAttribute("sort_list", sort_list);
+        String sort = req.getParameter("sort_select");
+        if (sort == null) sort = PRODUCT_ASCE;
         if (COUNT_ASCE.equals(sort)) {
             moveDocument.sort(TableLine.COMPARE_COUNT);
-            req.setAttribute("sort", COUNT_ASCE);
+            req.setAttribute("sort_select", COUNT_ASCE);
         } else if (COUNT_DESC.equals(sort)) {
             moveDocument.sort(TableLine.COMPARE_COUNT_DESC);
-            req.setAttribute("sort", COUNT_DESC);
+            req.setAttribute("sort_select", COUNT_DESC);
         } else if (PRODUCT_DESC.equals(sort)) {
             moveDocument.sort(TableLine.COMPARE_PRODUCT_NAME_DESC);
-            req.setAttribute("sort", PRODUCT_DESC);
+            req.setAttribute("sort_select", PRODUCT_DESC);
         } else if (PRODUCT_ASCE.equals(sort)) {
             moveDocument.sort(TableLine.COMPARE_PRODUCT_NAME);
-            req.setAttribute("sort", PRODUCT_ASCE);
+            req.setAttribute("sort_select", PRODUCT_ASCE);
         }
     }
 }

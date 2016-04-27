@@ -1,6 +1,7 @@
 package com.epam.msfrolov.freewms.action;
 
 import com.epam.msfrolov.freewms.model.User;
+import com.epam.msfrolov.freewms.model.UserRole;
 import com.epam.msfrolov.freewms.service.UserService;
 import com.epam.msfrolov.freewms.util.AppException;
 import com.epam.msfrolov.freewms.util.Validator;
@@ -28,7 +29,7 @@ public class SignInAction implements Action {
         log.debug(" sign_in {}", signIn);
         log.debug(" sign_up {}", signUp);
         if (!Validator.isValid(login, Validator.LETTERS_DIGITS_WS_MIN5_MAX32)
-                ||  !Validator.isValid(password, Validator.LETTERS_DIGITS_WS_MIN5_MAX32)) {
+                || !Validator.isValid(password, Validator.LETTERS_DIGITS_WS_MIN5_MAX32)) {
             log.debug("login or password is not isValid");
             req.setAttribute("signInError", "login or password is not valid");
             return signInAgain;
@@ -39,6 +40,7 @@ public class SignInAction implements Action {
             User user = new User();
             user.setName(login);
             user.setPassword(password);
+            user.setRole(UserRole.USER);
             if (signIn) {
                 log.debug("if (signIn) ");
                 user = userService.signIn(user);

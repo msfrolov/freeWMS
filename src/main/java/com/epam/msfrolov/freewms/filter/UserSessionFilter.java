@@ -2,6 +2,7 @@ package com.epam.msfrolov.freewms.filter;
 
 import com.epam.msfrolov.freewms.model.User;
 import com.epam.msfrolov.freewms.model.UserRole;
+import com.epam.msfrolov.freewms.util.FileManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,14 +11,17 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Properties;
 
 @WebFilter(filterName = "1UserSessionFilter", urlPatterns = "/wms/*")
 public class UserSessionFilter implements Filter {
     private static final String FORBIDDEN_PAGE = "/WEB-INF/jsp/forbidden.jsp";
     private static final Logger log = LoggerFactory.getLogger(UserSessionFilter.class);
+    private Properties accessLevelProp;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        accessLevelProp = FileManager.getProperties("properties/access.levels.properties");
     }
 
     @Override
@@ -42,23 +46,28 @@ public class UserSessionFilter implements Filter {
             role = UserRole.GUEST;
         else
             role = ((User) o).getRole();
+        if (role == null) role = UserRole.GUEST;
         log.debug("UserSessionFilter pathInfo: {}", pathInfo);
         log.debug("UserSessionFilter user: {}", o);
         log.debug("UserSessionFilter role: {}", role);
-        if (checkPathInfo(pathInfo, role)) {
+        if (checkAccess(pathInfo, role)) {
+            chain.doFilter(req, resp);
+        } else {
             log.debug("  Forbidden!");
             forbidden(req, resp, chain);
-        } else {
-            chain.doFilter(req, resp);
         }
     }
 
-    private boolean checkPathInfo(String pathInfo, UserRole role) {
-//        if ("/cabinet".equalsIgnoreCase(pathInfo)) {
-//            if (getAccessLevel(role) < 4)
-//                return true;
-//        }
-        return false;
+    private boolean checkAccess(String pathInfo, UserRole role) {
+        int currentAccessLevel = getAccessLevel(role);
+        try {
+            int requiredLevel = Integer.parseInt(accessLevelProp.getProperty(pathInfo));
+            log.debug("Access curent {} required {}", currentAccessLevel, requiredLevel);
+            if (requiredLevel <= currentAccessLevel) return true;
+            else return false;
+        } catch (Exception e) {
+            throw new FilterException("failed to get the level of access", e);
+        }
     }
 
     private int getAccessLevel(UserRole role) {
