@@ -34,7 +34,7 @@
             }
         </script>
         <t:sort/>
-        <select name="warehouse_select" size="1" id="Combobox2455"
+        <select name="warehouse_select" size="1" id="Combobox2455" onchange="this.form.submit()"
                 style="    position: absolute;left: -73px;top: -425px;width: 260px;height: 23px;z-index: 29;" required>
             <c:forEach items="${warehouse_list}" var="item">
                 <c:if test="${item eq warehouse_select}">

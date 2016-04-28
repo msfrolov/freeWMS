@@ -1,6 +1,10 @@
 package com.epam.msfrolov.freewms.model;
 
+import java.util.Comparator;
+
 public class Counterpart extends NamedEntity {
+    public static final Comparator<Counterpart> COMPARE_NAME
+            = (o1, o2) -> o1.getName().compareTo(o2.getName());
     private Individual responsiblePerson;
     private String requisite;
 

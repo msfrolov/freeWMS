@@ -37,7 +37,7 @@
                 <li><a href="<c:url value="${move_document}"></c:url>" title="Move document"><i
                         class="fa fa-calendar-times-o fa-2x">&nbsp;</i>Move&nbsp;document</a>
                 </li>
-                <li><a href="<c:url value="${expense_document}"></c:url>" title="Expense documen"><i
+                <li><a href="<c:url value="${expense_document}"></c:url>" title="Expense document"><i
                         class="fa fa-calendar-minus-o fa-2x">&nbsp;</i>Expense&nbsp;documen</a>
                 </li>
             </ul>

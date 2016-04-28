@@ -1,8 +1,12 @@
 package com.epam.msfrolov.freewms.model;
 
+import java.util.Comparator;
+
 import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public class Product extends NamedEntity {
+    public static final Comparator<Product> COMPARE_NAME
+            = (o1, o2) -> o1.getName().compareTo(o2.getName());
     private ProductType type;
     private Measure measure;
     private String description;

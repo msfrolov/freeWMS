@@ -90,12 +90,10 @@ public class BalanceProductsShowAction implements Action {
         if (Validator.isValid(id, Validator.DIGITS_MIN1_MAX9)) {
             idInt = Integer.parseInt(id);
             if (idInt < 1) {
-//                throw new ActionException("incorrect warehouse id (negative number)");
                 log.debug("incorrect warehouse id (negative number)");
                 idInt = 1;
             }
         } else {
-//            throw new ActionException("incorrect warehouse id (non-numeric characters)");
             log.debug("incorrect warehouse id (non-numeric characters)");
             idInt = 1;
         }

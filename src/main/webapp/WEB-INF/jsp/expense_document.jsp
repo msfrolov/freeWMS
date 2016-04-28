@@ -14,7 +14,7 @@
 <div id="wb_Heading1533">
     <h1 id="Heading1">Expense document</h1>
 </div>
-<form name="Form17">
+<form name="Form17" method="get" action="<c:url value="${expense_document}"></c:url>" accept-charset="UTF-8">
     <p style=" position:absolute;top: 251px;left: 30px;z-index: 14">Document date:
         <input type="date" name="doc_date" value="${doc_date}"
                max="${today}" min="2016-01-01"></p>
@@ -228,8 +228,6 @@
             }
         </style>
     </div>
-</form>
-<form name="Form17" method="get" action="<c:url value="${expense_document}"></c:url>" accept-charset="UTF-8">
     <div name="div55" id="div55" style="position: absolute;top: 689px;left: 525px;z-index:29;">
         <label for="" id="Label74558"
                style="position: absolute;left: 196px;top: -425px;width: 85;pxheight: 20px;line-height: 20px;z-index: 10;">Sort

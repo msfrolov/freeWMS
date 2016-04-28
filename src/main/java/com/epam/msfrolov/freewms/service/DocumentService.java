@@ -46,7 +46,9 @@ public class DocumentService extends Service {
     }
 
     public List<Product> findAllProduct() {
-        return productDao.findAll();
+        List<Product> all = productDao.findAll();
+        all.sort(Product.COMPARE_NAME);
+        return all;
     }
 
     public Product findProduct(int productId) {
@@ -59,7 +61,9 @@ public class DocumentService extends Service {
     }
 
     public List<Counterpart> findAllCounterparts() {
-        return counterpartDao.findAll();
+        List<Counterpart> all = counterpartDao.findAll();
+        all.sort(Counterpart.COMPARE_NAME);
+        return all;
     }
 
     public List<Warehouse> findAllWarehouse() {
@@ -100,7 +104,8 @@ public class DocumentService extends Service {
             }
             boolean success;
             success = balanceProductsInWarehouses(document);
-            if (!success) throw new ServiceException("failed to write data into the table BALANCE_PRODUCTS_IN_WAREHOUSES");
+            if (!success)
+                throw new ServiceException("failed to write data into the table BALANCE_PRODUCTS_IN_WAREHOUSES");
             success = turnoverProductsWithCounterparties(document);
             if (!success)
                 throw new ServiceException("failed to write data into the table TURNOVER_PRODUCTS_WITH_COUNTERPARTIES");

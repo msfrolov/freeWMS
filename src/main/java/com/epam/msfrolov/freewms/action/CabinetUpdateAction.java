@@ -115,10 +115,10 @@ public class CabinetUpdateAction implements Action {
                 req.setAttribute("individ_cabinet", user.getIndividual());
                 req.setAttribute("success", success);
                 req.setAttribute("violation", violation);
-                log.debug("{}", listRole);
-                log.debug("{}", listGender);
-                log.debug("{}", user);
-                log.debug("{}", user.getIndividual());
+                log.debug("listRole {}", listRole);
+                log.debug("listGender {}", listGender);
+                log.debug("user {}", user);
+                log.debug("user.getIndividual() {}", user.getIndividual());
                 return cabinet;
             }
         } else if (close) {

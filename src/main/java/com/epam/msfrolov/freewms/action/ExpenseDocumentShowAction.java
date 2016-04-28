@@ -51,11 +51,11 @@ public class ExpenseDocumentShowAction implements Action {
             pageNumber = Integer.parseInt(pageNumberStr);
             if (pageNumber < 1) pageNumber = DEFAULT_PAGE_NUMBER;
         }
-        Object expenseDocumentObj = null;
+        Object expenseDocumentObj;
         try {
             expenseDocumentObj = req.getSession(false).getAttribute("expense_document");
         } catch (Exception e) {
-            //this exception does not have to handle
+           expenseDocumentObj = null;
         }
         log.debug("attribute document {}", expenseDocumentObj);
         ExpenseDocument expenseDocument;
@@ -104,7 +104,7 @@ public class ExpenseDocumentShowAction implements Action {
             try {
                 expenseDocument.setDate(LocalDate.parse(docDate, DateTimeFormatter.ISO_LOCAL_DATE));
             } catch (Exception e) {
-                //this exception does not have to handle
+                throw new ActionException("the incorrect date", e);
             }
             String format = expenseDocument.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
             log.debug("document date {}", format);
@@ -134,7 +134,7 @@ public class ExpenseDocumentShowAction implements Action {
                 counterpart = documentService.findCounterpartById(Integer.parseInt(editRecipient));
                 receiptDocument.setRecipient(counterpart);
             } catch (Exception e) {
-                //this exception does not have to handle
+                throw new ActionException("failed to find a counterpart for id", e);
             }
         }
         return counterpart;
@@ -146,7 +146,7 @@ public class ExpenseDocumentShowAction implements Action {
                 warehouse = documentService.findWarehouseById(Integer.parseInt(editSender));
                 expenseDocument.setSender(warehouse);
             } catch (Exception e) {
-                //this exception does not have to handle
+                throw new ActionException("failed to find a warehouse for id", e);
             }
         }
         return warehouse;
@@ -216,7 +216,6 @@ public class ExpenseDocumentShowAction implements Action {
         sort_list.add(PRODUCT_DESC);
         req.setAttribute("sort_list", sort_list);
         String sort = req.getParameter("sort_select");
-        if (sort == null) sort = PRODUCT_ASCE;
         log.debug("sort {}", sort);
         if (COUNT_ASCE.equals(sort)) {
             expenseDocument.sort(TableLine.COMPARE_COUNT);

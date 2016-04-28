@@ -31,7 +31,6 @@ public class ReceiptDocumentShowAction implements Action {
         String pageNumberStr = req.getParameter("page_number");
         String productIdStr = req.getParameter("product");
         String countStr = req.getParameter("count");
-        String sort = req.getParameter("sort");
         String EditSender = req.getParameter("EditSender");
         String EditRecipient = req.getParameter("EditRecipient");
         String docDate = req.getParameter("doc_date");
@@ -53,11 +52,11 @@ public class ReceiptDocumentShowAction implements Action {
             if (pageNumber < 1) pageNumber = DEFAULT_PAGE_NUMBER;
         }
 
-        Object receiptDocumentObj = null;
+        Object receiptDocumentObj;
         try {
             receiptDocumentObj = req.getSession(false).getAttribute("receipt_document");
         } catch (Exception e) {
-            //this exception does not have to handle
+            receiptDocumentObj = null;
         }
         log.debug("attribute document {}", receiptDocumentObj);
         ReceiptDocument receiptDocument;
@@ -77,7 +76,7 @@ public class ReceiptDocumentShowAction implements Action {
             warehouse = setRecipient(EditRecipient, receiptDocument, documentService, warehouse);
             req.setAttribute("sender", counterpart);
             req.setAttribute("recipient", warehouse);
-            sortDocumentLine(sort, receiptDocument, req);
+            sortDocumentLine(receiptDocument, req);
             List<TableLine> tableLineList;
             int size;
             int fromIndex;
@@ -103,7 +102,7 @@ public class ReceiptDocumentShowAction implements Action {
             try {
                 receiptDocument.setDate(LocalDate.parse(docDate, DateTimeFormatter.ISO_LOCAL_DATE));
             } catch (Exception e) {
-                //this exception does not have to handle
+                throw new ActionException("the incorrect date", e);
             }
             String format = receiptDocument.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
             log.debug("document date {}", format);
@@ -133,7 +132,7 @@ public class ReceiptDocumentShowAction implements Action {
                 warehouse = documentService.findWarehouseById(Integer.parseInt(editRecipient));
                 receiptDocument.setRecipient(warehouse);
             } catch (Exception e) {
-                //this exception does not have to handle
+                throw new ActionException("failed to find a warehouse for id", e);
             }
         }
         return warehouse;
@@ -145,7 +144,7 @@ public class ReceiptDocumentShowAction implements Action {
                 counterpart = documentService.findCounterpartById(Integer.parseInt(editSender));
                 receiptDocument.setSender(counterpart);
             } catch (Exception e) {
-                //this exception does not have to handle
+                throw new ActionException("failed to find a counterpart sender for id", e);
             }
         }
         return counterpart;
@@ -205,7 +204,14 @@ public class ReceiptDocumentShowAction implements Action {
         req.setAttribute("curProd", product);
     }
 
-    private void sortDocumentLine(String sort, ReceiptDocument receiptDocument, HttpServletRequest req) {
+    private void sortDocumentLine(ReceiptDocument receiptDocument, HttpServletRequest req) {
+        List<String> sort_list = new ArrayList<>();
+        sort_list.add(COUNT_ASCE);
+        sort_list.add(PRODUCT_ASCE);
+        sort_list.add(COUNT_DESC);
+        sort_list.add(PRODUCT_DESC);
+        req.setAttribute("sort_list", sort_list);
+        String sort = req.getParameter("sort_select");
         if (COUNT_ASCE.equals(sort)) {
             receiptDocument.sort(TableLine.COMPARE_COUNT);
             req.setAttribute("sort", COUNT_ASCE);

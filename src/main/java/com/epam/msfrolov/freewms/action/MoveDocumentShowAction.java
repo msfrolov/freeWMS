@@ -54,11 +54,11 @@ public class MoveDocumentShowAction implements Action {
             pageNumber = Integer.parseInt(pageNumberStr);
             if (pageNumber < 1) pageNumber = DEFAULT_PAGE_NUMBER;
         }
-        Object moveDocumentObj = null;
+        Object moveDocumentObj;
         try {
             moveDocumentObj = req.getSession(false).getAttribute("document_move");
         } catch (Exception e) {
-            //this exception does not have to handle
+            moveDocumentObj = null;
         }
         log.debug("attribute document {}", moveDocumentObj);
         MoveDocument moveDocument;
@@ -105,7 +105,7 @@ public class MoveDocumentShowAction implements Action {
             try {
                 moveDocument.setDate(LocalDate.parse(docDate, DateTimeFormatter.ISO_LOCAL_DATE));
             } catch (Exception e) {
-                //this exception does not have to handle
+                throw new ActionException("the incorrect date", e);
             }
             String format = moveDocument.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
             log.debug("document date {}", format);
@@ -135,7 +135,7 @@ public class MoveDocumentShowAction implements Action {
                 warehouse = documentService.findWarehouseById(Integer.parseInt(editRecipient));
                 receiptDocument.setRecipient(warehouse);
             } catch (Exception e) {
-                //this exception does not have to handle
+                throw new ActionException("failed to find a warehouse recipient for id", e);
             }
         }
         return warehouse;
@@ -147,7 +147,7 @@ public class MoveDocumentShowAction implements Action {
                 warehouse = documentService.findWarehouseById(Integer.parseInt(editSender));
                 moveDocument.setSender(warehouse);
             } catch (Exception e) {
-                //this exception does not have to handle
+                throw new ActionException("failed to find a warehouse sender for id", e);
             }
         }
         return warehouse;
@@ -215,7 +215,6 @@ public class MoveDocumentShowAction implements Action {
         sort_list.add(PRODUCT_DESC);
         req.setAttribute("sort_list", sort_list);
         String sort = req.getParameter("sort_select");
-        if (sort == null) sort = PRODUCT_ASCE;
         if (COUNT_ASCE.equals(sort)) {
             moveDocument.sort(TableLine.COMPARE_COUNT);
             req.setAttribute("sort_select", COUNT_ASCE);

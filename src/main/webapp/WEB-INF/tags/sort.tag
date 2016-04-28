@@ -1,9 +1,13 @@
 <%--suppress ALL --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@tag description="sort" pageEncoding="UTF-8" %>
-<select name="sort_select" size="1" id="Combobox1455"
+<select name="sort_select" size="1" id="Combobox1455" onchange="this.form.submit()"
         style="position: absolute;left: 300px;top: -425px;width: 151px;height: 23px;line-height: 20px;z-index: 10;"
         required>
+    <c:if test="${empty sort_select}">
+        <option selected disabled>Choose a sort order ${sort_select}</option>
+    </c:if>
+
     <c:forEach items="${requestScope.sort_list}" var="item">
         <c:if test="${item eq sort_select}">
             <option value="${item}" selected>${item}</option>

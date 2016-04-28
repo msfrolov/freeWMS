@@ -37,12 +37,12 @@ public class ProductsCatalogShowAction implements Action {
         try (ProductService productService = new ProductService()) {
             products = productService.getProductsForPage(pageNumber, DEFAULT_PAGE_SIZE);
         }
-        boolean isAdmin = false;
+        boolean isAdmin;
         try {
             User user = (User) req.getSession(false).getAttribute("user");
-            if (user.getRole().equals(UserRole.ADMIN)) isAdmin = true;
+            isAdmin = user.getRole().equals(UserRole.ADMIN);
         } catch (Exception e) {
-            //this exception does not have to handle
+            isAdmin = false;
         }
         log.debug("isAdmin: {}", isAdmin);
         req.setAttribute("products_list", products);
