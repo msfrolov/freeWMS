@@ -15,10 +15,27 @@
                href="<c:url value="${url}"></c:url>"> </input>
     </li>
     <li>
-        <input height="35" src="${img_path}/next.png" type="image" name="page_number" value="${page_number+1}"
-               style=" text-align: center;text-decoration: underline"
-               href="<c:url value="${url}"></c:url>"> </input>
+        <c:choose>
+            <c:when test="${page_number < requestScope.total_pages}">
+                <input height="35" src="${img_path}/next.png" type="image" name="page_number" value="${page_number+1}"
+                       style=" text-align: center;text-decoration: underline"
+                       href="<c:url value="${url}"></c:url>"> </input>
+            </c:when>
+            <c:otherwise>
+                <input height="35" src="${img_path}/next.png" type="image" name="page_number" value="${page_number}"
+                       style=" text-align: center;text-decoration: underline"
+                       href="<c:url value="${url}"></c:url>"> </input>
+            </c:otherwise>
+        </c:choose>
     </li>
-    <br><h4>Page number ${page_number}</h4>
+    <c:choose>
+        <c:when test="${not empty requestScope.total_pages}">
+            <br><h4>Page number ${page_number} from ${requestScope.total_pages}</h4>
+        </c:when>
+        <c:otherwise>
+            <br><h4>Page number ${page_number} from 1</h4>
+        </c:otherwise>
+    </c:choose>
+
 </ul>
 

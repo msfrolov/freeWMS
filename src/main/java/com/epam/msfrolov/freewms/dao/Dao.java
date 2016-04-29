@@ -30,4 +30,6 @@ public interface Dao<T extends BaseEntity> {
     boolean queryDesigner(QueryDesigner query, List<Object> param);
 
     CachedRowSet queryDesignerResultSet(QueryDesigner query, List<Object> param);
+
+    int getNumberRows();
 }

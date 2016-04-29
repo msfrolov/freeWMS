@@ -43,7 +43,7 @@ public class ProductCardUpdateAction implements Action {
                 }
                 if (product == null) product = new Product();
                 String name = req.getParameter("EditName");
-                if (!isValid(name, LETTERS_DIGITS_WS)) violation.put("name", "incorrect characters in the field name");
+                if (!isValid(name, LETTERS_DIGITS_WS)) violation.put("name", "incorrect characters (only letters, digits and space character)");
                 else product.setName(name);
                 String typeId = req.getParameter("EditType");//type id
                 if (!isValid(typeId, DIGITS_MIN1_MAX9)) violation.put("type", "selected the wrong product type");

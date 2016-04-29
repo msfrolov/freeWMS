@@ -90,6 +90,8 @@ public class ExpenseDocumentShowAction implements Action {
                     toIndex = size;
                 log.debug(" fromIndex  {}", fromIndex);
                 log.debug(" toIndex   {}", toIndex);
+                int totalPages = (int) Math.ceil((double) expenseDocument.size()/DEFAULT_PAGE_SIZE);
+                req.setAttribute("total_pages", totalPages);
                 tableLineList = expenseDocument.getSubList(fromIndex, toIndex);
             }
             double i = (size / DEFAULT_PAGE_SIZE + 1);
@@ -101,15 +103,11 @@ public class ExpenseDocumentShowAction implements Action {
             } else if (pageNumber > i) {
                 pageNumber--;
             }
-            try {
+            if (Validator.isValid(docDate, Validator.DATE))
                 expenseDocument.setDate(LocalDate.parse(docDate, DateTimeFormatter.ISO_LOCAL_DATE));
-            } catch (Exception e) {
-                throw new ActionException("the incorrect date", e);
-            }
-            String format = expenseDocument.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
-            log.debug("document date {}", format);
+            log.debug("document date {}", docDate);
             req.setAttribute("current_document_list", tableLineList);
-            req.setAttribute("doc_date", format);
+            req.setAttribute("doc_date", docDate);
             req.setAttribute("today", LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
             req.setAttribute("product_list", productList);
             req.setAttribute("sender_list", senderList);

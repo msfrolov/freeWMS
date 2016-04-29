@@ -91,6 +91,8 @@ public class ReceiptDocumentShowAction implements Action {
                     toIndex = size;
                 log.debug("fromIndex {}", fromIndex);
                 log.debug("toIndex   {}", toIndex);
+                int totalPages = (int) Math.ceil((double) receiptDocument.size() / DEFAULT_PAGE_SIZE);
+                req.setAttribute("total_pages", totalPages);
                 tableLineList = receiptDocument.getSubList(fromIndex, toIndex);
             }
             double i = (size / DEFAULT_PAGE_SIZE + 1);
@@ -99,15 +101,11 @@ public class ReceiptDocumentShowAction implements Action {
             log.debug("pageNumber {}", pageNumber);
             if (add || delete) if (i > pageNumber) pageNumber++;
             else if (pageNumber > i) pageNumber--;
-            try {
+            if (Validator.isValid(docDate, Validator.DATE))
                 receiptDocument.setDate(LocalDate.parse(docDate, DateTimeFormatter.ISO_LOCAL_DATE));
-            } catch (Exception e) {
-                throw new ActionException("the incorrect date", e);
-            }
-            String format = receiptDocument.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
-            log.debug("document date {}", format);
+            log.debug("document date {}", docDate);
             req.setAttribute("current_document_list", tableLineList);
-            req.setAttribute("doc_date", format);
+            req.setAttribute("doc_date", docDate);
             req.setAttribute("today", LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
             req.setAttribute("product_list", productList);
             req.setAttribute("sender_list", senderList);
@@ -124,6 +122,7 @@ public class ReceiptDocumentShowAction implements Action {
             if (req.getParameter("doc_save") != null) req.setAttribute("doc_save", "true");
             return new ActionResult("receipt_document");
         }
+
     }
 
     private Warehouse setRecipient(String editRecipient, ReceiptDocument receiptDocument, DocumentService documentService, Warehouse warehouse) {

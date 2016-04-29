@@ -5,7 +5,7 @@
         style="position: absolute;left: 300px;top: -425px;width: 151px;height: 23px;line-height: 20px;z-index: 10;"
         required>
     <c:if test="${empty sort_select}">
-        <option selected disabled>Choose a sort order ${sort_select}</option>
+        <option selected disabled>Choose a sort order</option>
     </c:if>
 
     <c:forEach items="${requestScope.sort_list}" var="item">

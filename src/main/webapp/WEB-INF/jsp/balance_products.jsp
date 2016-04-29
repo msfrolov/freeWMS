@@ -21,7 +21,7 @@
     top: -439px;
     left: -500;
     z-index: 14;">Report date:
-            <input type="date" name="doc_date" value="${doc_date}" max="${today}" min="2016-01-01" required></p>
+            <input onchange="this.form.submit()" type="date" name="doc_date" value="${doc_date}" max="${today}" min="2016-01-01" required></p>
         <label for="" id="Label64558"
                style="position: absolute;left: -230px;top: -425px;width: 171px;height: 20px;line-height: 20px;z-index: 10;">Selection
             of warehouse:</label>

@@ -72,4 +72,8 @@ public class ProductService extends Service {
     public void close() {
         super.close();
     }
+
+    public int getProductsNumber() {
+        return productDao.getNumberRows();
+    }
 }

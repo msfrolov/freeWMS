@@ -93,6 +93,8 @@ public class MoveDocumentShowAction implements Action {
                     toIndex = size;
                 log.debug("fromIndex  {}", fromIndex);
                 log.debug("toIndex   {}", toIndex);
+                int totalPages = (int) Math.ceil((double) moveDocument.size()/DEFAULT_PAGE_SIZE);
+                req.setAttribute("total_pages", totalPages);
                 tableLineList = moveDocument.getSubList(fromIndex, toIndex);
             }
             double i = (size / DEFAULT_PAGE_SIZE + 1);
@@ -102,15 +104,11 @@ public class MoveDocumentShowAction implements Action {
             if (add || delete) if (i > pageNumber) {
                 pageNumber++;
             } else if (pageNumber > i) pageNumber--;
-            try {
+            if (Validator.isValid(docDate, Validator.DATE))
                 moveDocument.setDate(LocalDate.parse(docDate, DateTimeFormatter.ISO_LOCAL_DATE));
-            } catch (Exception e) {
-                throw new ActionException("the incorrect date", e);
-            }
-            String format = moveDocument.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE);
-            log.debug("document date {}", format);
+            log.debug("document date {}", docDate);
             req.setAttribute("current_document_list", tableLineList);
-            req.setAttribute("doc_date", format);
+            req.setAttribute("doc_date", docDate);
             req.setAttribute("today", LocalDate.now().format(DateTimeFormatter.ISO_LOCAL_DATE));
             req.setAttribute("product_list", productList);
             req.setAttribute("sender_list", senderList);

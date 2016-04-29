@@ -10,8 +10,7 @@
     <td class="cell2">&nbsp;&nbsp;${product_elem.measure.name}</td>
     <td class="cell2">&nbsp;&nbsp;${product_elem.barcode}</td>
     <td class="cell1">&nbsp;&nbsp;
-        <c:if test="${empty product_elem.description}"><c:forEach begin="1"
-                                                                  end="10">&nbsp;</c:forEach></c:if>
+        <c:if test="${empty product_elem.description}"><c:forEach begin="1" end="10">&nbsp;</c:forEach></c:if>
         ${product_elem.description}
     </td>
     <td class="cell2">

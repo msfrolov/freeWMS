@@ -35,7 +35,10 @@
         <%--prod--%>
         <td class="cell1">
             <%--<select name="product" size="1" id="Combobox24">--%>
-            <select name="product" size="1" style="width: 820px;height: 30px">
+            <select name="product" size="1" style="width: 820px;height: 30px" required>
+                <c:if test="${empty curProd.id}">
+                    <option selected disabled>Select a product for adding</option>
+                </c:if>
                 <c:forEach items="${requestScope.product_list}" var="item">
                     <c:choose>
                         <c:when test="${curProd.id == item.id}">

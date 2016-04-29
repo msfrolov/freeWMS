@@ -16,52 +16,37 @@
 <script>
     function ValidateForm2(theForm) {
         var regexp;
-        regexp = /^[A-Za-zёЁА-Яа-я \t\r\n\f0-9-]*$/;
-        if (!regexp.test(theForm.Editbox1.value)) {
+        regexp = /^[A-Za-zёЁА-Яа-я \t\r\n\f()0-9-]*$/;
+        if (!regexp.test(theForm.Editbox14.value)) {
             alert("Please enter only letter, digit and whitespace characters in the \"EditName\" field.");
-            theForm.Editbox1.focus();
+            theForm.Editbox14.focus();
             return false;
         }
-        if (theForm.Editbox1.value == "") {
+        if (theForm.Editbox14.value == "") {
             alert("Please enter a value for the \"EditName\" field.");
-            theForm.Editbox1.focus();
+            theForm.Editbox14.focus();
             return false;
         }
-        if (theForm.Editbox1.value.length < 1) {
+        if (theForm.Editbox14.value.length < 1) {
             alert("Please enter at least 1 characters in the \"EditName\" field.");
-            theForm.Editbox1.focus();
+            theForm.Editbox14.focus();
             return false;
         }
-        if (theForm.Editbox1.value.length > 100) {
+        if (theForm.Editbox14.value.length > 100) {
             alert("Please enter at most 100 characters in the \"EditName\" field.");
-            theForm.Editbox1.focus();
+            theForm.Editbox14.focus();
             return false;
         }
-        regexp = /^[A-Za-zёЁА-Яа-я \t\r\n\f0-9-]*$/;
-        if (!regexp.test(theForm.Editbox4.value)) {
-            alert("Please enter only letter, digit and whitespace characters in the \"EditDescription\" field.");
-            theForm.Editbox4.focus();
-            return false;
-        }
-        if (theForm.Combobox1.selectedIndex < 0) {
-            alert("Please select one of the \"EditMeasure\" options.");
-            theForm.Combobox1.focus();
-            return false;
-        }
-        if (theForm.Combobox2.selectedIndex < 0) {
-            alert("Please select one of the \"EditType\" options.");
-            theForm.Combobox2.focus();
-            return false;
-        }
+
         regexp = /^[0-9-]*$/;
-        if (!regexp.test(theForm.Editbox2.value)) {
+        if (!regexp.test(theForm.Editbox24.value)) {
             alert("Please enter only digit characters in the \"EditBarcode\" field.");
-            theForm.Editbox2.focus();
+            theForm.Editbox24.focus();
             return false;
         }
-        if (theForm.Editbox2.value != "" && !(theForm.Editbox2.value > 0)) {
+        if (theForm.Editbox24.value != "" && !(theForm.Editbox24.value > 0)) {
             alert("Please enter a value greater than \"0\" in the \"EditBarcode\" field.");
-            theForm.Editbox2.focus();
+            theForm.Editbox24.focus();
             return false;
         }
         return true;

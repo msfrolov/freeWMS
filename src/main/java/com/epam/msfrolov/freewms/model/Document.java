@@ -16,7 +16,6 @@ public abstract class Document extends BaseEntity {
 
     public Document() {
         table = new ArrayList<>();
-        date = LocalDate.now();
     }
 
     @Override

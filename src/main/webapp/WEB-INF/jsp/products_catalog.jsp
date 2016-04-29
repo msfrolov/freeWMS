@@ -15,19 +15,6 @@
 </div>
 <t:table_products products_list="${products_list}" isAdmin="${isAdmin}"/>
 <form>
-<ul class="pagination">
-    <li>
-        <input height="35" src="${img_path}/pre.ico" type="image" name="page_number" value="${page_number-1}" style=" text-align: center;text-decoration: underline"
-               href="<c:url value="${balance_products}"></c:url>"> </input>
-    </li>
-    <li>
-        <input height="35" src="${img_path}/refresh.png" type="image" name="page_number" value="${page_number}" style=" text-align: center;text-decoration: underline"
-               href="<c:url value="${balance_products}"></c:url>"> </input>
-    </li>
-    <li>
-        <input height="35" src="${img_path}/next.png" type="image" name="page_number" value="${page_number+1}" style=" text-align: center;text-decoration: underline"
-               href="<c:url value="${balance_products}"></c:url>"> </input>
-    </li><h2>&nbsp;&nbsp;&nbsp;&nbsp;Page number ${page_number}</h2>
-</ul>
+    <t:pagination url="${balance_products}" page_number="${requestScope.page_number}"/>
 </form>
 <t:footer/>

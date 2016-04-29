@@ -41,7 +41,7 @@ public class CabinetShowAction implements Action {
     private void usersIndividInit(UserService userService, User user) {
         if (user.getIndividual() == null) {
             Individual individ = new Individual();
-            individ.setName(user.getName());
+            individ.setName("New user");
             individ = userService.insertIndivid(individ);
             user.setIndividual(individ);
             boolean success = userService.updateUser(user);

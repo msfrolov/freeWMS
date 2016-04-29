@@ -64,6 +64,6 @@
                 <li><a href="#" title="Roles"><i class="fa fa-tachometer fa-2x">&nbsp;</i>Roles</a></li>
             </ul>
         </li>
-        <li><a href="<c:url value="${cabinet_action}"></c:url>" title="Cabinet"><i class="fa fa-user fa-2x">&nbsp;</i><br>Cabinet</a></li>
+        <li><a href="<c:url value="${cabinet_action}"></c:url>" title="Cabinet"><i class="fa fa-user fa-2x">&nbsp;</i><br>Profile</a></li>
     </ul>
 </div>

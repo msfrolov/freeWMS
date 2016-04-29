@@ -132,6 +132,7 @@ public class QueryDesigner {
         stringBuilder.append(" > ");
         return this;
     }
+
     public QueryDesigner groupBy() {
         stringBuilder.append(" GROUP BY ");
         return this;
@@ -159,6 +160,26 @@ public class QueryDesigner {
 
     public QueryDesigner id() {
         stringBuilder.append(" ID ");
+        return this;
+    }
+
+    public QueryDesigner count() {
+        stringBuilder.append(" COUNT ");
+        return this;
+    }
+
+    public QueryDesigner innerJoin() {
+        stringBuilder.append(" INNER JOIN ");
+        return this;
+    }
+
+    public QueryDesigner on() {
+        stringBuilder.append(" ON ");
+        return this;
+    }
+
+    public QueryDesigner dot() {
+        stringBuilder.append(" . ");
         return this;
     }
 
@@ -230,4 +251,6 @@ public class QueryDesigner {
     public String toString() {
         return stringBuilder.toString();
     }
+
+
 }

@@ -16,12 +16,15 @@ import java.util.Properties;
 @WebFilter(filterName = "1UserSessionFilter", urlPatterns = "/wms/*")
 public class UserSessionFilter implements Filter {
     private static final String FORBIDDEN_PAGE = "/WEB-INF/jsp/forbidden.jsp";
+    private static final String NOTICE__PAGE = "/WEB-INF/jsp/notice.jsp";
     private static final Logger log = LoggerFactory.getLogger(UserSessionFilter.class);
-    private Properties accessLevelProp;
+    private Properties accessRequiredProp;
+    private Properties accessLevelsProp;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        accessLevelProp = FileManager.getProperties("properties/access.levels.properties");
+        accessRequiredProp = FileManager.getProperties("properties/access.required.properties");
+        accessLevelsProp = FileManager.getProperties("properties/access.levels.properties");
     }
 
     @Override
@@ -53,16 +56,22 @@ public class UserSessionFilter implements Filter {
         if (checkAccess(pathInfo, role)) {
             chain.doFilter(req, resp);
         } else {
-            log.debug("  Forbidden!");
-            forbidden(req, resp, chain);
+            if (role == UserRole.GUEST) {
+                log.debug("  Please, sign in or sign up");
+                notice(req, resp, chain);
+            } else {
+                log.debug("  Forbidden!");
+                forbidden(req, resp, chain);
+            }
         }
     }
+
 
     private boolean checkAccess(String pathInfo, UserRole role) {
         int currentAccessLevel = getAccessLevel(role);
         try {
-            int requiredLevel = Integer.parseInt(accessLevelProp.getProperty(pathInfo));
-            log.debug("Access curent {} required {}", currentAccessLevel, requiredLevel);
+            int requiredLevel = Integer.parseInt(accessRequiredProp.getProperty(pathInfo));
+            log.debug("Access current {} required {}", currentAccessLevel, requiredLevel);
             if (requiredLevel <= currentAccessLevel) return true;
             else return false;
         } catch (Exception e) {
@@ -71,11 +80,16 @@ public class UserSessionFilter implements Filter {
     }
 
     private int getAccessLevel(UserRole role) {
-        if (role.equals(UserRole.ADMIN)) return 5;
-        else if (role.equals(UserRole.ACCOUNTANT)) return 4;
-        else if (role.equals(UserRole.STOCKMAN)) return 3;
-        else if (role.equals(UserRole.USER)) return 2;
-        else return 1;
+        Integer id = role.getId();
+        log.debug("get role id: {}", id);
+        int i;
+        try {
+            i = Integer.parseInt(accessLevelsProp.getProperty(String.valueOf(id)));
+        }catch (Exception e){
+            throw new FilterException("failed to get the level of access", e);
+        }
+        log.debug("get access level: {}", i);
+        return i;
     }
 
     private void forbidden(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws ServletException, IOException {
@@ -87,6 +101,13 @@ public class UserSessionFilter implements Filter {
         log.debug("RequestDispatcher");
         log.debug("Status code: {}", statusCode);
         log.debug("URI: {}", requestUri);
+        req.getRequestDispatcher(path).forward(req, resp);
+    }
+
+
+    private void notice(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws ServletException, IOException {
+        String path = NOTICE__PAGE;
+        log.debug("RequestDispatcher");
         req.getRequestDispatcher(path).forward(req, resp);
     }
 

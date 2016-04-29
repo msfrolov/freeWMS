@@ -35,6 +35,9 @@ public class ProductsCatalogShowAction implements Action {
         log.debug("current page number {}", pageNumber);
         List<Product> products;
         try (ProductService productService = new ProductService()) {
+            int elemNumber = productService.getProductsNumber();
+            int totalPages = (int) Math.ceil((double) elemNumber/DEFAULT_PAGE_SIZE);
+            req.setAttribute("total_pages", totalPages);
             products = productService.getProductsForPage(pageNumber, DEFAULT_PAGE_SIZE);
         }
         boolean isAdmin;

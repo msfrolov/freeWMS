@@ -14,7 +14,19 @@
 <div id="wb_Heading1533">
     <h1 id="Heading1">Receipt document</h1>
 </div>
-<form name="Form17" method="get" action="<c:url value="${receipt_document}"></c:url>" accept-charset="UTF-8">
+<script>
+    function ValidateForm4(theForm){
+        var regexp;
+        regexp = /^[0-9]*$/;
+        if (!regexp.test(theForm.product.value)) {
+            alert("Please, select a product for adding.");
+            theForm.product.focus();
+            return false;
+        }
+    }
+</script>
+<form name="Form17" method="get" action="<c:url value="${receipt_document}"></c:url>" accept-charset="UTF-8"
+onsubmit="return ValidateForm4">
     <p style=" position:absolute;top: 251px;left: 30px;z-index: 14">Document date:
         <input type="date" name="doc_date" value="${doc_date}"
                max="${today}" min="2016-01-01"></p>

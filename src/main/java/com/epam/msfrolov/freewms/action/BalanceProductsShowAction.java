@@ -29,7 +29,6 @@ public class BalanceProductsShowAction implements Action {
         Integer pageNumber;
         LocalDate date;
         Warehouse warehouse;
-        String sort;
         String pageString = req.getParameter("page_number");
         String dateString = req.getParameter("doc_date");
         String warehouseString = req.getParameter("warehouse_select");
@@ -42,7 +41,7 @@ public class BalanceProductsShowAction implements Action {
             Integer warehouseId = checkWarehouseId(warehouseString);
             warehouse = orderService.findWarehouseById(warehouseId);
             if (warehouse == null) throw new ActionException("failed to find the warehouse");
-            tableLineList = orderService.calculateProdBalance(pageNumber, DEFAULT_PAGE_SIZE, warehouse, date);
+            tableLineList = orderService.calculateProdBalance(pageNumber, DEFAULT_PAGE_SIZE, warehouse, date, req);
             fillWarehouseList(orderService, req);
         }
 

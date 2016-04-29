@@ -341,4 +341,21 @@ public class JdbcDao<T extends BaseEntity> implements Dao<T> {
         }
     }
 
+    @Override
+    public int getNumberRows() {
+        QueryDesigner query = new QueryDesigner();
+        query.select().count().ob().asterisk().cb().from().table(clazz).where().deletionMark().equal().bool(false);
+        String assembledQuery = query.toString();
+        log.debug("getNumberRows: {}", assembledQuery);
+        try (PreparedStatement statement = connection.prepareStatement(assembledQuery)) {
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            int anInt = resultSet.getInt(1);
+            log.debug("rows number: {}", anInt);
+            return anInt;
+        } catch (SQLException e) {
+            throw new DaoException("SQLException: fail in prepare statement 'queryDesigner'", e);
+        }
+    }
+
 }

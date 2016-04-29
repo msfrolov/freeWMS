@@ -9,56 +9,69 @@
 <div id="wb_Image4" style="position:absolute;left:6px;top:264px;width:989px;height:489px;z-index:14;">
     <img src="${img_path}/body2.jpg" id="Image4" alt=""></div>
 <div id="wb_Heading15">
-    <h1 id="Heading1">Cabinet</h1></div>
+    <h1 id="Heading1">Profile</h1></div>
 <script>
     function ValidateForm3(theForm) {
         var regexp;
-        regexp = /^[A-Za-zёЁА-Яа-я \t\r\n\f0-9-]*$/;
-        if (!regexp.test(theForm.Editbox1.value)) {
+        regexp = /^[A-Za-zёЁА-Яа-я0-9-]*$/;
+        if (!regexp.test(theForm.Editbox1422.value)) {
             alert("Please enter only letter, digit and whitespace characters in the \"EditName\" field.");
-            theForm.Editbox1.focus();
+            theForm.Editbox1422.focus();
             return false;
         }
-        if (theForm.Editbox1.value == "") {
+        if (theForm.Editbox1422.value == "") {
             alert("Please enter a value for the \"EditName\" field.");
-            theForm.Editbox1.focus();
+            theForm.Editbox1422.focus();
             return false;
         }
-        if (theForm.Editbox1.value.length < 1) {
+        if (theForm.Editbox1422.value.length < 1) {
             alert("Please enter at least 1 characters in the \"EditName\" field.");
-            theForm.Editbox1.focus();
+            theForm.Editbox1422.focus();
             return false;
         }
-        if (theForm.Editbox1.value.length > 100) {
+        if (theForm.Editbox1422.value.length > 100) {
             alert("Please enter at most 100 characters in the \"EditName\" field.");
-            theForm.Editbox1.focus();
+            theForm.Editbox1422.focus();
             return false;
         }
-        regexp = /^[A-Za-zёЁА-Яа-я \t\r\n\f0-9-]*$/;
-        if (!regexp.test(theForm.Editbox4.value)) {
-            alert("Please enter only letter, digit and whitespace characters in the \"EditDescription\" field.");
-            theForm.Editbox4.focus();
+        if (!regexp.test(theForm.Combobox2422.value)) {
+            alert("Please enter only letter, digit and whitespace characters in the \"EditName\" field.");
+            theForm.Combobox2422.focus();
             return false;
         }
-        if (theForm.Combobox1.selectedIndex < 0) {
-            alert("Please select one of the \"EditMeasure\" options.");
-            theForm.Combobox1.focus();
+        if (theForm.Combobox2422.value == "") {
+            alert("Please enter a value for the \"EditName\" field.");
+            theForm.Combobox2422.focus();
             return false;
         }
-        if (theForm.Combobox2.selectedIndex < 0) {
-            alert("Please select one of the \"EditType\" options.");
-            theForm.Combobox2.focus();
+        if (theForm.Combobox2422.value.length < 1) {
+            alert("Please enter at least 1 characters in the \"EditName\" field.");
+            theForm.Combobox2422.focus();
             return false;
         }
-        regexp = /^[0-9-]*$/;
-        if (!regexp.test(theForm.Editbox2.value)) {
-            alert("Please enter only digit characters in the \"EditBarcode\" field.");
-            theForm.Editbox2.focus();
+        if (theForm.Combobox2422.value.length > 100) {
+            alert("Please enter at most 100 characters in the \"EditName\" field.");
+            theForm.Combobox2422.focus();
             return false;
         }
-        if (theForm.Editbox2.value != "" && !(theForm.Editbox2.value > 0)) {
-            alert("Please enter a value greater than \"0\" in the \"EditBarcode\" field.");
-            theForm.Editbox2.focus();
+        if (!regexp.test(theForm.Combobox14.value)) {
+            alert("Please enter only letter, digit and whitespace characters in the \"EditName\" field.");
+            theForm.Combobox14.focus();
+            return false;
+        }
+        if (theForm.Combobox14.value == "") {
+            alert("Please enter a value for the \"EditName\" field.");
+            theForm.Combobox14.focus();
+            return false;
+        }
+        if (theForm.Combobox14.value.length < 1) {
+            alert("Please enter at least 1 characters in the \"EditName\" field.");
+            theForm.Combobox14.focus();
+            return false;
+        }
+        if (theForm.Combobox14.value.length > 100) {
+            alert("Please enter at most 100 characters in the \"EditName\" field.");
+            theForm.Combobox14.focus();
             return false;
         }
         return true;
@@ -109,7 +122,8 @@
         <c:if test="${not empty violation.individName}"><label id="Label12622">${violation.individName}</label></c:if>
         <c:if test="${not empty violation.individLName}"><label id="Label12722">${violation.individLName}</label></c:if>
         <c:if test="${not empty violation.gender}"><label id="Label12822">${violation.gender}</label></c:if>
-        <c:if test="${not empty violation.transaction}"><label for="" id="Label129">${violation.transaction}</label></c:if>
+        <c:if test="${not empty violation.transaction}"><label for=""
+                                                               id="Label129">${violation.transaction}</label></c:if>
         <c:if test="${success}"><label id="Label13022">successfully saved</label></c:if>
 
         <input type="submit" id="Button3422" name="Save" value="Save">
