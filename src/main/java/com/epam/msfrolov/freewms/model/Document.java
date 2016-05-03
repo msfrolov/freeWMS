@@ -10,6 +10,7 @@ import static com.epam.msfrolov.freewms.util.Common.checkNotNull;
 
 public abstract class Document extends BaseEntity {
 
+
     private LocalDate date;
     private List<TableLine> table;
     private String comment;
@@ -91,11 +92,7 @@ public abstract class Document extends BaseEntity {
     public TableLine remove(int i) {
         return table.remove(i);
     }
-
-    public boolean remove(Object o) {
-        return table.remove(o);
-    }
-
+    
     public void forEach(Consumer<? super TableLine> consumer) {
         table.forEach(consumer);
     }

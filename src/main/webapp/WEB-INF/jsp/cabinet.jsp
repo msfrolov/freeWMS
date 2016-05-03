@@ -82,6 +82,7 @@
                                                 <c:param name="EditId" value="${user_cabinet.id}"/>
                                                 <c:param name="EditName" value="${user_cabinet.name}"/>
                                                 <c:param name="CurrentRole" value="${user_cabinet.role.id}"/>
+                                                <c:param name="edit" value="${edit}"/>
                                              </c:url>" id="Form14"
           onsubmit="return ValidateForm3(this)">
         <label for="" id="Label9422">Role:</label>

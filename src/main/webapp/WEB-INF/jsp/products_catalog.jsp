@@ -15,6 +15,12 @@
 </div>
 <t:table_products products_list="${products_list}" isAdmin="${isAdmin}"/>
 <form>
+    <div style="top: 685;position: absolute;left: 638;z-index: 17;font-size:20;font-weight: bold;">
+        <a href="<c:url value="${product_card}">
+                                 <c:param name="page_number" value="${page_number}"/>
+                                 <c:param name="add_prod" value="add_prod"/>
+                             </c:url>"><img src="${img_path}/add.png" height="24">Add product</a>
+    </div>
     <t:pagination url="${balance_products}" page_number="${requestScope.page_number}"/>
 </form>
 <t:footer/>

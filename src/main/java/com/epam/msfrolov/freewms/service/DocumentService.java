@@ -6,10 +6,10 @@ import com.epam.msfrolov.freewms.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.sql.rowset.CachedRowSet;
+import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class DocumentService extends Service {
     public static final QueryDesigner BALANCE_PRODUCTS_IN_WAREHOUSES = new QueryDesigner()
@@ -154,14 +154,14 @@ public class DocumentService extends Service {
         if (document.getClass() == ReceiptDocument.class) {
             ReceiptDocument receiptDocument = (ReceiptDocument) document;
             receiptDocument.forEach(tableLine -> executeQuery(mainSuccess, tableLine.getProduct().getId(),
-                    receiptDocument.getRecipient().getId(), tableLine.getCount(),
+                    receiptDocument.getSender().getId(), tableLine.getCount(),
                     receiptDocument.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE),
                     TURNOVER_PRODUCTS_WITH_COUNTERPARTIES));
         } else if (document.getClass() == ExpenseDocument.class) {
             ExpenseDocument expenseDocument = (ExpenseDocument) document;
             expenseDocument.forEach(tableLine ->
                     executeQuery(mainSuccess, tableLine.getProduct().getId(),
-                            expenseDocument.getSender().getId(), tableLine.getCount() * -1,
+                            expenseDocument.getRecipient().getId(), tableLine.getCount() * -1,
                             expenseDocument.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE),
                             TURNOVER_PRODUCTS_WITH_COUNTERPARTIES));
         }
@@ -179,4 +179,98 @@ public class DocumentService extends Service {
         if (!success) mainSuccess[0] = false;
     }
 
+    public List<Map<String, String>> documentsList(int pageNumber, int pageSize) {
+        String query = "SELECT\n" +
+                "  TYPE,\n" +
+                "  ID,\n" +
+                "  DATE,\n" +
+                "  SENDER,\n" +
+                "  RECIPIENT,\n" +
+                "  COMMENT\n" +
+                "FROM\n" +
+                "  (SELECT\n" +
+                "     RD.ID   AS ID,\n" +
+                "     DATE,\n" +
+                "     CP.NAME AS SENDER,\n" +
+                "     WH.NAME AS RECIPIENT,\n" +
+                "     COMMENT,\n" +
+                "     'RECIPIENT'       AS TYPE\n" +
+                "   FROM RECEIPT_DOCUMENT AS RD\n" +
+                "     LEFT JOIN COUNTERPART AS CP ON RD.SENDER = CP.ID\n" +
+                "     LEFT JOIN WAREHOUSE AS WH ON RD.RECIPIENT = WH.ID\n" +
+                "   WHERE RD.DELETION_MARK = FALSE\n" +
+                "\n" +
+                "   UNION\n" +
+                "\n" +
+                "   SELECT\n" +
+                "     MD.ID    AS ID,\n" +
+                "     DATE,\n" +
+                "     WH.NAME  AS SENDER,\n" +
+                "     WH2.NAME AS RECIPIENT,\n" +
+                "     COMMENT,\n" +
+                "     'MOVE'        AS TYPE\n" +
+                "   FROM MOVE_DOCUMENT AS MD\n" +
+                "     LEFT JOIN WAREHOUSE AS WH ON MD.SENDER = WH.ID\n" +
+                "     LEFT JOIN WAREHOUSE AS WH2 ON MD.RECIPIENT = WH2.ID\n" +
+                "   WHERE MD.DELETION_MARK = FALSE\n" +
+                "\n" +
+                "   UNION\n" +
+                "\n" +
+                "   SELECT\n" +
+                "     ED.ID   AS ID,\n" +
+                "     DATE,\n" +
+                "     WH.NAME AS SENDER,\n" +
+                "     CP.NAME AS RECIPIENT,\n" +
+                "     COMMENT,\n" +
+                "     'EXPENSE'       AS TYPE\n" +
+                "   FROM EXPENSE_DOCUMENT AS ED\n" +
+                "     LEFT JOIN WAREHOUSE AS WH ON ED.SENDER = WH.ID\n" +
+                "     LEFT JOIN COUNTERPART AS CP ON ED.RECIPIENT = CP.ID\n" +
+                "   WHERE ED.DELETION_MARK = FALSE) AS TB\n" +
+                "ORDER BY ID,SENDER,RECIPIENT LIMIT ? OFFSET ?";
+
+        QueryDesigner queryDesigner = new QueryDesigner();
+        queryDesigner.text(query);
+        List<Object> param = new ArrayList<>();
+        param.add(pageSize);
+        int offSet = (pageNumber - 1) * pageSize;
+        param.add(offSet);
+        CachedRowSet cachedRowSet = productDao.queryDesignerResultSet(queryDesigner, param);
+        List<Map<String, String>> documentList = new ArrayList<>();
+        try {
+            while (cachedRowSet.next()) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("type", cachedRowSet.getString("TYPE"));
+                map.put("id", cachedRowSet.getString("ID"));
+                map.put("date", cachedRowSet.getString("DATE"));
+                map.put("sender", cachedRowSet.getString("SENDER"));
+                map.put("recipient", cachedRowSet.getString("RECIPIENT"));
+                map.put("comment", cachedRowSet.getString("COMMENT"));
+                documentList.add(map);
+            }
+        } catch (SQLException e) {
+            throw new ServiceException("failed to generate report (unreadable data in DB)", e);
+        }
+        return documentList;
+    }
+
+    public int documentsListSize() {
+        String query = "SELECT COUNT(*) FROM (\n" +
+                "  SELECT ID FROM RECEIPT_DOCUMENT WHERE DELETION_MARK = FALSE\n" +
+                "  UNION\n" +
+                "  SELECT ID FROM MOVE_DOCUMENT WHERE DELETION_MARK = FALSE\n" +
+                "  UNION\n" +
+                "  SELECT ID FROM EXPENSE_DOCUMENT WHERE DELETION_MARK = FALSE\n" +
+                ")";
+        QueryDesigner queryDesigner = new QueryDesigner();
+        queryDesigner.text(query);
+        List<Object> param = new ArrayList<>();
+        CachedRowSet cachedRowSet = productDao.queryDesignerResultSet(queryDesigner, param);
+        try {
+            cachedRowSet.next();
+            return cachedRowSet.getInt(1);
+        } catch (SQLException e) {
+            throw new ServiceException("failed to generate report (unreadable data in DB)", e);
+        }
+    }
 }

@@ -22,6 +22,7 @@ public class CabinetUpdateAction implements Action {
     private static final Logger log = LoggerFactory.getLogger(CabinetUpdateAction.class);
     private ActionResult cabinet = new ActionResult("cabinet");
     private ActionResult home = new ActionResult("home");
+    private ActionResult usersCatalog = new ActionResult("users_catalog",true);
 
 
     @Override
@@ -115,6 +116,7 @@ public class CabinetUpdateAction implements Action {
                 req.setAttribute("individ_cabinet", user.getIndividual());
                 req.setAttribute("success", success);
                 req.setAttribute("violation", violation);
+                req.setAttribute("edit", "edit");
                 log.debug("listRole {}", listRole);
                 log.debug("listGender {}", listGender);
                 log.debug("user {}", user);
@@ -123,6 +125,9 @@ public class CabinetUpdateAction implements Action {
             }
         } else if (close) {
             log.debug("- click on the button Close");
+            if ("edit".equalsIgnoreCase(req.getParameter("edit"))) {
+                return usersCatalog;
+            }
             return home;
         } else throw new AppException("condition was not provided");
     }

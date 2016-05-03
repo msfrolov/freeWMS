@@ -54,6 +54,7 @@
 </script>
 <div id="wb_Form14">
     <form name="Form1" method="post" action="<c:url value="${product_card}">
+                                                <c:param name="add_prod" value="${add_prod}"/>
                                                 <c:param name="EditId" value="${product.id}"/>
                                             </c:url>" id="Form14"
           onsubmit="return ValidateForm2(this)">

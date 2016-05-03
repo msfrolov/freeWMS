@@ -1,7 +1,6 @@
 package com.epam.msfrolov.freewms.service;
 
 import com.epam.msfrolov.freewms.dao.Dao;
-import com.epam.msfrolov.freewms.dao.DaoFactory;
 import com.epam.msfrolov.freewms.model.Measure;
 import com.epam.msfrolov.freewms.model.Product;
 import com.epam.msfrolov.freewms.model.ProductType;
@@ -75,5 +74,9 @@ public class ProductService extends Service {
 
     public int getProductsNumber() {
         return productDao.getNumberRows();
+    }
+
+    public Product addProduct(Product product) {
+        return productDao.insert(product);
     }
 }

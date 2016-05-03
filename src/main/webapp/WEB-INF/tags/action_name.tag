@@ -18,3 +18,6 @@
 <c:set var="move_document" scope="request" value="/wms/move_document"/>
 <c:set var="expense_document" scope="request" value="/wms/expense_document"/>
 <c:set var="balance_products" scope="request" value="/wms/balance_products"/>
+<c:set var="turnover_products" scope="request" value="/wms/turnover_products"/>
+<c:set var="document_journal" scope="request" value="/wms/document_journal"/>
+<c:set var="users_catalog" scope="request" value="/wms/users_catalog"/>

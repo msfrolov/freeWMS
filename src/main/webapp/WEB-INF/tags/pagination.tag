@@ -30,10 +30,10 @@
     </li>
     <c:choose>
         <c:when test="${not empty requestScope.total_pages}">
-            <br><h4>Page number ${page_number} from ${requestScope.total_pages}</h4>
+            <br><h4 style="font-family: fantasy;font-style: inherit;">Page ${page_number} - ${requestScope.total_pages}</h4>
         </c:when>
         <c:otherwise>
-            <br><h4>Page number ${page_number} from 1</h4>
+            <br><h4>Page ${page_number} - 1</h4>
         </c:otherwise>
     </c:choose>
 

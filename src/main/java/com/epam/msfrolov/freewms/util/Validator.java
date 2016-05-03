@@ -4,9 +4,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Validator {
-    public static final String LETTERS_DIGITS_WS = "^[а-яА-ЯёЁa-zA-Z()_ 0-9]+$";
-    public static final String LETTERS_DIGITS_WS_MIN5_MAX32 = "^[а-яА-ЯёЁa-zA-Z()_ 0-9]{5,32}$";
-    public static final String LETTERS_DIGITS = "^[а-яА-ЯёЁa-z_A-Z()0-9]+$";
+    public static final String LETTERS_DIGITS_WS = "^[а-яА-ЯёЁa-zA-Z()_ 0-9-]+$";
+    public static final String LETTERS_DIGITS_WS_MIN5_MAX32 = "^[а-яА-ЯёЁa-zA-Z()_ 0-9-]{5,32}$";
+    public static final String LETTERS_DIGITS = "^[а-яА-ЯёЁa-z_A-Z()0-9-]+$";
     public static final String DIGITS = "^[0-9]+$";
     public static final String DIGITS_MIN1_MAX9 = "^[0-9]{1,9}$";
     public static final String LETTERS = "^[а-яА-ЯёЁa-zA-Z()_]+$";

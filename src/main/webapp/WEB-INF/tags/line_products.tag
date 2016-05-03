@@ -26,6 +26,4 @@
             <img src="${img_path}/delete.png" height="20">
         </a>
     </td>
-    <%--<c:if test="${isAdmin}">--%>
-    <%--</c:if>--%>
 </tr>

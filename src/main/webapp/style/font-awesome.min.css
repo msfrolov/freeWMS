@@ -1,7 +1,3 @@
-/*!
- *  Font Awesome 4.5.0 by @davegandy - http://fontawesome.io - @fontawesome
- *  License - http://fontawesome.io/license (Font: SIL OFL 1.1, CSS: MIT License)
- */
 @font-face {
     font-family: 'FontAwesome';
     src: url('fontawesome-webfont.eot?v=4.5.0');
@@ -17,8 +13,6 @@
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale
-    /*display: block; !* Ссылка как блочный элемент *!*/
-    /*height: 100%; !* Высота на весь слой *!*/
 }
 
 .fa-lg {

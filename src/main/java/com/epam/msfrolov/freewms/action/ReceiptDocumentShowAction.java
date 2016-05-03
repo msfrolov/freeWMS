@@ -178,15 +178,16 @@ public class ReceiptDocumentShowAction implements Action {
         int productId;
         int count;
         if (!Validator.isValid(productIdStr, Validator.DIGITS_MIN1_MAX9))
-            throw new ActionException("add: product id parameter is incorrect (not a number)");
+            return;
         else if ((productId = Integer.parseInt(productIdStr)) < 1)
-            throw new ActionException("add: product id parameter is incorrect (negative number)");
+            return;
         if (!Validator.isValid(countStr, Validator.DIGITS_MIN1_MAX9))
-            throw new ActionException("add: count parameter is incorrect (not a number)");
+            return;
         else if ((count = Integer.parseInt(countStr)) < 1)
-            throw new ActionException("add: count parameter is incorrect (negative number)");
+            return;
         Product product = documentService.findProduct(productId);
-        if (product == null) throw new ActionException("add: product with the id is deleted or does not exist");
+        if (product == null)
+            return;
         final boolean[] addNewLine = {true};
         receiptDocument.forEach(tableLine -> {
             if (tableLine.getProduct().equals(product)) {

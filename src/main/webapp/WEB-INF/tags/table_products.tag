@@ -13,8 +13,6 @@
         <td class="cell3">Description</td>
         <td class="cell3">Edit</td>
         <td class="cell3">Delete</td>
-        <%--<c:if test="${isAdmin}">--%>
-        <%--</c:if>--%>
     </tr>
     <c:forEach items="${products_list}" var="product_elem">
         <tags:line_products page_number="${requestScope.page_number}" product_elem="${product_elem}"/>

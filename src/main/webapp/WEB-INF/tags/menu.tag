@@ -17,11 +17,11 @@
             <ul>
                 <li><a href="<c:url value="${products_catalog}"></c:url>"><i class="fa fa-cubes fa-2x">&nbsp;</i>Products</a>
                 </li>
-                <li><a href="#"><i class="fa fa-stack-overflow fa-2x">&nbsp;</i>Warehouses</a></li>
-                <li><a href="#" title="Counterparts"><i class="fa fa-user-secret fa-2x">&nbsp;</i>Counterparts</a></li>
-                <li><a href="#" title="Product types"><i class="fa fa-list-ul fa-2x">&nbsp;</i>Product&nbsp;types</a>
-                </li>
-                <li><a href="#"><i class="fa fa-codepen fa-2x">&nbsp;</i>Measures</a></li>
+                <%--<li><a href="#"><i class="fa fa-stack-overflow fa-2x">&nbsp;</i>Warehouses</a></li>--%>
+                <%--<li><a href="#" title="Counterparts"><i class="fa fa-user-secret fa-2x">&nbsp;</i>Counterparts</a></li>--%>
+                <%--<li><a href="#" title="Product types"><i class="fa fa-list-ul fa-2x">&nbsp;</i>Product&nbsp;types</a>--%>
+                <%--</li>--%>
+                <%--<li><a href="#"><i class="fa fa-codepen fa-2x">&nbsp;</i>Measures</a></li>--%>
             </ul>
         </li>
         <li>
@@ -31,6 +31,9 @@
             <a href="#"><i class="fa fa-book fa-2x">&nbsp;</i><br>Documents<b class="arrow-down"></b></a>
             <input type="checkbox" id="ResponsiveMenu1-submenu-1">
             <ul>
+                <li><a href="<c:url value="${document_journal}"></c:url>" title="Document journal"><i
+                        class="fa fa-list fa-2x">&nbsp;</i>Document&nbsp;journal</a>
+                </li>
                 <li><a href="<c:url value="${receipt_document}"></c:url>" title="Receipt document"><i
                         class="fa fa-calendar-plus-o fa-2x">&nbsp;</i>Receipt&nbsp;document</a>
                 </li>
@@ -50,7 +53,7 @@
             <input type="checkbox" id="ResponsiveMenu1-submenu-2">
             <ul>
                 <li><a href="<c:url value="${balance_products}"></c:url>" title="Balance products"><i class="fa fa-tasks fa-2x">&nbsp;</i>Balance&nbsp;products</a></li>
-                <li><a href="<c:url value="${turnover}"></c:url>" title="Turnover with counterparties"><i class="fa fa-retweet fa-2x">&nbsp;</i>Turnover&nbsp;with&nbsp;counterparties</a>
+                <li><a href="<c:url value="${turnover_products}"></c:url>" title="Turnover with counterparties"><i class="fa fa-retweet fa-2x">&nbsp;</i>Turnover&nbsp;with&nbsp;counterparties</a>
                 </li>
             </ul>
         </li>
@@ -60,8 +63,8 @@
                     class="arrow-down"></b></a>
             <input type="checkbox" id="ResponsiveMenu1-submenu-3">
             <ul>
-                <li><a href="#" title="Users"><i class="fa fa-users fa-2x">&nbsp;</i>Users</a></li>
-                <li><a href="#" title="Roles"><i class="fa fa-tachometer fa-2x">&nbsp;</i>Roles</a></li>
+                <li><a href="<c:url value="${users_catalog}"></c:url>" title="Users"><i class="fa fa-users fa-2x">&nbsp;</i>Users</a></li>
+                <%--<li><a href="#" title="Roles"><i class="fa fa-tachometer fa-2x">&nbsp;</i>Roles</a></li>--%>
             </ul>
         </li>
         <li><a href="<c:url value="${cabinet_action}"></c:url>" title="Cabinet"><i class="fa fa-user fa-2x">&nbsp;</i><br>Profile</a></li>

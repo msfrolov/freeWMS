@@ -33,17 +33,21 @@ public class ProductCardUpdateAction implements Action {
                 Product product = null;
                 Map<String, String> violation = new HashMap<>();
                 String idString = req.getParameter("EditId");
-                if (!isValid(idString, DIGITS_MIN1_MAX9))
-                    violation.put("id", "the product with such id was not found (not a number)");
-                else {
-                    int id = Integer.parseInt(idString);
-                    if (id < 1) violation.put("id", "the product with such id was not found (negative id)");
-                    else if ((product = productService.findProduct(id)) == null)
-                        violation.put("id", "product with such id is missing or deleted");
+                boolean addProd = "add_prod".equalsIgnoreCase(req.getParameter("add_prod"));
+                if (!addProd) {
+                    if (!isValid(idString, DIGITS_MIN1_MAX9))
+                        violation.put("id", "the product with such id was not found (not a number)");
+                    else {
+                        int id = Integer.parseInt(idString);
+                        if (id < 1) violation.put("id", "the product with such id was not found (negative id)");
+                        else if ((product = productService.findProduct(id)) == null)
+                            violation.put("id", "product with such id is missing or deleted");
+                    }
                 }
                 if (product == null) product = new Product();
                 String name = req.getParameter("EditName");
-                if (!isValid(name, LETTERS_DIGITS_WS)) violation.put("name", "incorrect characters (only letters, digits and space character)");
+                if (!isValid(name, LETTERS_DIGITS_WS))
+                    violation.put("name", "incorrect characters (only letters, digits and space character)");
                 else product.setName(name);
                 String typeId = req.getParameter("EditType");//type id
                 if (!isValid(typeId, DIGITS_MIN1_MAX9)) violation.put("type", "selected the wrong product type");
@@ -67,9 +71,16 @@ public class ProductCardUpdateAction implements Action {
                 else product.setBarcode(barcode);
                 boolean success = false;
                 if (violation.isEmpty()) {
-                    log.debug("save change in product fields");
-                    success = productService.saveProduct(product);
-                    log.debug("Data saved successfully = {}", success);
+                    if (addProd) {
+                        log.debug("add new product");
+                        product = productService.addProduct(product);
+                        if (product != null) success = true;
+                        log.debug("Data saved successfully = {}", success);
+                    } else {
+                        log.debug("save change in product fields");
+                        success = productService.saveProduct(product);
+                        log.debug("Data saved successfully = {}", success);
+                    }
                 }
                 List<ProductType> productTypes = productService.findAllProductType();
                 List<Measure> measureList = productService.findAllMeasure();

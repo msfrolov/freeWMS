@@ -24,12 +24,11 @@ public class CabinetShowAction implements Action {
             usersIndividInit(userService, user);
             List<UserRole> listRole = userService.getAllRoles();
             List<Gender> listGender = userService.getGender();
-
-
             req.setAttribute("role_list", listRole);
             req.setAttribute("gender_list", listGender);
             req.setAttribute("user_cabinet", user);
             req.setAttribute("individ_cabinet", user.getIndividual());
+            req.setAttribute("edit", req.getParameter("edit"));
             log.debug("{}", listRole);
             log.debug("{}", listGender);
             log.debug("{}", user);
@@ -52,11 +51,14 @@ public class CabinetShowAction implements Action {
     private User userInit(HttpServletRequest req, UserService userService) {
         User user;
         String userId = req.getParameter("userId");
-        if (userId == null || !Validator.isValid(userId, Validator.DIGITS_MIN1_MAX9)) {
+        boolean addUser = "edit".equalsIgnoreCase(req.getParameter("edit"));
+        if (!addUser) {
             Object userObject = req.getSession(false).getAttribute("user");
             if (userObject == null) throw new ActionException("session user is not found");
             else user = (User) userObject;
         } else {
+            if (!Validator.isValid(userId, Validator.DIGITS_MIN1_MAX9))
+                throw new ActionException("incorrect parameters for the user search (not digits)");
             int id = Integer.parseInt(userId);
             if (id < 1) throw new ActionException("incorrect parameters for the user search (negative id)");
             user = userService.findById(id);

@@ -56,7 +56,7 @@ public class BalanceProductsShowAction implements Action {
     }
 
     private void fillWarehouseList(OrderService orderService, HttpServletRequest req) {
-        List<Warehouse> warehouses = orderService.findAllWarehouse();
+        List<Warehouse> warehouses = orderService.findAllWarehouses();
         req.setAttribute("warehouse_list", warehouses);
 
     }

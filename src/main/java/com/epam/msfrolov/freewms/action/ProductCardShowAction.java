@@ -18,22 +18,25 @@ public class ProductCardShowAction implements Action {
     @Override
     public ActionResult execute(HttpServletRequest req, HttpServletResponse resp) {
         String prodIdString = req.getParameter("prodId");
-        try {
-            int prodId = Integer.parseInt(prodIdString);
-            if (prodId < 0) throw new ActionException("incorrect parameter (negative id)");
-            try (ProductService productService = new ProductService()) {
+        boolean addProd = "add_prod".equalsIgnoreCase(req.getParameter("add_prod"));
+        try (ProductService productService = new ProductService()) {
+            if (!addProd) {
+                int prodId = Integer.parseInt(prodIdString);
+                if (prodId < 0) throw new ActionException("incorrect parameter (negative id)");
                 Product product = productService.findProduct(prodId);
-                List<ProductType> productTypes = productService.findAllProductType();
-                List<Measure> measureList = productService.findAllMeasure();
                 if (product == null) throw new ActionException("product not found");
                 log.debug("product  {}", product);
-                log.debug("productTypes  {}", productTypes);
-                log.debug("measureList  {}", measureList);
                 req.setAttribute("product", product);
-                req.setAttribute("typeList", productTypes);
-                req.setAttribute("measureList", measureList);
-                return productCard;
             }
+            List<ProductType> productTypes = productService.findAllProductType();
+            List<Measure> measureList = productService.findAllMeasure();
+            log.debug("productTypes  {}", productTypes);
+            log.debug("measureList  {}", measureList);
+            req.setAttribute("typeList", productTypes);
+            req.setAttribute("measureList", measureList);
+            req.setAttribute("add_prod", req.getParameter("add_prod"));
+            return productCard;
+
         } catch (NumberFormatException e) {
             throw new ActionException("incorrect parameter (invalid characters)", e);
         }

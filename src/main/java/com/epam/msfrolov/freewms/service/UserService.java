@@ -2,10 +2,7 @@ package com.epam.msfrolov.freewms.service;
 
 import com.epam.msfrolov.freewms.dao.Dao;
 import com.epam.msfrolov.freewms.dao.DaoException;
-import com.epam.msfrolov.freewms.model.Gender;
-import com.epam.msfrolov.freewms.model.Individual;
-import com.epam.msfrolov.freewms.model.User;
-import com.epam.msfrolov.freewms.model.UserRole;
+import com.epam.msfrolov.freewms.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,5 +104,19 @@ public class UserService extends Service {
     @Override
     public void close() {
         super.close();
+    }
+
+    public List<User> findAllUsers() {
+        return userDao.findAll();
+    }
+
+    public List<User> getUsersForPage(int pageNumber, int pageSize) {
+        int start = pageSize * (pageNumber - 1) + 1;
+        log.debug("pageNumber  {}", pageNumber);
+        log.debug("pageSize  {}", pageSize);
+        log.debug("start  {}", start);
+        List<User> users = userDao.findAll(start, pageSize);
+        log.debug("number of users in the list: {}", users.size());
+        return users;
     }
 }
