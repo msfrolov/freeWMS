@@ -3,6 +3,8 @@ package com.epam.msfrolov.freewms.servlet;
 import com.epam.msfrolov.freewms.action.Action;
 import com.epam.msfrolov.freewms.action.ActionFactory;
 import com.epam.msfrolov.freewms.action.ActionResult;
+import com.epam.msfrolov.freewms.connection.ConnectionPool;
+import com.epam.msfrolov.freewms.connection.MyConnectionPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +27,7 @@ public class FrontControllerServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         actionFactory = new ActionFactory();
+        ConnectionPool pool = MyConnectionPool.getInstance();
     }
 
     @Override

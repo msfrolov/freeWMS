@@ -1,10 +1,6 @@
 package com.epam.msfrolov.freewms.dao;
 
-import com.epam.msfrolov.freewms.connection.ConnectionPool;
-import com.epam.msfrolov.freewms.dao.Dao;
-import com.epam.msfrolov.freewms.dao.DaoException;
-import com.epam.msfrolov.freewms.dao.DaoFactory;
-import com.epam.msfrolov.freewms.dao.JdbcDao;
+import com.epam.msfrolov.freewms.connection.MyConnectionPool;
 import com.epam.msfrolov.freewms.model.BaseEntity;
 
 import java.sql.Connection;
@@ -15,7 +11,7 @@ public class JdbcDaoFactory implements DaoFactory {
     private final Connection connection;
 
     public JdbcDaoFactory() {
-        this.connection = ConnectionPool.getInstance().getConnection();
+        this.connection = MyConnectionPool.getInstance().getConnection();
     }
 
     @Override
@@ -24,7 +20,7 @@ public class JdbcDaoFactory implements DaoFactory {
     }
 
     @Override
-    public void startTransaction()  {
+    public void startTransaction() {
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
@@ -33,7 +29,7 @@ public class JdbcDaoFactory implements DaoFactory {
     }
 
     @Override
-    public void commit()  {
+    public void commit() {
         try {
             connection.commit();
         } catch (SQLException e) {
@@ -42,7 +38,7 @@ public class JdbcDaoFactory implements DaoFactory {
     }
 
     @Override
-    public void rollback()  {
+    public void rollback() {
         try {
             connection.rollback();
         } catch (SQLException e) {

@@ -92,7 +92,7 @@ public abstract class Document extends BaseEntity {
     public TableLine remove(int i) {
         return table.remove(i);
     }
-    
+
     public void forEach(Consumer<? super TableLine> consumer) {
         table.forEach(consumer);
     }
